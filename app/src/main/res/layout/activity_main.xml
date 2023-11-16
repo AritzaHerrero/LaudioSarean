@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/eposta"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,8 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
         android:ems="10"
-        android:inputType="textPassword"
         android:hint="@string/pasahitza"
+        android:inputType="textPassword"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -42,9 +44,10 @@
         android:text="@string/saioahasi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.34" />
 
     <TextView
         android:id="@+id/tvEzKontua"
@@ -69,6 +72,18 @@
         android:text="@string/erregistratuEmen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvEzKontua" />
+
+    <CheckBox
+        android:id="@+id/cbPasahitzaGorde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pasahitzaGorde"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

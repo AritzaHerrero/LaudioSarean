@@ -6,4 +6,13 @@
     <string name="saioahasi">Saioa hasi</string>
     <string name="erregistratuEmen">Erregistratu emen</string>
     <string name="kontuaEz">Ez duzu kontua?</string>
+    <string name="sartuEposta">Sartu zure E-posta</string>
+    <string name="sartuPasahitza">Sartu zure pasahitza</string>
+    <string name="pasahitzaGorde">Pasahitza gorde</string>
+
+    <string name="erKonexioaLogin">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEpostaLogin">Eposta ez da aurkitu</string>
+    <string name="erPasahitzaLogin">Pasahitz okerra</string>
+    <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
+    <string name="ongiEtorri">Ongi etorri</string>
 </resources>
