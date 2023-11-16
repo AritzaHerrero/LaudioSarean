@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Laudio Sarean</string>
+    <!-- MainActivity -->
+    <string name="eposta">E-posta</string>
+    <string name="pasahitza">Pasahitza</string>
+    <string name="saioahasi">Saioa hasi</string>
+    <string name="erregistratuEmen">Erregistratu emen</string>
+    <string name="kontuaEz">Ez duzu kontua?</string>
 </resources>

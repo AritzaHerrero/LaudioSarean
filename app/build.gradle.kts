@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.talde3.laudiosarean"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.talde3.laudiosarean"
