@@ -15,4 +15,11 @@
     <string name="erPasahitzaLogin">Pasahitz okerra</string>
     <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
     <string name="ongiEtorri">Ongi etorri</string>
+
+    <!-- Erregistroa -->
+    <string name="izena">Sartu zure izena</string>
+    <string name="abizenak">Sartu zure abizenak</string>
+    <string name="pasahitza1">Sartu zure pasahitza</string>
+    <string name="pasahitza2">Errepikatu pasahitza</string>
+    <string name="erregistratu">Erregistroa bukatu</string>
 </resources>
