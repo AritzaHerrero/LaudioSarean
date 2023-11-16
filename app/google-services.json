@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "215089537804",
+    "project_id": "laudio-sarean",
+    "storage_bucket": "laudio-sarean.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215089537804:android:7c8e9564f7252ac31f1f29",
+        "android_client_info": {
+          "package_name": "com.talde3.laudiosarean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD15SbDBXd8rzLmWqUQ64HC7OuL6GMHuis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

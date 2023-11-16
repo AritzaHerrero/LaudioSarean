@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.281" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/etPasahitza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+        app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
         app:layout_constraintVertical_bias="0.211" />
 
     <TextView
