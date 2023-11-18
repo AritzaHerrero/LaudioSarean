@@ -22,4 +22,15 @@
     <string name="pasahitza1">Sartu zure pasahitza</string>
     <string name="pasahitza2">Errepikatu pasahitza</string>
     <string name="erregistratu">Erregistroa bukatu</string>
+    <string name="erIzena">Izena bete mesedez</string>
+    <string name="erAbizenak">Lehen bi abizenak sartu mesedez</string>
+    <string name="erEposta">Eposta okerra</string>
+    <string name="erPasahitza1">Pasahitza bete mesedez</string>
+    <string name="erPasahitza2">Pasahitzak ez dira berdinak</string>
+    <string name="erOkerra">Erregistro okerra: </string>
+    <string name="erNanBikoiztua">Beste erabiltzaile bat dago NAN berarekin.</string>
+    <string name="erPasahitzFormatua">Pasahitzak ez dago behar bezalako formatua (gutxienez 6 karaktere)</string>
+    <string name="erEpostaErregistratuta">E-posta dagoeneko erregistratua dago</string>
+    <string name="erInternet">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEzezaguna">Errore ezezaguna: </string>
 </resources>
