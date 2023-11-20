@@ -1,9 +1,9 @@
-package com.talde3.laudiosarean.Dao;
+package com.talde3.laudiosarean.Room.Dao;
 
 import androidx.room.Dao;
 import androidx.room.Query;
 
-import com.talde3.laudiosarean.Entities.Erabiltzailea;
+import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 
 @Dao
 public interface ErabiltzaileaDao {

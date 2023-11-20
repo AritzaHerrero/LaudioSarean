@@ -26,7 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
+import com.talde3.laudiosarean.Room.Datubase;
+import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Datubase db = new Datubase();
+
 
         etEposta = findViewById(R.id.etEposta);
         etPasahitza = findViewById(R.id.etPasahitza);
@@ -100,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void saioaHasi(String eposta, String pasahitza) {
         desaktibatuUI();
