@@ -18,7 +18,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".GuneInformazioa"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

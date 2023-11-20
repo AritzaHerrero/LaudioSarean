@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox cbPasahitzaGorde;
     private TextView tvErregistratuEmen;
     private ImageButton ibPasahitza;
+    private ProgressBar pbKarga;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +49,12 @@ public class MainActivity extends AppCompatActivity {
         btnSaioahasi = findViewById(R.id.btnSaioahasi);
         tvErregistratuEmen = findViewById(R.id.tvErregistratuEmen);
         ibPasahitza = findViewById(R.id.ibPasahitza);
+        pbKarga = findViewById(R.id.pbKarga);
 
         mAuth = FirebaseAuth.getInstance();
         lehentasunakKargatu();
+
+        aktibatuUI();
         btnSaioahasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void saioaHasi(String eposta, String pasahitza) {
+        desaktibatuUI();
         mAuth.signInWithEmailAndPassword(eposta, pasahitza)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -106,13 +113,14 @@ public class MainActivity extends AppCompatActivity {
                             cbPasahitzaGorde = findViewById(R.id.cbPasahitzaGorde);
                             if(cbPasahitzaGorde.isChecked()) {
                                 lehentasunakGorde();
-                            } else {
-                                // Toast.makeText(MainActivity.this, "Ez gorde", Toast.LENGTH_SHORT).show();
                             }
+                            Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
+                            startActivity(intent);
+                            aktibatuUI();
                             // Toast.makeText(MainActivity.this, getResources().getString(R.string.ongiEtorri), Toast.LENGTH_SHORT).show();
                         } else {
                             Exception exception = task.getException();
-
+                            aktibatuUI();
                             if (exception instanceof FirebaseNetworkException) {
                                 Toast.makeText(MainActivity.this, getResources().getString(R.string.erKonexioaLogin), Toast.LENGTH_SHORT).show();
                             } else if (exception instanceof FirebaseAuthInvalidUserException) {
@@ -159,5 +167,23 @@ public class MainActivity extends AppCompatActivity {
 
         // dena gordeko da xml-an.
         editor.commit();
+    }
+
+    private void desaktibatuUI() {
+        etEposta.setEnabled(false);
+        etPasahitza.setEnabled(false);
+        btnSaioahasi.setEnabled(false);
+        tvErregistratuEmen.setEnabled(false);
+        ibPasahitza.setEnabled(false);
+        pbKarga.setVisibility(View.VISIBLE);
+    }
+
+    private void aktibatuUI() {
+        etEposta.setEnabled(true);
+        etPasahitza.setEnabled(true);
+        btnSaioahasi.setEnabled(true);
+        tvErregistratuEmen.setEnabled(true);
+        ibPasahitza.setEnabled(true);
+        pbKarga.setVisibility(View.INVISIBLE);;
     }
 }
