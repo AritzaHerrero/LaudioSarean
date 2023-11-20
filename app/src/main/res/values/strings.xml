@@ -6,4 +6,31 @@
     <string name="saioahasi">Saioa hasi</string>
     <string name="erregistratuEmen">Erregistratu emen</string>
     <string name="kontuaEz">Ez duzu kontua?</string>
+    <string name="sartuEposta">Sartu zure E-posta</string>
+    <string name="sartuPasahitza">Sartu zure pasahitza</string>
+    <string name="pasahitzaGorde">Pasahitza gorde</string>
+
+    <string name="erKonexioaLogin">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEpostaLogin">Eposta ez da aurkitu</string>
+    <string name="erPasahitzaLogin">Pasahitz okerra</string>
+    <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
+    <string name="ongiEtorri">Ongi etorri</string>
+
+    <!-- Erregistroa -->
+    <string name="izena">Sartu zure izena</string>
+    <string name="abizenak">Sartu zure abizenak</string>
+    <string name="pasahitza1">Sartu zure pasahitza</string>
+    <string name="pasahitza2">Errepikatu pasahitza</string>
+    <string name="erregistratu">Erregistroa bukatu</string>
+    <string name="erIzena">Izena bete mesedez</string>
+    <string name="erAbizenak">Lehen bi abizenak sartu mesedez</string>
+    <string name="erEposta">Eposta okerra</string>
+    <string name="erPasahitza1">Pasahitza bete mesedez</string>
+    <string name="erPasahitza2">Pasahitzak ez dira berdinak</string>
+    <string name="erOkerra">Erregistro okerra: </string>
+    <string name="erNanBikoiztua">Beste erabiltzaile bat dago NAN berarekin.</string>
+    <string name="erPasahitzFormatua">Pasahitzak ez dago behar bezalako formatua (gutxienez 6 karaktere)</string>
+    <string name="erEpostaErregistratuta">E-posta dagoeneko erregistratua dago</string>
+    <string name="erInternet">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEzezaguna">Errore ezezaguna: </string>
 </resources>

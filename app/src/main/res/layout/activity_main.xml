@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/eposta"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,8 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
         android:ems="10"
-        android:inputType="textPassword"
         android:hint="@string/pasahitza"
+        android:inputType="textPassword"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -42,9 +44,10 @@
         android:text="@string/saioahasi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.34" />
 
     <TextView
         android:id="@+id/tvEzKontua"
@@ -69,6 +72,40 @@
         android:text="@string/erregistratuEmen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvEzKontua" />
+
+    <CheckBox
+        android:id="@+id/cbPasahitzaGorde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pasahitzaGorde"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/ibPasahitza"
+        android:layout_width="52dp"
+        android:layout_height="51dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.618"
+        app:layout_constraintStart_toStartOf="@+id/etPasahitza"
+        app:layout_constraintTop_toBottomOf="@+id/etEposta"
+        app:layout_constraintVertical_bias="0.26"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ProgressBar
+        android:id="@+id/pbKarga"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
