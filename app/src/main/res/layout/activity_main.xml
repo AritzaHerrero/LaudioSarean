@@ -19,23 +19,43 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.281" />
+        app:layout_constraintVertical_bias="0.281"
+        tools:ignore="Autofill,TextContrastCheck" />
 
-    <EditText
-        android:id="@+id/etPasahitza"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:ems="10"
-        android:hint="@string/pasahitza"
-        android:inputType="textPassword"
-        android:minHeight="48sp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEposta"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.355">
+
+        <EditText
+            android:id="@+id/etPasahitza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/pasahitza"
+            android:inputType="textPassword"
+            android:minHeight="48sp"
+            tools:ignore="Autofill,TextContrastCheck" />
+
+        <ImageButton
+            android:id="@+id/ibPasahitza"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/begia"
+            tools:ignore="InefficientWeight,SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            android:contentDescription="@string/pasahitzaBegia" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnSaioahasi"
@@ -46,8 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
-        app:layout_constraintVertical_bias="0.34" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.532" />
 
     <TextView
         android:id="@+id/tvEzKontua"
@@ -80,22 +100,11 @@
         android:text="@string/pasahitzaGorde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintHorizontal_bias="0.320"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasahitza"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/ibPasahitza"
-        android:layout_width="52dp"
-        android:layout_height="51dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.618"
-        app:layout_constraintStart_toStartOf="@+id/etPasahitza"
-        app:layout_constraintTop_toBottomOf="@+id/etEposta"
-        app:layout_constraintVertical_bias="0.26"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0"
+        android:enabled="false"/>
 
     <ProgressBar
         android:id="@+id/pbKarga"

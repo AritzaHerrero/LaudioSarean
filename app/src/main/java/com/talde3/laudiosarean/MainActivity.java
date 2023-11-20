@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.talde3.laudiosarean.Room.Datubase;
-import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,12 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         Datubase db = new Datubase();
 
-
         etEposta = findViewById(R.id.etEposta);
         etPasahitza = findViewById(R.id.etPasahitza);
         btnSaioahasi = findViewById(R.id.btnSaioahasi);
         tvErregistratuEmen = findViewById(R.id.tvErregistratuEmen);
         ibPasahitza = findViewById(R.id.ibPasahitza);
+        ibPasahitza = findViewById(R.id.ibPasahitza);
+        cbPasahitzaGorde = findViewById(R.id.cbPasahitzaGorde);
         pbKarga = findViewById(R.id.pbKarga);
 
         mAuth = FirebaseAuth.getInstance();
@@ -94,9 +94,11 @@ public class MainActivity extends AppCompatActivity {
                 if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
                     etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     etPasahitza.setTypeface(Typeface.DEFAULT);
+                    ibPasahitza.setImageResource(R.drawable.begia_itxita);
                 } else {
                     etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     etPasahitza.setTypeface(Typeface.DEFAULT);
+                    ibPasahitza.setImageResource(R.drawable.begia);
                 }
 
                 // Mover el cursor al final del texto para mantener la visibilidad
@@ -178,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         btnSaioahasi.setEnabled(false);
         tvErregistratuEmen.setEnabled(false);
         ibPasahitza.setEnabled(false);
+        cbPasahitzaGorde.setEnabled(false);
         pbKarga.setVisibility(View.VISIBLE);
     }
 
@@ -187,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         btnSaioahasi.setEnabled(true);
         tvErregistratuEmen.setEnabled(true);
         ibPasahitza.setEnabled(true);
-        pbKarga.setVisibility(View.INVISIBLE);;
+        cbPasahitzaGorde.setEnabled(true);
+        pbKarga.setVisibility(View.INVISIBLE);
     }
 }
