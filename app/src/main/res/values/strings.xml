@@ -33,4 +33,9 @@
     <string name="erEpostaErregistratuta">E-posta dagoeneko erregistratua dago</string>
     <string name="erInternet">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
     <string name="erEzezaguna">Errore ezezaguna: </string>
+
+    <!-- Informazio Gunea -->
+    <string name="izenburuaGunea"></string>
+    <string name="informazioGunea"></string>
+    <string name="play">Jolasa hasi</string>
 </resources>
