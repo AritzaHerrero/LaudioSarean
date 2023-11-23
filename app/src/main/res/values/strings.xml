@@ -16,6 +16,9 @@
     <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
     <string name="ongiEtorri">Ongi etorri</string>
 
+    <!-- MainActivity.xml -->
+    <string name="pasahitzaBegia">Pasahitza erakutsi/ezkutatu</string>
+
     <!-- Erregistroa -->
     <string name="izena">Sartu zure izena</string>
     <string name="abizenak">Sartu zure abizenak</string>
