@@ -16,7 +16,11 @@ import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Record;
 
 public class Datubase {
-    @Database(entities = {Erabiltzailea.class, Galdera.class, Gunea.class, Record.class}, version = 1, exportSchema = false)
+    @Database(
+            entities = {Erabiltzailea.class, Galdera.class, Gunea.class, Record.class},
+            version = 1,
+            exportSchema = true
+    )
     public abstract static class AppDatabase extends RoomDatabase {
         public abstract ErabiltzaileaDao erabiltzaileaDao();
         public abstract GalderaDao galderaDao();

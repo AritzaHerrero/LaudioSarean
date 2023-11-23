@@ -6,7 +6,11 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {@ForeignKey(entity= Record.class, parentColumns = "record_id", childColumns = "record_id", onDelete = ForeignKey.CASCADE)})
+@Entity(tableName = "Gunea",
+        foreignKeys = {
+            @ForeignKey(entity= Record.class, parentColumns = "record_id", childColumns = "record_id", onDelete = ForeignKey.CASCADE)
+        }
+)
 public class Gunea {
     @PrimaryKey
     @NonNull
