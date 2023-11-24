@@ -127,7 +127,7 @@ public class Erregistroa extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Erregistroa.this, MainActivity.class);
+                                Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
                                 startActivity(intent);
                             } else {
                                 // Erregistro okerra. Errore konkretuentzako mezu desberdinekin.

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/guneakFragment"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Guneak" />
+    <item
+        android:id="@+id/profilaFragment"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Profila" />
+    <item
+        android:id="@+id/itxiSaioaFragment"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:title="Itxi saioa" />
+
+</menu>
