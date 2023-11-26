@@ -48,4 +48,14 @@
     <string name="guneak">Guneak</string>
     <string name="profila">Profila</string>
     <string name="itxiSaioa">Itxi saioa</string>
+    
+    <!-- Guneak Fragmet -->
+    <string name="santutegiaIzenburua">Yermoko Andre Mariaren Santutegia</string>
+    <string name="burdinHestiaIzenburua">Burdin Hesia</string>
+    <string name="ermitaIzenburua">Santa Aguedako ermita</string>
+    <string name="katutxaJauregiaIzenburua">Katuxako jauregia</string>
+    <string name="elizaIzenburua">Lamuzako San Pedro eliza</string>
+    <string name="lamuzaJauregiaIzenburua">Lamuza jauregia</string>
+    <string name="legeazakoSorginaIzenburua">Lezeagako sorgina</string>
+    <string name="azkenEbaluazioaIzenburua">Azken ebaluazioa</string>
 </resources>
