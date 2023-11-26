@@ -94,11 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
                     etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     etPasahitza.setTypeface(Typeface.DEFAULT);
-                    ibPasahitza.setImageResource(R.drawable.begia_itxita);
+                    ibPasahitza.setImageResource(R.drawable.begia_off_24);
                 } else {
                     etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     etPasahitza.setTypeface(Typeface.DEFAULT);
-                    ibPasahitza.setImageResource(R.drawable.begia);
+                    ibPasahitza.setImageResource(R.drawable.begia_24);
                 }
 
                 // Mover el cursor al final del texto para mantener la visibilidad

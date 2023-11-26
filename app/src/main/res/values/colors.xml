@@ -8,4 +8,9 @@
     <color name="green_normal">#044a42</color>
     <color name="green_light">#3a9188</color>
     <color name="green_light2">#b8e1dd</color>
+
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <color name="red">#FF0000</color>
 </resources>

@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
-            android:src="@drawable/begia"
+            android:src="@drawable/begia_24"
             tools:ignore="InefficientWeight,SpeakableTextPresentCheck,TouchTargetSizeCheck"
             android:contentDescription="@string/pasahitzaBegia" />
     </LinearLayout>
