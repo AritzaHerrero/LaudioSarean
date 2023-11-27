@@ -41,8 +41,11 @@
                 <ImageButton
                     android:id="@+id/ibSantutegia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/yermoko_andre_mariaren_santutegia"
+                    android:contentDescription="Yermoko Andre Mariaren Santutegia BOTOIA" />
 
                 <TextView
                     android:id="@+id/tvSantutegia"
@@ -63,8 +66,10 @@
                 <ImageButton
                     android:id="@+id/ibBurdinHesia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:src="@drawable/burdin_hesia"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"/>
 
                 <TextView
                     android:id="@+id/tvBurdinHesia"
@@ -97,8 +102,10 @@
                 <ImageButton
                     android:id="@+id/ibErmita"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/santa_aguedako_ermita" />
 
                 <TextView
                     android:id="@+id/tvErmita"
@@ -119,8 +126,10 @@
                 <ImageButton
                     android:id="@+id/ibKatutxaJauregia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/katuxako_jauregia" />
 
                 <TextView
                     android:id="@+id/tvKatutxaJauregia"
@@ -153,8 +162,10 @@
                 <ImageButton
                     android:id="@+id/ibEliza"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lamuzako_san_pedro_eliza"/>
 
                 <TextView
                     android:id="@+id/tvEliza"
@@ -175,8 +186,10 @@
                 <ImageButton
                     android:id="@+id/ibLamuzaJauregia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lamuza_jauregia" />
 
                 <TextView
                     android:id="@+id/tvLamuzaJauregia"
@@ -209,8 +222,10 @@
                 <ImageButton
                     android:id="@+id/ibLegazakoSorgina"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lezeagako_sorgina" />
 
                 <TextView
                     android:id="@+id/tvLegazakoSorgina"
@@ -231,8 +246,10 @@
                 <ImageButton
                     android:id="@+id/ibAzkenEbaluazioa"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
+                    android:layout_height="90sp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/azken_ebaluazioa" />
 
                 <TextView
                     android:id="@+id/tvAzkenEbaluzioa"
