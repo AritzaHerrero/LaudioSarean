@@ -14,11 +14,11 @@ public class MainActivity extends AppCompatActivity {
 
     GuneakFragment guneakFragment = new GuneakFragment();
     ProfilaFragment profilaFragment =new ProfilaFragment();
-    ItxiSaioaFragment itxiSaioaFragment = new ItxiSaioaFragment();
+    rankingFragment rankingFragment = new rankingFragment();
 
     private static final int GUNEEK_FRAGMENT_ID = R.id.guneakFragment;
     private static final int PROFILA_FRAGMENT_ID = R.id.profilaFragment;
-    private static final int ITXI_SAIOA_FRAGMENT_ID = R.id.itxiSaioaFragment;
+    private static final int ITXI_SAIOA_FRAGMENT_ID = R.id.rankingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 loadFragment(profilaFragment);
                 return true;
             } else if (itemId == ITXI_SAIOA_FRAGMENT_ID) {
-                loadFragment(itxiSaioaFragment);
+                loadFragment(rankingFragment);
                 return true;
             }
 
