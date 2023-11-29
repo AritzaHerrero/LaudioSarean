@@ -213,7 +213,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/ibLegazakoSorgina"
+                    android:id="@+id/ibLezeagakoSorgina"
                     android:layout_width="match_parent"
                     android:layout_height="90sp"
                     android:background="@android:color/transparent"

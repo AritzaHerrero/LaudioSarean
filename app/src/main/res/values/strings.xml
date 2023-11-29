@@ -66,8 +66,27 @@
     <string name="etAbizenak">Abizenak</string>
     <string name="etKurtsoa">Kurtsoa</string>
     <string name="btnAldatuPass">Aldatu Pasahitza</string>
+    <string name="btnItxiSaioa">Itxi saioa</string>
     <string name="btnDelAcc">Ezabatu kontua</string>
 
     <string name="descriptionEditIzena">Izena editatzeko botoia</string>
     <string name="descriptionEditAbizenak">Abizenak editatzeko botoiak</string>
+
+    <string name="aldaketakGorde">Aldaketak gorde nahi dituzu?</string>
+    <string name="bai">Bai</string>
+    <string name="ez">Ez</string>
+
+    <string name="pasahitzBerria">Pasahitz berria sartu:</string>
+    <string name="aldatu">Aldatu</string>
+    <string name="ezeztatu">Ezeztatu</string>
+
+    <string name="pasahitzaHutsik">Pasahitza ezin da hutsik egon</string>
+    <string name="pasahitzaOndoAldatuta">Zure pasahitza eguneratu da</string>
+    <string name="pasahitzaGaizkiAldatuta">Ezin izan da pasahitza aldatu</string>
+    <string name="internetKonexioEz">Internet konexio gabe. Saiatu berriro beranduago.</string>
+    <string name="pasahitzFormaEz">Gutxienez 6 karaktereko luzeera eduki behar du</string>
+
+    <string name="kontuaEzabatuGaldera">Ziur zaude zure kontua ezabatu nahi duzula?</string>
+    <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
+    <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
 </resources>

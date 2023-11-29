@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfilaFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -48,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="30sp"
             android:layout_marginStart="30sp"
             android:layout_marginEnd="30sp">
 
@@ -68,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="20sp"
             android:layout_marginStart="30sp"
             android:layout_marginEnd="30sp">
 
@@ -83,7 +84,7 @@
                 android:inputType="text" />
 
             <ImageButton
-                android:id="@+id/ibEditIzena"
+                android:id="@+id/ibEditIzenaProfila"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -97,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="20sp"
             android:layout_marginStart="30sp"
             android:layout_marginEnd="30sp">
 
@@ -112,7 +113,7 @@
                 android:inputType="text" />
 
             <ImageButton
-                android:id="@+id/ibEditAbizena"
+                android:id="@+id/ibEditAbizenaProfila"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -126,12 +127,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="20sp"
             android:layout_marginStart="30sp"
             android:layout_marginEnd="30sp">
 
             <EditText
-                android:id="@+id/etKurtsoa"
+                android:id="@+id/etKurtsoaProfila"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -156,7 +157,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btnAldatuPass" />
+                android:text="@string/btnAldatuPass"
+                app:icon="@drawable/password_24"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40sp"
+            android:layout_marginStart="30sp"
+            android:layout_marginEnd="30sp">
+
+            <Button
+                android:id="@+id/btnItxiSaioa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnItxiSaioa"
+                android:backgroundTint="@color/soft_orange"
+                app:icon="@drawable/logout_24" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +194,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btnDelAcc"
-                android:backgroundTint="@color/soft_red" />
+                android:backgroundTint="@color/soft_red"
+                app:icon="@drawable/delete_acc_24"/>
         </LinearLayout>
 
     </LinearLayout>
