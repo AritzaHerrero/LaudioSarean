@@ -58,4 +58,16 @@
     <string name="lamuzaJauregiaIzenburua">Lamuza jauregia</string>
     <string name="legeazakoSorginaIzenburua">Lezeagako sorgina</string>
     <string name="azkenEbaluazioaIzenburua">Azken ebaluazioa</string>
+
+    <!-- Profila Fragment -->
+    <string name="profilArgazkia">Aldatu profileko argazkia</string>
+    <string name="etEposta">Eposta</string>
+    <string name="etIzena">Izena</string>
+    <string name="etAbizenak">Abizenak</string>
+    <string name="etKurtsoa">Kurtsoa</string>
+    <string name="btnAldatuPass">Aldatu Pasahitza</string>
+    <string name="btnDelAcc">Ezabatu kontua</string>
+
+    <string name="descriptionEditIzena">Izena editatzeko botoia</string>
+    <string name="descriptionEditAbizenak">Abizenak editatzeko botoiak</string>
 </resources>
