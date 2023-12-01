@@ -26,7 +26,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
+import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,7 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Datubase db = new Datubase();
+        Datubase db = Datubase.getInstance(getApplicationContext());
+
+        Ikaslea e = new Ikaslea("12345678A", "Aingeru", "Siranaula", "aingeru@gmail.com", "12345678", "1");
+        IkasleaDao eDAO = db.ikasleaDao();
+        eDAO.insertAll(e);
 
         etEposta = findViewById(R.id.etEposta);
         etPasahitza = findViewById(R.id.etPasahitza);

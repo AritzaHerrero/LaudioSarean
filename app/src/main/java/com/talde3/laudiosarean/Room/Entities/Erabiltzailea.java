@@ -1,14 +1,12 @@
 package com.talde3.laudiosarean.Room.Entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(
-        tableName = "Erabiltzailea"
-)
-public class Erabiltzailea {
+@Entity
+public abstract class Erabiltzailea {
     @PrimaryKey
     @NonNull
     private String nan;
