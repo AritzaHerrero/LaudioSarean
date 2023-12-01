@@ -84,6 +84,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent YermokoSantutegiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                YermokoSantutegiaIntent.putExtra("aukeratutakoGunea", 1);
                 startActivity(YermokoSantutegiaIntent);
             }
         });
@@ -92,6 +93,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent BurdinHesiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                BurdinHesiaIntent.putExtra("aukeratutakoGunea", 2);
                 startActivity(BurdinHesiaIntent);
             }
         });
@@ -100,6 +102,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent SantaAguedakoErmitaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                SantaAguedakoErmitaIntent.putExtra("aukeratutakoGunea", 3);
                 startActivity(SantaAguedakoErmitaIntent);
             }
         });
@@ -108,6 +111,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent KatuxakoJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                KatuxakoJauregiaIntent.putExtra("aukeratutakoGunea", 4);
                 startActivity(KatuxakoJauregiaIntent);
             }
         });
@@ -116,6 +120,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent LamuzakoSanPedroElizaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                LamuzakoSanPedroElizaIntent.putExtra("aukeratutakoGunea", 5);
                 startActivity(LamuzakoSanPedroElizaIntent);
             }
         });
@@ -124,6 +129,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent LamuzaJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                LamuzaJauregiaIntent.putExtra("aukeratutakoGunea", 6);
                 startActivity(LamuzaJauregiaIntent);
             }
         });
@@ -132,6 +138,7 @@ public class GuneakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent LezeagakoSorginaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                LezeagakoSorginaIntent.putExtra("aukeratutakoGunea", 7);
                 startActivity(LezeagakoSorginaIntent);
             }
         });

@@ -6,8 +6,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,6 +19,7 @@ import java.io.IOException;
 public class GuneInformazioa extends Activity {
     private Handler handler = new Handler();
     private Runnable runnable;
+    private ImageView imgGunea;
     private ImageButton imgBtnHasi;
     private ImageButton imgBtnGelditu;
     private ImageButton imgBtnBerrebiarazi;
@@ -23,6 +27,9 @@ public class GuneInformazioa extends Activity {
     private SeekBar seekBarAudio;
     private boolean isPlaying = false;
     private int audioarenPosizioa = 0;
+    private int botoia= 0;
+    private int audioResource = 0;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -31,15 +38,69 @@ public class GuneInformazioa extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gune_informazioa);
 
+        botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
+        imgGunea = findViewById(R.id.imgGunea);
+
+        switch (botoia) {
+            case 1:
+                audioResource = R.raw.yermokoandremariarensantutegia;
+                imgGunea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
+                break;
+            case 2:
+                audioResource = R.raw.burdinhesia;
+                imgGunea.setImageResource(R.drawable.burdin_hesia);
+                break;
+            case 3:
+                audioResource = R.raw.santaaguedakoermita;
+                imgGunea.setImageResource(R.drawable.santa_aguedako_ermita);
+                break;
+            case 4:
+                audioResource = R.raw.katuxakojauregia;
+                imgGunea.setImageResource(R.drawable.katuxako_jauregia);
+                break;
+            case 5:
+                audioResource = R.raw.lamuzakosanpedroeliza;
+                imgGunea.setImageResource(R.drawable.lamuzako_san_pedro_eliza);
+                break;
+            case 6:
+                audioResource = R.raw.lamuzajauregia;
+                imgGunea.setImageResource(R.drawable.lamuza_jauregia);
+                break;
+            case 7:
+                audioResource = R.raw.lezeagakosorgina;
+                imgGunea.setImageResource(R.drawable.lezeagako_sorgina);
+                break;
+        }
+        // MediaPlayer klasea abiaraziko dugu Audio fitxategia elkartuz
+        mediaPlayer = MediaPlayer.create(this, audioResource);
 
         ViewPager viewPager = findViewById(R.id.imageSlider);
-        int[] images = {R.drawable.berrebiarazi, R.drawable.hasi, R.drawable.gelditu};
+        int[] images = {R.drawable.katuxako_jauregia, R.drawable.lamuza_jauregia, R.drawable.lezeagako_sorgina, R.drawable.lamuzako_san_pedro_eliza};
         ImageSliderAdapter adapter = new ImageSliderAdapter(this, images);
         viewPager.setAdapter(adapter);
 
+        ImageView imgPrevious = findViewById(R.id.imgPrevious);
+        ImageView imgNext = findViewById(R.id.imgNext);
+        imgPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem();
+                if (current > 0) {
+                    viewPager.setCurrentItem(current - 1);
+                }
+            }
+        });
+        imgNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem();
+                int total = viewPager.getAdapter().getCount();
+                if (current < total - 1) {
+                    viewPager.setCurrentItem(current + 1);
+                }
+            }
+        });
 
-        // MediaPlayer klasea abiaraziko dugu Audio fitxategia elkartuz
-        mediaPlayer = MediaPlayer.create(this, R.raw.audioa4);
         // Interfazearen hiru botoiak lortuko ditugu
         imgBtnHasi = findViewById(R.id.imgBtnHasi);
         imgBtnGelditu = findViewById(R.id.imgBtnGelditu);
@@ -48,6 +109,7 @@ public class GuneInformazioa extends Activity {
 
         imgBtnHasi.setVisibility(View.VISIBLE);
         imgBtnGelditu.setVisibility(View.GONE);
+
 
 
         //seekBar max jarri
@@ -74,12 +136,9 @@ public class GuneInformazioa extends Activity {
                 }
             }
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         // Konfiguratu botoiaren klik erreprodukzioa hasteko edo eteteko
