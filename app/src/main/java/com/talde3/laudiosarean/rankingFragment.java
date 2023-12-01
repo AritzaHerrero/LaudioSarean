@@ -7,6 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +64,57 @@ public class rankingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ranking, container, false);
+        View view = inflater.inflate(R.layout.fragment_ranking, container, false);
+
+        // Obtén la referencia al LinearLayout que contendrá los TextView
+        LinearLayout linearLayoutRanking = view.findViewById(R.id.linearLayoutRanking);
+
+        // Supongamos que tienes un array bidimensional de puntuaciones y usuarios
+        String[][] datos = {
+                {"725", "Usuario1"},
+                {"975", "Usuario2"},
+                {"1050", "Unax"},
+                {"700", "Usuario4"},
+                {"600", "Usuario5"},
+                {"500", "Usuario6"},
+                {"625", "Usuario7"},
+                {"775", "Usuario8"},
+                {"1000", "Aritza "},
+                {"85", "Usuario10"},
+                {"92", "Usuario11"},
+                {"78", "Usuario12"},
+                {"95", "Aingeru"},
+                {"88", "Usuario14"},
+                {"90", "Usuario15"},
+                {"87", "Usuario16"}
+        };
+
+
+        // Convertir las puntuaciones a int y ordenar
+        Arrays.sort(datos, (a, b) -> Integer.compare(Integer.parseInt(b[0]), Integer.parseInt(a[0])));
+        int topN = Math.min(10, datos.length); // Muestra hasta las 10 mejores puntuaciones
+
+        // Muestra las mejores puntuaciones en los TextView
+        for (int i = 0; i < topN; i++) {
+            // Crea un nuevo TextView
+            TextView textView = new TextView(getActivity());
+
+            // Configura los márgenes programáticamente
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            textView.setTextSize(18);
+            textView.setText((i + 1) + ". " + datos[i][1] + ": " + datos[i][0]);
+
+            layoutParams.setMargins(60, 60, 60, 0); // Aquí estableces los márgenes
+            textView.setLayoutParams(layoutParams);
+
+            // Agrega el TextView al LinearLayout
+            linearLayoutRanking.addView(textView);
+        }
+
+        return view;
     }
 }
