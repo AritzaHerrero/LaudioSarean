@@ -1,15 +1,20 @@
 package com.talde3.laudiosarean;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,8 +36,11 @@ import com.talde3.laudiosarean.Room.Datubase;
 import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
-public class LoginActivity extends AppCompatActivity {
+import java.io.File;
+import java.io.IOException;
 
+public class LoginActivity extends AppCompatActivity {
+    public static Datubase db;
     private FirebaseAuth mAuth;
     private EditText etEposta;
     private EditText etPasahitza;
@@ -42,16 +50,28 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton ibPasahitza;
     private ProgressBar pbKarga;
 
+    private static final int PERMISSION_REQUEST_CODE = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Datubase db = Datubase.getInstance(getApplicationContext());
+        db = Datubase.getInstance(getApplicationContext());
 
-        Ikaslea e = new Ikaslea("12345678A", "Aingeru", "Siranaula", "aingeru@gmail.com", "12345678", "1");
+        /*Ikaslea e = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
         IkasleaDao eDAO = db.ikasleaDao();
-        eDAO.insertAll(e);
+        eDAO.insertAll(e);*/
+
+        /*try {
+            File currentDB = getDatabasePath("LaudioDB");
+            File externalStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File backupDB = new File(externalStorageDir, "LaudioDB.db");
+
+            Datubase.exportDatabase(currentDB, backupDB);
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }*/
 
         etEposta = findViewById(R.id.etEposta);
         etPasahitza = findViewById(R.id.etPasahitza);
@@ -114,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void saioaHasi(String eposta, String pasahitza) {
+   private void saioaHasi(String eposta, String pasahitza) {
         desaktibatuUI();
         mAuth.signInWithEmailAndPassword(eposta, pasahitza)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

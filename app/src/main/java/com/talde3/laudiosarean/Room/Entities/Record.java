@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Record",
         foreignKeys = {
-                @ForeignKey(entity= Ikaslea.class, parentColumns = "nan", childColumns = "nan", onDelete = ForeignKey.CASCADE)
+                @ForeignKey(entity= Ikaslea.class, parentColumns = "id", childColumns = "id", onDelete = ForeignKey.CASCADE)
         }
 )
 public class Record {
@@ -17,14 +17,14 @@ public class Record {
     private int record_id;
     @ColumnInfo(name = "izena")
     private String pasahitza;
-    @ColumnInfo(name = "nan")
-    private String nan;
+    @ColumnInfo(name = "id")
+    private int id;
 
     // Constructor
-    public Record(int record_id, String pasahitza, String nan) {
+    public Record(int record_id, String pasahitza, int id) {
         this.record_id = record_id;
         this.pasahitza = pasahitza;
-        this.nan = nan;
+        this.id = id;
     }
 
     //Getters
@@ -34,8 +34,8 @@ public class Record {
     public String getPasahitza() {
         return pasahitza;
     }
-    public String getNan() {
-        return nan;
+    public int getId() {
+        return id;
     }
 
     // Setters
@@ -45,7 +45,7 @@ public class Record {
     public void setPasahitza(String pasahitza) {
         this.pasahitza = pasahitza;
     }
-    public void setNan(String nan) {
-        this.nan = nan;
+    public void setId(int id) {
+        this.id = id;
     }
 }

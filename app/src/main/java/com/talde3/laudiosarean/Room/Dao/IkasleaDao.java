@@ -12,10 +12,10 @@ import java.util.List;
 public interface IkasleaDao {
     @Query("SELECT * FROM Ikaslea")
     List<Ikaslea> getAll();
-
+    @Query("SELECT * FROM Ikaslea WHERE email = :email")
+    Ikaslea getUserByEmail(String email);
     @Insert
     void insertAll(Ikaslea ikaslea);
-
     @Insert
     void delete(Ikaslea ikaslea);
 }

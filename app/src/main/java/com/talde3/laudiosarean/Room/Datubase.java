@@ -18,9 +18,15 @@ import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 import com.talde3.laudiosarean.Room.Entities.Record;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+
 @Database(
         entities = {Erabiltzailea.class, Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class},
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 public abstract class Datubase extends RoomDatabase {
@@ -35,12 +41,21 @@ public abstract class Datubase extends RoomDatabase {
     public static Datubase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                            Datubase.class, "database-name")
-                    .fallbackToDestructiveMigration()
+                            Datubase.class, "LaudioDB")
                     .allowMainThreadQueries()
+                    .createFromAsset("database/LaudioDB.db")
                     .build();
         }
         return instance;
+    }
+
+    public static void exportDatabase(File currentDB, File backupDB) throws IOException {
+        try (FileInputStream fis = new FileInputStream(currentDB);
+             FileOutputStream fos = new FileOutputStream(backupDB);
+             FileChannel inChannel = fis.getChannel();
+             FileChannel outChannel = fos.getChannel()) {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        }
     }
 }
 

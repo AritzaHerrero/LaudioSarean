@@ -6,7 +6,7 @@ import androidx.room.Entity;
         tableName = "Ikaslea"
 )
 public class Ikaslea extends Erabiltzailea{
-    public Ikaslea(String nan, String izena, String abizena, String email, String pasahitza, String klasea) {
-        super(nan, izena, abizena, email, pasahitza, klasea);
+    public Ikaslea(String izena, String abizenak, String email, String pasahitza, String kurtsoa) {
+        super(izena, abizenak, email, pasahitza, kurtsoa);
     }
 }

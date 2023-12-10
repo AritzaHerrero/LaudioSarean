@@ -20,11 +20,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 import java.util.ArrayList;
 
 public class Erregistroa extends AppCompatActivity {
-
+    private IkasleaDao ikaselaDao;
     private FirebaseAuth mAuth;
     private EditText etEposta;
     private EditText etIzena;
@@ -38,7 +41,7 @@ public class Erregistroa extends AppCompatActivity {
     private String abizenak;
     private String pasahitza1;
     private String pasahitza2;
-    private String klasea;
+    private String kurtsoa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +123,16 @@ public class Erregistroa extends AppCompatActivity {
                 }
                 // Dena zuzen badago erregistroa egiten da.
                 else {
-                    klasea = spinnerKlasea.getSelectedItem().toString();
+                    kurtsoa = spinnerKlasea.getSelectedItem().toString();
 
                     mAuth.createUserWithEmailAndPassword(eposta, pasahitza1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
+                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
+                                LoginActivity.db.ikasleaDao().insertAll(ikaslea);
+
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
                                 startActivity(intent);

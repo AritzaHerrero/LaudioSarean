@@ -1,5 +1,7 @@
 package com.talde3.laudiosarean;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,8 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
  * create an instance of this fragment.
  */
 public class ProfilaFragment extends Fragment {
+    private IkasleaDao ikaselaDao;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,6 +105,15 @@ public class ProfilaFragment extends Fragment {
         btnEzabatuKontua = view.findViewById(R.id.btnEzabatuKontua);
 
         mAuth = FirebaseAuth.getInstance();
+
+        // Erabiltzailearen informazioa datu basetik hartzen da
+        ikaselaDao = LoginActivity.db.ikasleaDao();
+        Ikaslea ikaslea = ikaselaDao.getUserByEmail(mAuth.getCurrentUser().getEmail());
+
+        etEposta.setText(ikaslea.getEmail());
+        etIzena.setText(ikaslea.getIzena());
+        etAbizena.setText(ikaslea.getAbizenak());
+        etKurtsoa.setText(ikaslea.getKurtsoa());
 
         ibEditIzena.setOnClickListener(new View.OnClickListener() {
             @Override

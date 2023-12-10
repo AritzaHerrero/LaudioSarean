@@ -3,42 +3,44 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+import org.checkerframework.common.aliasing.qual.Unique;
+
+@Entity(indices = {@Index(value = {"email"},unique = true)})
 public abstract class Erabiltzailea {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    private String nan;
+    private int id;
     @ColumnInfo(name = "izena")
     private String izena;
-    @ColumnInfo(name = "abizena")
-    private String abizena;
+    @ColumnInfo(name = "abizenak")
+    private String abizenak;
     @ColumnInfo(name = "email")
     private String email;
     @ColumnInfo(name = "pasahitza")
     private String pasahitza;
-    @ColumnInfo(name = "klasea")
-    private String klasea;
+    @ColumnInfo(name = "kurtsoa")
+    private String kurtsoa;
 
-    public Erabiltzailea(String nan, String izena, String abizena, String email, String pasahitza, String klasea) {
-        this.nan = nan;
+    public Erabiltzailea(String izena, String abizenak, String email, String pasahitza, String kurtsoa) {
         this.izena = izena;
-        this.abizena = abizena;
+        this.abizenak = abizenak;
         this.email = email;
         this.pasahitza = pasahitza;
-        this.klasea = klasea;
+        this.kurtsoa = kurtsoa;
     }
 
     // Getters
-    public String getNan() {
-        return nan;
+    public int getId() {
+        return id;
     }
     public String getIzena() {
         return izena;
     }
-    public String getAbizena() {
-        return abizena;
+    public String getAbizenak() {
+        return abizenak;
     }
     public String getEmail() {
         return email;
@@ -46,19 +48,19 @@ public abstract class Erabiltzailea {
     public String getPasahitza() {
         return pasahitza;
     }
-    public String getKlasea() {
-        return klasea;
+    public String getKurtsoa() {
+        return kurtsoa;
     }
 
     // Setters
-    public void setNan(String nan) {
-        this.nan = nan;
+    public void setId(int id) {
+        this.id = id;
     }
     public void setIzena(String izena) {
         this.izena = izena;
     }
-    public void setAbizena(String abizena) {
-        this.abizena = abizena;
+    public void setAbizenak(String abizenak) {
+        this.abizenak = abizenak;
     }
     public void setEmail(String email) {
         this.email = email;
@@ -67,7 +69,7 @@ public abstract class Erabiltzailea {
         this.pasahitza = pasahitza;
     }
 
-    public void setKlasea(String klasea) {
-        this.klasea = klasea;
+    public void setKurtsoa(String kurtsoa) {
+        this.kurtsoa = kurtsoa;
     }
 }
