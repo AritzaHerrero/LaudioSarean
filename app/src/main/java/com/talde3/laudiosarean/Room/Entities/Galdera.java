@@ -8,43 +8,42 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Galdera",
         foreignKeys = {
-            @ForeignKey(entity= Gunea.class, parentColumns = "gunea_id", childColumns = "gunea_id", onDelete = ForeignKey.CASCADE)
+            @ForeignKey(entity= Gunea.class, parentColumns = "id_gunea", childColumns = "id_gunea", onDelete = ForeignKey.CASCADE)
         }
 )
 public class Galdera {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    private int galdera_id;
+    private int id_galdera;
     @ColumnInfo(name = "galdera")
     private String galdera;
-    @ColumnInfo(name = "gunea_id")
-    private int gunea_id;
+    @ColumnInfo(name = "id_gunea")
+    private int id_gunea;
 
-    public Galdera(int galdera_id, String galdera, int gunea_id) {
-        this.galdera_id = galdera_id;
+    public Galdera(String galdera, int id_gunea) {
         this.galdera = galdera;
-        this.gunea_id = gunea_id;
+        this.id_gunea = id_gunea;
     }
 
     // Getters
-    public int getGaldera_id() {
-        return galdera_id;
+    public int getId_galdera() {
+        return id_galdera;
     }
     public String getGaldera() {
         return galdera;
     }
-    public int getGunea_id() {
-        return gunea_id;
+    public int getId_gunea() {
+        return id_gunea;
     }
 
     // Setters
-    public void setGaldera_id(int galdera_id) {
-        this.galdera_id = galdera_id;
+    public void setId_galdera(int id_galdera) {
+        this.id_galdera = id_galdera;
     }
     public void setGaldera(String galdera) {
         this.galdera = galdera;
     }
-    public void setGunea_id(int gunea_id) {
-        this.gunea_id = gunea_id;
+    public void setId_gunea(int id_gunea) {
+        this.id_gunea = id_gunea;
     }
 }

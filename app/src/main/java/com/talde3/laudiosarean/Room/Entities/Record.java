@@ -8,44 +8,34 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Record",
         foreignKeys = {
-                @ForeignKey(entity= Ikaslea.class, parentColumns = "id", childColumns = "id", onDelete = ForeignKey.CASCADE)
+                @ForeignKey(entity= Puntuazioa.class, parentColumns = "id_puntuazioa", childColumns = "id_puntuazioa", onDelete = ForeignKey.CASCADE)
         }
 )
 public class Record {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    private int record_id;
-    @ColumnInfo(name = "izena")
-    private String pasahitza;
-    @ColumnInfo(name = "id")
-    private int id;
-
+    @ColumnInfo(name = "id_record")
+    private int id_record;
+    @ColumnInfo(name = "id_puntuazioa")
+    private int id_puntuazioa;
     // Constructor
-    public Record(int record_id, String pasahitza, int id) {
-        this.record_id = record_id;
-        this.pasahitza = pasahitza;
-        this.id = id;
+    public Record(int id_puntuazioa) {
+        this.id_puntuazioa = id_puntuazioa;
     }
 
     //Getters
-    public int getRecord_id() {
-        return record_id;
+    public int getId_record() {
+        return id_record;
     }
-    public String getPasahitza() {
-        return pasahitza;
-    }
-    public int getId() {
-        return id;
+    public int getId_puntuazioa() {
+        return id_puntuazioa;
     }
 
     // Setters
-    public void setRecord_id(int record_id) {
-        this.record_id = record_id;
+    public void setId_record(int id_record) {
+        this.id_record = id_record;
     }
-    public void setPasahitza(String pasahitza) {
-        this.pasahitza = pasahitza;
-    }
-    public void setId(int id) {
-        this.id = id;
+    public void setId_puntuazioa(int id_puntuazioa) {
+        this.id_puntuazioa = id_puntuazioa;
     }
 }

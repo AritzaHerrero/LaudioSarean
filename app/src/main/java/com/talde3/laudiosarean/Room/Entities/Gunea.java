@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Gunea",
         foreignKeys = {
-            @ForeignKey(entity= Record.class, parentColumns = "record_id", childColumns = "record_id", onDelete = ForeignKey.CASCADE)
+            @ForeignKey(entity= Record.class, parentColumns = "id_record", childColumns = "id_record", onDelete = ForeignKey.CASCADE)
         }
 )
 public class Gunea {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    private int gunea_id;
+    private int id_gunea;
     @ColumnInfo(name = "izena")
     private String izena;
     @ColumnInfo(name = "deskribapena")
@@ -25,23 +25,22 @@ public class Gunea {
     private String audioa;
     @ColumnInfo(name = "irudia")
     private String irudia;
-    @ColumnInfo(name = "record_id")
-    private int record_id;
+    @ColumnInfo(name = "id_record")
+    private int id_record;
 
     // Constructor
-    public Gunea(int gunea_id, String izena, String deskribapena, String koordenadak, String audioa, String irudia, int record_id) {
-        this.gunea_id = gunea_id;
+    public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudia, int id_record) {
         this.izena = izena;
         this.deskribapena = deskribapena;
         this.koordenadak = koordenadak;
         this.audioa = audioa;
         this.irudia = irudia;
-        this.record_id = record_id;
+        this.id_record = id_record;
     }
 
     // Getters
-    public int getGunea_id() {
-        return gunea_id;
+    public int getId_gunea() {
+        return id_gunea;
     }
     public String getIzena() {
         return izena;
@@ -58,13 +57,13 @@ public class Gunea {
     public String getIrudia() {
         return irudia;
     }
-    public int getRecord_id() {
-        return record_id;
+    public int getId_record() {
+        return id_record;
     }
 
     // Setters
-    public void setGuneak_id(int guneak_id) {
-        this.gunea_id = guneak_id;
+    public void setId_gunea(int id_gunea) {
+        this.id_gunea = id_gunea;
     }
     public void setIzena(String izena) {
         this.izena = izena;
@@ -81,7 +80,7 @@ public class Gunea {
     public void setIrudia(String irudia) {
         this.irudia = irudia;
     }
-    public void setRecord_id(int record_id) {
-        this.record_id = record_id;
+    public void setId_record(int id_record) {
+        this.id_record = id_record;
     }
 }

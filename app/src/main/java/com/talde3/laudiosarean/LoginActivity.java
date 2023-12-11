@@ -59,9 +59,9 @@ public class LoginActivity extends AppCompatActivity {
 
         db = Datubase.getInstance(getApplicationContext());
 
-        /*Ikaslea e = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
+        Ikaslea e = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
         IkasleaDao eDAO = db.ikasleaDao();
-        eDAO.insertAll(e);*/
+        eDAO.insertAll(e);
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");

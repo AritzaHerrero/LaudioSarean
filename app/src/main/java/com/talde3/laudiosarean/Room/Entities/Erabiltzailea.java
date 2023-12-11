@@ -1,27 +1,11 @@
 package com.talde3.laudiosarean.Room.Entities;
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-
-import org.checkerframework.common.aliasing.qual.Unique;
-
-@Entity(indices = {@Index(value = {"email"},unique = true)})
 public abstract class Erabiltzailea {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
     private int id;
-    @ColumnInfo(name = "izena")
     private String izena;
-    @ColumnInfo(name = "abizenak")
     private String abizenak;
-    @ColumnInfo(name = "email")
     private String email;
-    @ColumnInfo(name = "pasahitza")
     private String pasahitza;
-    @ColumnInfo(name = "kurtsoa")
     private String kurtsoa;
 
     public Erabiltzailea(String izena, String abizenak, String email, String pasahitza, String kurtsoa) {

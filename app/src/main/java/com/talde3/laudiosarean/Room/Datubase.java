@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 @Database(
-        entities = {Erabiltzailea.class, Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class},
+        entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class},
         version = 2,
         exportSchema = false
 )
@@ -43,7 +43,6 @@ public abstract class Datubase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             Datubase.class, "LaudioDB")
                     .allowMainThreadQueries()
-                    .createFromAsset("database/LaudioDB.db")
                     .build();
         }
         return instance;
