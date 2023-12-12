@@ -2,20 +2,27 @@ package com.talde3.laudiosarean;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
+import com.talde3.laudiosarean.Jolasak.Puzlea.PuzlearenArauak;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
 
 import java.io.IOException;
@@ -28,6 +35,9 @@ public class GuneInformazioa extends Activity {
     private ImageButton imgBtnGelditu;
     private ImageButton imgBtnBerrebiarazi;
     private Button btnPlay;
+    private TextView tituloa;
+    private TextView informazioa;
+    private ViewPager viewPager;
     private MediaPlayer mediaPlayer;
     private SeekBar seekBarAudio;
     private boolean isPlaying = false;
@@ -47,16 +57,31 @@ public class GuneInformazioa extends Activity {
         botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
         imgGunea = findViewById(R.id.imgGunea);
         btnPlay = findViewById(R.id.btnPlay);
+        tituloa= findViewById(R.id.txtGunea);
+        informazioa= findViewById(R.id.txtHistoriaGunea);
+        viewPager = findViewById(R.id.imageSlider);
+
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         switch (botoia) {
             case 1:
                 audioResource = R.raw.yermokoandremariarensantutegia;
                 imgGunea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
+                tituloa.setText(getString(R.string.izenburuaGunea1));
+                informazioa.setText(getString(R.string.informazioGunea1));
+                int[] yermo = {R.drawable.yermoko_andre_mari2, R.drawable.yermoko_andre_mari3, R.drawable.yermoko_andre_mari4,  R.drawable.yermoko_andre_mari5};
+                ImageSliderAdapter adapterYermo = new ImageSliderAdapter(this, yermo);
+                viewPager.setAdapter(adapterYermo);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
-                            startActivity(intent);
+                        PuzzleActivity puzzleActivity = new PuzzleActivity();
+                        erakutsiMezua(puzzleActivity);
                     }
                 });
                 break;
@@ -75,11 +100,16 @@ public class GuneInformazioa extends Activity {
             case 3:
                 audioResource = R.raw.santaaguedakoermita;
                 imgGunea.setImageResource(R.drawable.santa_aguedako_ermita);
+                tituloa.setText(getString(R.string.izenburuaGunea2));
+                informazioa.setText(getString(R.string.informazioGunea2));
+                int[] santaAgueda = {R.drawable.santa_aguedako_ermita1, R.drawable.santa_aguedako_ermita2, R.drawable.santa_aguedako_ermita3};
+                ImageSliderAdapter santaAguedaAdapter = new ImageSliderAdapter(this, santaAgueda);
+                viewPager.setAdapter(santaAguedaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(GuneInformazioa.this, Laberintoa.class);
-                        startActivity(intent);
+                        Laberintoa laberintoa = new Laberintoa();
+                        erakutsiMezua(laberintoa);
                     }
                 });
                 break;
@@ -134,11 +164,6 @@ public class GuneInformazioa extends Activity {
         }
         // MediaPlayer klasea abiaraziko dugu Audio fitxategia elkartuz
         mediaPlayer = MediaPlayer.create(this, audioResource);
-
-        ViewPager viewPager = findViewById(R.id.imageSlider);
-        int[] images = {R.drawable.katuxako_jauregia, R.drawable.lamuza_jauregia, R.drawable.lezeagako_sorgina, R.drawable.lamuzako_san_pedro_eliza};
-        ImageSliderAdapter adapter = new ImageSliderAdapter(this, images);
-        viewPager.setAdapter(adapter);
 
         ImageView imgPrevious = findViewById(R.id.imgPrevious);
         ImageView imgNext = findViewById(R.id.imgNext);
@@ -268,6 +293,41 @@ public class GuneInformazioa extends Activity {
         isPlaying = true;
         imgBtnHasi.setVisibility(View.GONE);
         imgBtnGelditu.setVisibility(View.VISIBLE);
+    }
+
+    private void erakutsiMezua(Activity x) {
+        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
+        View view = LayoutInflater.from(GuneInformazioa.this).inflate(R.layout.informazioa_dialog, null);
+        Button prestBai = view.findViewById(R.id.prestBai);
+        Button prestEz = view.findViewById(R.id.prestEz);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(GuneInformazioa.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        prestEz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(GuneInformazioa.this, PuzlearenArauak.class);
+                startActivity(intent);
+            }
+        });
+
+        prestBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(GuneInformazioa.this, x.getClass());
+                startActivity(intent);
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        alertDialog.show();
     }
 
     @Override

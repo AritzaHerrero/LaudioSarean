@@ -1,8 +1,15 @@
 package com.talde3.laudiosarean.Jolasak.Laberintoa;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,9 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.talde3.laudiosarean.GuneakFragment;
+import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +41,13 @@ public class Laberintoa extends AppCompatActivity {
     private int jugadorY = 1;
     private int salidaX = 23;
     private int salidaY = 23;
-
+    private Button buttonDerecha;
+    private Button buttonIzquierda;
+    private Button buttonArriba;
+    private Button buttonAbajo;
+    private Button restart;
+    private TextView txtKronometroa ;
+    private TextView txtPuntuazioa ;
     private Random random = new Random();
     private int alturaLaberinto = 25;
     private int anchoLaberinto = 25;
@@ -49,8 +67,8 @@ public class Laberintoa extends AppCompatActivity {
             int minutuak = segundoak / 60;
             segundoak = segundoak % 60;
 
-            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-            TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+             txtKronometroa = findViewById(R.id.txtKronometroa);
+             txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
 
             String time = String.format("%02d:%02d", minutuak, segundoak);
             txtKronometroa.setText(time);
@@ -70,6 +88,11 @@ public class Laberintoa extends AppCompatActivity {
 
         hasierakoDenbora = System.currentTimeMillis();
         koronoHandler.postDelayed(kronoRunnable, 0);
+        buttonDerecha = findViewById(R.id.btnDerecha);
+        buttonIzquierda = findViewById(R.id.btnIzquierda);
+        buttonArriba = findViewById(R.id.btnArriba);
+        buttonAbajo = findViewById(R.id.btnAbajo);
+        restart = findViewById(R.id.laberintoRestar);
 
         laberintoaSortu();
       //  imprimirLaberinto();
@@ -115,12 +138,6 @@ public class Laberintoa extends AppCompatActivity {
                 gridLayout.getLayoutParams().height = laberinto.length * buttonSize;
             }
         }
-
-        Button buttonDerecha = findViewById(R.id.btnDerecha);
-        Button buttonIzquierda = findViewById(R.id.btnIzquierda);
-        Button buttonArriba = findViewById(R.id.btnArriba);
-        Button buttonAbajo = findViewById(R.id.btnAbajo);
-        Button restart = findViewById(R.id.laberintoRestar);
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,8 +261,9 @@ public class Laberintoa extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        erakutsiMezua(txtPuntuazioa);
                         koronoHandler.removeCallbacks(kronoRunnable);
-                        mezuaErakutzi("Irabazi duzu!");
+//                        mezuaErakutzi("Irabazi duzu!");
                         interfazeaEguneratu();
                         buttonArriba.setEnabled(false);
                         buttonIzquierda.setEnabled(false);
@@ -276,10 +294,6 @@ public class Laberintoa extends AppCompatActivity {
         }
     }
 
-    private void mezuaErakutzi(String mensaje) {
-        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
-    }
-
     private void reiniciarLaberinto() {
         //Denbora eta puntuazioa berrezarri
         hasierakoDenbora = System.currentTimeMillis();
@@ -301,6 +315,11 @@ public class Laberintoa extends AppCompatActivity {
 
         // Koloreak eguneratu
         botoienKoloreakEguneratu();
+
+        buttonArriba.setEnabled(true);
+        buttonIzquierda.setEnabled(true);
+        buttonDerecha.setEnabled(true);
+        buttonAbajo.setEnabled(true);
     }
 
 
@@ -345,6 +364,51 @@ public class Laberintoa extends AppCompatActivity {
         }
         return puntuazioa;
     }
+
+    private void erakutsiMezua(TextView puntuaizoa) {
+        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
+        View view = LayoutInflater.from(Laberintoa.this).inflate(R.layout.zorionak_dialog, null);
+        Button successDone = view.findViewById(R.id.successDone);
+        Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
+
+        // Obtener la referencia correcta de successDesc desde la vista inflada 'view'
+        TextView successDesc = view.findViewById(R.id.successDesc);
+
+        if (successDesc != null) {
+            String puntuaizoText = puntuaizoa.getText().toString();
+            successDesc.setText("Itzela, hau izan da zure puntuazioa "+ puntuaizoText + "\n Segi horrela!!!");
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Laberintoa.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        successDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(Laberintoa.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        berriroJolastu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                hasierakoDenbora = System.currentTimeMillis();
+                koronoHandler.postDelayed(kronoRunnable, 0);
+                reiniciarLaberinto();
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        alertDialog.show();
+    }
+
 
     @Override
     protected void onDestroy() {

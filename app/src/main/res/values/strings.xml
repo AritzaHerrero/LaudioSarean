@@ -38,9 +38,31 @@
     <string name="erEzezaguna">Errore ezezaguna: </string>
 
     <!-- Informazio Gunea -->
+    <string name="jokoaHasi">Jokatzen hasi</string>
     <string name="izenburuaGunea"></string>
     <string name="informazioGunea"></string>
-    <string name="play">Jolasa hasi</string>
+
+    <string name="izenburuaGunea1">YERMOKO MARIA ANDREAREN SANTUTEGIA</string>
+    <string name="informazioGunea1"> Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean
+    eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu.
+    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta
+    santutegiaren alboan ermita txiki bat dago, Santa Luzia izena daukana.
+    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.
+    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta
+    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden
+    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.
+    </string>
+
+    <string name="izenburuaGunea2">SANTA AGUEDA ERMITA</string>
+    <string name="informazioGunea2">Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal
+    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen
+    den santa kristauari.
+    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko
+    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko
+    jai eta tradizioei lotuta egoten dira.
+    </string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -89,4 +111,17 @@
     <string name="kontuaEzabatuGaldera">Ziur zaude zure kontua ezabatu nahi duzula?</string>
     <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
     <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
+
+    //informazioa_dialog
+    <string name="prest">Prest zaude jokoa hasteko?</string>
+    <string name="prestEz">Arauak ikusi</string>
+    <string name="prestBai">Goazen</string>
+
+    //zorionak_dialog
+    <string name="aurrera">Aurrera</string>
+    <string name="berriroJolastu">Berriro jolastu</string>
+    <string name="tituloaZorionak">ZORIONAK!!</string>
+    <string name="testuaZorionak">Oso ondo segui horrela!!</string>
+
+
 </resources>

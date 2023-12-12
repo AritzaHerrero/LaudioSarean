@@ -15,4 +15,7 @@
     <color name="red">#FF0000</color>
     <color name="soft_red">#E85252</color>
     <color name="soft_orange">#E89352</color>
+
+    <color name="green">#50C878</color>
+
 </resources>

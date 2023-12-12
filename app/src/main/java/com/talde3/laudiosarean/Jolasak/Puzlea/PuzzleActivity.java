@@ -3,12 +3,15 @@ package com.talde3.laudiosarean.Jolasak.Puzlea;
 import static java.lang.Math.abs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -16,16 +19,21 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
+import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
 
 import java.io.IOException;
@@ -70,18 +78,6 @@ public class PuzzleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
-
-
-        //Arauak botoiatik ematerakoan beste aktibiti batera eramango zaizu non aurkituko duzun puzzleen arauak eta puntuazioa nola kalkulatzen den
-        final ImageButton btnArauak = findViewById(R.id.imgBtnArauak);
-        btnArauak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PuzzleActivity.this, PuzlearenArauak.class);
-                startActivity(intent);
-            }
-        });
-
 
         final RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
         final ImageView imgPuzlea = findViewById(R.id.imgPuzlea);
@@ -320,8 +316,7 @@ public class PuzzleActivity extends AppCompatActivity {
     public void egiaztatuJokuAmaiera() {
         if (amaitutaDago()) {
             koronoHandler.removeCallbacks(kronoRunnable);
-            int puntuazioa = Integer.parseInt(txtPuntuazioa.getText().toString());
-            erakutsiPuntuazioa(puntuazioa);
+            erakutsiMezua(txtPuntuazioa);
         }
     }
 
@@ -345,10 +340,6 @@ public class PuzzleActivity extends AppCompatActivity {
         return puntuazioa;
     }
 
-    private void erakutsiPuntuazioa(double score) {
-        Toast.makeText(this, "Zure puntuazioa: " + score, Toast.LENGTH_LONG).show();
-    }
-
     private boolean amaitutaDago() {
         for (PuzlearenPieza pieza : piezak) {
             if (pieza.mugitu) {
@@ -357,6 +348,69 @@ public class PuzzleActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private void erakutsiMezua(TextView puntuaizoa) {
+        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
+        View view = LayoutInflater.from(PuzzleActivity.this).inflate(R.layout.zorionak_dialog, null);
+        Button successDone = view.findViewById(R.id.successDone);
+        Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
+
+        // Obtener la referencia correcta de successDesc desde la vista inflada 'view'
+        TextView successDesc = view.findViewById(R.id.successDesc);
+
+        if (successDesc != null) {
+            String puntuaizoText = puntuaizoa.getText().toString();
+            successDesc.setText("Itzela, hau izan da zure puntuazioa "+ puntuaizoText + "\n Segi horrela!!!");
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        successDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(PuzzleActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        berriroJolastu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                hasierakoDenbora = System.currentTimeMillis();
+                koronoHandler.postDelayed(kronoRunnable, 0);
+                puzzleBerrezarri();
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        alertDialog.show();
+    }
+
+    private void puzzleBerrezarri() {
+        piezak = zatituArgazkia();
+        RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout.removeAllViews(); // Elimina las piezas anteriores del RelativeLayout
+        TouchListener touchListener = new TouchListener(PuzzleActivity.this);
+        // piezen ordena nahastu
+        Collections.shuffle(piezak);
+        for (PuzlearenPieza pieza : piezak) {
+            pieza.setOnTouchListener(touchListener);
+            relativeLayout.addView(pieza);
+            // pantailaren beheko aldean sortzen dira posizio random batean
+            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) pieza.getLayoutParams();
+            lParams.leftMargin = new Random().nextInt(relativeLayout.getWidth() - pieza.piezarenZabalera);
+            lParams.topMargin = relativeLayout.getHeight() - pieza.piezarenAltuera;
+            pieza.setLayoutParams(lParams);
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
