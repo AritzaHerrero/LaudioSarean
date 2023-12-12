@@ -1,6 +1,14 @@
 package com.talde3.laudiosarean.Room.Entities;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+@Entity
 public abstract class Erabiltzailea {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private int id;
     private String izena;
     private String abizenak;

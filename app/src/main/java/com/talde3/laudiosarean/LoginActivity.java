@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,16 +53,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 123;
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        db = Datubase.getInstance(getApplicationContext());
-//
-//        Ikaslea e = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
-//        IkasleaDao eDAO = db.ikasleaDao();
-//        eDAO.insertAll(e);
+        db = Datubase.getInstance(getApplicationContext());
+        db.clearAllTables();
+
+        /*Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
+        IkasleaDao iDAO = db.ikasleaDao();
+        iDAO.insertAll(i);*/
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");

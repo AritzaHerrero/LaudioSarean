@@ -13,10 +13,8 @@ import java.util.List;
 public interface GuneaDao {
     @Query("Select * from Gunea")
     List<Gunea> getAll();
-
     @Insert
     void InsertAll(Gunea gunea);
-
     @Delete
     void delete(Gunea gunea);
 }

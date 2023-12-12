@@ -13,10 +13,8 @@ import java.util.List;
 public interface GalderaDao {
     @Query("Select * from Galdera")
     List<Galdera> getAll();
-
     @Insert
     void InsertAll(Galdera galdera);
-
     @Delete
     void delete(Galdera galdera);
 }

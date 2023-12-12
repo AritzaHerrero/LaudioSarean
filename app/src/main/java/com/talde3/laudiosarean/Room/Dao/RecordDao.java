@@ -13,10 +13,8 @@ import java.util.List;
 public interface RecordDao {
     @Query("Select * from Record")
     List<Record> getAll();
-
     @Insert
     void InsertAll(Record record);
-
     @Delete
     void delete(Record record);
 }

@@ -1,10 +1,13 @@
 package com.talde3.laudiosarean;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -130,8 +133,11 @@ public class Erregistroa extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
+                                // Log.i(TAG, izena + " " + abizenak + " " + eposta + " " +pasahitza1 + " " + kurtsoa);
                                 Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
-                                LoginActivity.db.ikasleaDao().insertAll(ikaslea);
+                                // Log.i(TAG, String.valueOf(ikaslea.getId()));
+                                IkasleaDao iDAO = LoginActivity.db.ikasleaDao();
+                                iDAO.insertAll(ikaslea);
 
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Erregistroa.this, LoginActivity.class);

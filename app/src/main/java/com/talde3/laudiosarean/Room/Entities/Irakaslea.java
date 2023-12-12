@@ -5,8 +5,7 @@ import androidx.room.Index;
 
 @Entity(
         tableName = "Irakaslea",
-        indices = {@Index(value = "email", unique = true)},
-        primaryKeys = {"id"}
+        indices = {@Index(value = "email", unique = true)}
 )
 public class Irakaslea extends Erabiltzailea{
     public Irakaslea(String izena, String abizenak, String email, String pasahitza, String kurtsoa) {

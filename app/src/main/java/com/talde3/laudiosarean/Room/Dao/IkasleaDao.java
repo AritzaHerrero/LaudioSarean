@@ -1,6 +1,7 @@
 package com.talde3.laudiosarean.Room.Dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -15,7 +16,7 @@ public interface IkasleaDao {
     @Query("SELECT * FROM Ikaslea WHERE email = :email")
     Ikaslea getUserByEmail(String email);
     @Insert
-    void insertAll(Ikaslea ikaslea);
-    @Insert
+    void insertAll(Ikaslea... ikaslea);
+    @Delete
     void delete(Ikaslea ikaslea);
 }

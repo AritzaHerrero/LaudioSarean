@@ -6,10 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.talde3.laudiosarean.Room.Dao.ErantzunaDao;
 import com.talde3.laudiosarean.Room.Dao.GalderaDao;
 import com.talde3.laudiosarean.Room.Dao.GuneaDao;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
+import com.talde3.laudiosarean.Room.Dao.PuntuazioaDao;
 import com.talde3.laudiosarean.Room.Dao.RecordDao;
 import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 import com.talde3.laudiosarean.Room.Entities.Erantzuna;
@@ -37,6 +39,8 @@ public abstract class Datubase extends RoomDatabase {
     public abstract GalderaDao galderaDao();
     public abstract GuneaDao guneaDao();
     public abstract RecordDao recordDao();
+    public abstract ErantzunaDao erantzunaDao();
+    public abstract PuntuazioaDao puntuazioaDao();
 
     private static volatile Datubase instance;
 

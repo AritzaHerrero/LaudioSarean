@@ -12,10 +12,8 @@ import java.util.List;
 public interface IrakasleaDao {
     @Query("SELECT * FROM Irakaslea")
     List<Irakaslea> getAll();
-
     @Insert
     void insertAll(Irakaslea irakaslea);
-
     @Insert
     void delete(Irakaslea irakaslea);
 }
