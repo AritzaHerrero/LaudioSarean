@@ -38,6 +38,7 @@ public class PuzzleActivity extends AppCompatActivity {
     ArrayList<PuzlearenPieza> piezak;
     private int unekoPuntuazioa;
     private long hasierakoDenbora = 0L;
+    private TextView txtPuntuazioa;
     private Handler koronoHandler = new Handler();
 
     //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
@@ -50,7 +51,7 @@ public class PuzzleActivity extends AppCompatActivity {
             segundoak = segundoak % 60;
 
             TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-            TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+             txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
 
             String time = String.format("%02d:%02d", minutuak, segundoak);
             txtKronometroa.setText(time);
@@ -318,11 +319,9 @@ public class PuzzleActivity extends AppCompatActivity {
 
     public void egiaztatuJokuAmaiera() {
         if (amaitutaDago()) {
-            long denboraFinala = System.currentTimeMillis();
-            long denboraTotala = denboraFinala - hasierakoDenbora;
-            double puntuazioa = puntazioaKalkulatu(denboraTotala);
+            koronoHandler.removeCallbacks(kronoRunnable);
+            int puntuazioa = Integer.parseInt(txtPuntuazioa.getText().toString());
             erakutsiPuntuazioa(puntuazioa);
-            finish();
         }
     }
 

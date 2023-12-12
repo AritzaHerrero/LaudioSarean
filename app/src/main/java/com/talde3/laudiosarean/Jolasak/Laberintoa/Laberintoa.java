@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,14 +36,45 @@ public class Laberintoa extends AppCompatActivity {
     private int[][] laberinto = new int[anchoLaberinto][alturaLaberinto];
     private GridLayout gridLayout;
     private ImageButton[][] botones;
+    private int unekoPuntuazioa;
+    private long hasierakoDenbora = 0L;
+    private Handler koronoHandler = new Handler();
+
+    //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
+    private Runnable kronoRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
+            int segundoak = (int) (milisegundoak / 1000);
+            int minutuak = segundoak / 60;
+            segundoak = segundoak % 60;
+
+            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
+            TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+
+            String time = String.format("%02d:%02d", minutuak, segundoak);
+            txtKronometroa.setText(time);
+
+            // Actualizar puntuación según el tiempo transcurrido
+            unekoPuntuazioa = puntazioaKalkulatu(milisegundoak);
+            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
+
+            koronoHandler.postDelayed(this, 10);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laberintoa);
 
+        hasierakoDenbora = System.currentTimeMillis();
+        koronoHandler.postDelayed(kronoRunnable, 0);
+
         laberintoaSortu();
       //  imprimirLaberinto();
+
+
 
         //Ajustar tamaño de botones segun resolucion de pantalla
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -212,6 +244,7 @@ public class Laberintoa extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        koronoHandler.removeCallbacks(kronoRunnable);
                         mezuaErakutzi("Irabazi duzu!");
                         interfazeaEguneratu();
                         buttonArriba.setEnabled(false);
@@ -248,6 +281,9 @@ public class Laberintoa extends AppCompatActivity {
     }
 
     private void reiniciarLaberinto() {
+        //Denbora eta puntuazioa berrezarri
+        hasierakoDenbora = System.currentTimeMillis();
+        koronoHandler.postDelayed(kronoRunnable, 0);
         // Jokalariaren irudia kendu
         botones[jugadorX][jugadorY].setImageResource(0);
 
@@ -288,6 +324,32 @@ public class Laberintoa extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private int puntazioaKalkulatu (long totalTimeInMillis) {
+        int maxPuntuazioa = 10000;
+        int milisegundoak = (int) totalTimeInMillis;
+        int puntuazioa;
+
+        if (milisegundoak <= 10000){
+            puntuazioa=10000;
+        } else if(milisegundoak<=20000){
+            puntuazioa = maxPuntuazioa - ((milisegundoak-10000)*128)/1000;
+        } else if(milisegundoak<=30000){
+            puntuazioa = maxPuntuazioa - 1280 - ((milisegundoak-20000)*64)/1000;
+        } else{
+            puntuazioa = maxPuntuazioa -  1920 - ((milisegundoak-30000)*32)/1000;
+        }
+        if (puntuazioa < 0) {
+            puntuazioa = 0;
+        }
+        return puntuazioa;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        koronoHandler.removeCallbacks(kronoRunnable);
     }
 
 }
