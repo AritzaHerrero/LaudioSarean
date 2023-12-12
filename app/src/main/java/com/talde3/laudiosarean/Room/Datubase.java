@@ -12,10 +12,12 @@ import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
 import com.talde3.laudiosarean.Room.Dao.RecordDao;
 import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
+import com.talde3.laudiosarean.Room.Entities.Erantzuna;
 import com.talde3.laudiosarean.Room.Entities.Galdera;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Irakaslea;
+import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 import com.talde3.laudiosarean.Room.Entities.Record;
 
 import java.io.File;
@@ -25,7 +27,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 @Database(
-        entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class},
+        entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class, Puntuazioa.class, Erantzuna.class},
         version = 2,
         exportSchema = false
 )

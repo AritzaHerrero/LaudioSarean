@@ -9,7 +9,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Entity(tableName = "Puntuazioa",
         foreignKeys = {
-                @ForeignKey(entity= Ikaslea.class, parentColumns = "id_ikaslea", childColumns = "id_ikaslea", onDelete = ForeignKey.CASCADE)
+                @ForeignKey(entity= Ikaslea.class, parentColumns = "id", childColumns = "id_ikaslea", onDelete = ForeignKey.CASCADE)
         }
 )
 public class Puntuazioa {
@@ -35,7 +35,7 @@ public class Puntuazioa {
     public int getPuntuazioa() {
         return puntuazioa;
     }
-    public int getId_rikaslea() {
+    public int getId_ikaslea() {
         return id_ikaslea;
     }
 
