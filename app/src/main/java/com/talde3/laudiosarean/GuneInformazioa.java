@@ -2,6 +2,7 @@ package com.talde3.laudiosarean;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,15 @@ public class GuneInformazioa extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gune_informazioa);
+
+        Button btnPlay = findViewById(R.id.btnPlay);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                startActivity(intent);
+            }
+        });
 
         botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
         imgGunea = findViewById(R.id.imgGunea);
