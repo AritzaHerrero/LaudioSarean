@@ -1,10 +1,12 @@
-package com.talde3.laudiosarean;
+package com.talde3.laudiosarean.Jolasak.Puzlea;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.talde3.laudiosarean.R;
 
 public class PuzlearenArauak extends AppCompatActivity {
     WebView webView;

@@ -107,13 +107,13 @@ public class ProfilaFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         // Erabiltzailearen informazioa datu basetik hartzen da
-        ikaselaDao = LoginActivity.db.ikasleaDao();
+      /*  ikaselaDao = LoginActivity.db.ikasleaDao();
         Ikaslea ikaslea = ikaselaDao.getUserByEmail(mAuth.getCurrentUser().getEmail());
 
         etEposta.setText(ikaslea.getEmail());
         etIzena.setText(ikaslea.getIzena());
         etAbizena.setText(ikaslea.getAbizenak());
-        etKurtsoa.setText(ikaslea.getKurtsoa());
+        etKurtsoa.setText(ikaslea.getKurtsoa());*/
 
         ibEditIzena.setOnClickListener(new View.OnClickListener() {
             @Override

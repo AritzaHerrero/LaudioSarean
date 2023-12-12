@@ -31,20 +31,23 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PuzzleActivity"
+            android:name=".Jolasak.Puzlea.PuzzleActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PuzlearenArauak"
+            android:name=".Jolasak.Puzlea.PuzlearenArauak"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Jolasak.Laberintoa.Laberintoa"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

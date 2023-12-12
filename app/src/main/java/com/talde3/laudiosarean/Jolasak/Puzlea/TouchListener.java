@@ -1,4 +1,4 @@
-package com.talde3.laudiosarean;
+package com.talde3.laudiosarean.Jolasak.Puzlea;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;

@@ -1,4 +1,4 @@
-package com.talde3.laudiosarean;
+package com.talde3.laudiosarean.Jolasak.Puzlea;
 
 import static java.lang.Math.abs;
 
@@ -17,8 +17,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -27,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.talde3.laudiosarean.R;
 
 import java.io.IOException;
 import java.io.InputStream;

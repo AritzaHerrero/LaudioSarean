@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
+import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
+
 import java.io.IOException;
 
 public class GuneInformazioa extends Activity {
@@ -24,6 +27,7 @@ public class GuneInformazioa extends Activity {
     private ImageButton imgBtnHasi;
     private ImageButton imgBtnGelditu;
     private ImageButton imgBtnBerrebiarazi;
+    private Button btnPlay;
     private MediaPlayer mediaPlayer;
     private SeekBar seekBarAudio;
     private boolean isPlaying = false;
@@ -39,46 +43,93 @@ public class GuneInformazioa extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gune_informazioa);
 
-        Button btnPlay = findViewById(R.id.btnPlay);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
-                startActivity(intent);
-            }
-        });
 
         botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
         imgGunea = findViewById(R.id.imgGunea);
+        btnPlay = findViewById(R.id.btnPlay);
 
         switch (botoia) {
             case 1:
                 audioResource = R.raw.yermokoandremariarensantutegia;
                 imgGunea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                            startActivity(intent);
+                    }
+                });
                 break;
             case 2:
                 audioResource = R.raw.burdinhesia;
                 imgGunea.setImageResource(R.drawable.burdin_hesia);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                        startActivity(intent);*/
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case 3:
                 audioResource = R.raw.santaaguedakoermita;
                 imgGunea.setImageResource(R.drawable.santa_aguedako_ermita);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(GuneInformazioa.this, Laberintoa.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
             case 4:
                 audioResource = R.raw.katuxakojauregia;
                 imgGunea.setImageResource(R.drawable.katuxako_jauregia);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                        startActivity(intent);*/
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case 5:
                 audioResource = R.raw.lamuzakosanpedroeliza;
                 imgGunea.setImageResource(R.drawable.lamuzako_san_pedro_eliza);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                        startActivity(intent);*/
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case 6:
                 audioResource = R.raw.lamuzajauregia;
                 imgGunea.setImageResource(R.drawable.lamuza_jauregia);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                        startActivity(intent);*/
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case 7:
                 audioResource = R.raw.lezeagakosorgina;
                 imgGunea.setImageResource(R.drawable.lezeagako_sorgina);
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
+                        startActivity(intent);*/
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
         // MediaPlayer klasea abiaraziko dugu Audio fitxategia elkartuz

@@ -1,4 +1,4 @@
-package com.talde3.laudiosarean;
+package com.talde3.laudiosarean.Jolasak.Puzlea;
 
 import android.content.Context;
 import androidx.appcompat.widget.AppCompatImageView;
