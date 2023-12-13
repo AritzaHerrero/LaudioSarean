@@ -357,15 +357,28 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // Obtener la referencia correcta de successDesc desde la vista inflada 'view'
         TextView successDesc = view.findViewById(R.id.successDesc);
+        TextView successTitle= view.findViewById(R.id.successTitle);
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText("Itzela, hau izan da zure puntuazioa "+ puntuaizoText + "\n Segi horrela!!!");
+            successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+            int puntuaizoInt = Integer.parseInt(puntuaizoText);
+            if(puntuaizoInt>8000) {
+                successTitle.setText("Hobeezina!!!");
+            } else if (puntuaizoInt>6000) {
+                successTitle.setText("Oso ondo!!");
+            } else if (puntuaizoInt>3500) {
+                successTitle.setText("Ondo!");
+            } else if (puntuaizoInt>1000){
+                successTitle.setText("Justutxu");
+            }
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this);
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+
 
         successDone.setOnClickListener(new View.OnClickListener() {
             @Override

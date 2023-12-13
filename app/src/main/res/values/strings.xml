@@ -112,6 +112,12 @@
     <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
     <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
 
+    //laberintoa
+    <string name="btnAurrera">AURRERA</string>
+    <string name="btnAtzera">ATZERA</string>
+    <string name="btnEzkerra">EZKERRA</string>
+    <string name="btnEskuma">ESKUMA</string>
+
     //informazioa_dialog
     <string name="prest">Prest zaude jokoa hasteko?</string>
     <string name="prestEz">Arauak ikusi</string>

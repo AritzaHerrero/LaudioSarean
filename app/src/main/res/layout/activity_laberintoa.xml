@@ -51,9 +51,12 @@
 
     <Button
         android:id="@+id/btnDerecha"
+        android:backgroundTint="@color/green_light"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Derecha"
+        android:text="@string/btnEskuma"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAbajo"
@@ -61,9 +64,12 @@
 
     <Button
         android:id="@+id/btnArriba"
+        android:backgroundTint="@color/green_light"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arriba"
+        android:text="@string/btnAurrera"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -73,9 +79,12 @@
 
     <Button
         android:id="@+id/btnAbajo"
+        android:backgroundTint="@color/green_light"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Abajo"
+        android:text="@string/btnAtzera"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,23 +93,15 @@
 
     <Button
         android:id="@+id/btnIzquierda"
+        android:backgroundTint="@color/green_light"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Izquierda"
+        android:text="@string/btnEzkerra"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnAbajo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnArriba" />
 
-    <Button
-        android:id="@+id/laberintoRestar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Laberinto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toEndOf="@+id/btnArriba"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
-        app:layout_constraintVertical_bias="0.238" />
 </androidx.constraintlayout.widget.ConstraintLayout>

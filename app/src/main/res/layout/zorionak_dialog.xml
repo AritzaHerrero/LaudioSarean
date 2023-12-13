@@ -51,6 +51,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
+            android:textColor="@color/black"
             android:text="@string/testuaZorionak"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/successDone"
@@ -74,6 +75,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/green"
                 android:text="@string/aurrera"
                 android:textSize="14sp" />
@@ -85,6 +87,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/green"
                 android:text="@string/berriroJolastu"
                 android:textSize="14sp" />
