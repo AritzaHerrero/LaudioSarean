@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.talde3.laudiosarean.GuneInformazioa;
 import com.talde3.laudiosarean.GuneakFragment;
 import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
@@ -35,10 +36,12 @@ import java.util.Random;
 
 public class Laberintoa extends AppCompatActivity {
 
+    private int hasieraPuntuaX = 1;
+    private int hasieraPuntuaY = 1;
     private int jugadorXAnterior = 1;
     private int jugadorYAnterior = 1;
-    private int jugadorX = 1;
-    private int jugadorY = 1;
+    private int jugadorX;
+    private int jugadorY;
     private int salidaX = 23;
     private int salidaY = 23;
     private Button buttonDerecha;
@@ -84,6 +87,9 @@ public class Laberintoa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laberintoa);
+
+        jugadorX = hasieraPuntuaX;
+        jugadorY = hasieraPuntuaY;
 
         hasierakoDenbora = System.currentTimeMillis();
         koronoHandler.postDelayed(kronoRunnable, 0);
@@ -292,10 +298,10 @@ public class Laberintoa extends AppCompatActivity {
         botones[jugadorX][jugadorY].setImageResource(0);
 
         // Hasierako posiziora eraman jokalaria
-        jugadorXAnterior = 1;
-        jugadorYAnterior = 1;
-        jugadorX = 1;
-        jugadorY = 1;
+        jugadorXAnterior = hasieraPuntuaX;
+        jugadorYAnterior = hasieraPuntuaY;
+        jugadorX = hasieraPuntuaX;
+        jugadorY = hasieraPuntuaY;
 
         // Laberinto berria egin
         laberintoaSortu();
@@ -360,7 +366,6 @@ public class Laberintoa extends AppCompatActivity {
         View view = LayoutInflater.from(Laberintoa.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
         Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
-
         TextView successDesc = view.findViewById(R.id.successDesc);
         TextView successTitle= view.findViewById(R.id.successTitle);
 
@@ -374,8 +379,8 @@ public class Laberintoa extends AppCompatActivity {
                 successTitle.setText("Oso ondo!!");
             } else if (puntuaizoInt>3500) {
                 successTitle.setText("Ondo!");
-            } else if (puntuaizoInt>1000){
-                successTitle.setText("Justutxu");
+            } else {
+                successTitle.setText("Hurrengoan hobeto egingo duzu!");
             }
         }
 
@@ -383,16 +388,16 @@ public class Laberintoa extends AppCompatActivity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
-
-
+        alertDialog.setCancelable(false);
         successDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(Laberintoa.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
+
+
 
         berriroJolastu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,11 +416,9 @@ public class Laberintoa extends AppCompatActivity {
         alertDialog.show();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         koronoHandler.removeCallbacks(kronoRunnable);
     }
-
 }

@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/successConstraintLayout"
-    android:layout_width="380dp"
+    android:layout_width="330dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layooutInformazioaDialog"
-        android:layout_width="380dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/background_rounded_corners"
+        android:paddingBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -30,7 +31,7 @@
 
         <TextView
             android:id="@+id/informazioaTituloa"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingTop="5dp"
@@ -57,11 +58,12 @@
                 android:id="@+id/prestEz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/green_light"
+                android:background="@drawable/button_rounded_corners"
                 android:text="@string/prestEz"
                 android:textSize="14sp" />
 
@@ -69,11 +71,12 @@
                 android:id="@+id/prestBai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/green_light"
+                android:background="@drawable/button_rounded_corners"
                 android:text="@string/prestBai"
                 android:textSize="14sp" />
 

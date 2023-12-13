@@ -369,8 +369,8 @@ public class PuzzleActivity extends AppCompatActivity {
                 successTitle.setText("Oso ondo!!");
             } else if (puntuaizoInt>3500) {
                 successTitle.setText("Ondo!");
-            } else if (puntuaizoInt>1000){
-                successTitle.setText("Justutxu");
+            } else {
+                successTitle.setText("Hurrengoan hobeto egingo duzu!");
             }
         }
 
@@ -378,14 +378,14 @@ public class PuzzleActivity extends AppCompatActivity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
 
 
         successDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(PuzzleActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

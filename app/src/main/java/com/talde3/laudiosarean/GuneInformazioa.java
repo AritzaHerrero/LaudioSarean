@@ -320,6 +320,7 @@ public class GuneInformazioa extends Activity {
                 alertDialog.dismiss();
                 Intent intent = new Intent(GuneInformazioa.this, x.getClass());
                 startActivity(intent);
+                finish();
             }
         });
 
