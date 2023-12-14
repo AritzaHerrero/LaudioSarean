@@ -1,3 +1,133 @@
 <resources>
     <string name="app_name">Laudio Sarean</string>
+    <!-- MainActivity -->
+    <string name="eposta">E-posta</string>
+    <string name="pasahitza">Pasahitza</string>
+    <string name="saioahasi">Saioa hasi</string>
+    <string name="erregistratuEmen">Erregistratu emen</string>
+    <string name="kontuaEz">Ez duzu kontua?</string>
+    <string name="sartuEposta">Sartu zure E-posta</string>
+    <string name="sartuPasahitza">Sartu zure pasahitza</string>
+    <string name="pasahitzaGorde">Pasahitza gorde</string>
+
+    <string name="erKonexioaLogin">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEpostaLogin">Eposta ez da aurkitu</string>
+    <string name="erPasahitzaLogin">Pasahitz okerra</string>
+    <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
+    <string name="ongiEtorri">Ongi etorri</string>
+
+    <!-- MainActivity.xml -->
+    <string name="pasahitzaBegia">Pasahitza erakutsi/ezkutatu</string>
+
+    <!-- Erregistroa -->
+    <string name="izena">Sartu zure izena</string>
+    <string name="abizenak">Sartu zure abizenak</string>
+    <string name="pasahitza1">Sartu zure pasahitza</string>
+    <string name="pasahitza2">Errepikatu pasahitza</string>
+    <string name="erregistratu">Erregistroa bukatu</string>
+    <string name="erIzena">Izena bete mesedez</string>
+    <string name="erAbizenak">Lehen bi abizenak sartu mesedez</string>
+    <string name="erEposta">Eposta okerra</string>
+    <string name="erPasahitza1">Pasahitza bete mesedez</string>
+    <string name="erPasahitza2">Pasahitzak ez dira berdinak</string>
+    <string name="erOkerra">Erregistro okerra: </string>
+    <string name="erNanBikoiztua">Beste erabiltzaile bat dago NAN berarekin.</string>
+    <string name="erPasahitzFormatua">Pasahitzak ez dago behar bezalako formatua (gutxienez 6 karaktere)</string>
+    <string name="erEpostaErregistratuta">E-posta dagoeneko erregistratua dago</string>
+    <string name="erInternet">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
+    <string name="erEzezaguna">Errore ezezaguna: </string>
+
+    <!-- Informazio Gunea -->
+    <string name="jokoaHasi">Jokatzen hasi</string>
+    <string name="izenburuaGunea"></string>
+    <string name="informazioGunea"></string>
+
+    <string name="izenburuaGunea1">YERMOKO MARIA ANDREAREN SANTUTEGIA</string>
+    <string name="informazioGunea1"> Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean
+    eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu.
+    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta
+    santutegiaren alboan ermita txiki bat dago, Santa Luzia izena daukana.
+    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.
+    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta
+    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden
+    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.
+    </string>
+
+    <string name="izenburuaGunea2">SANTA AGUEDA ERMITA</string>
+    <string name="informazioGunea2">Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal
+    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen
+    den santa kristauari.
+    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko
+    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko
+    jai eta tradizioei lotuta egoten dira.
+    </string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Botttom Navigation-->
+    <string name="guneak">Guneak</string>
+    <string name="profila">Profila</string>
+    <string name="ranking">Rankinga</string>
+    
+    <!-- Guneak Fragmet -->
+    <string name="santutegiaIzenburua">Yermoko Andre Mariaren Santutegia</string>
+    <string name="burdinHestiaIzenburua">Burdin Hesia</string>
+    <string name="ermitaIzenburua">Santa Aguedako ermita</string>
+    <string name="katutxaJauregiaIzenburua">Katuxako jauregia</string>
+    <string name="elizaIzenburua">Lamuzako San Pedro eliza</string>
+    <string name="lamuzaJauregiaIzenburua">Lamuza jauregia</string>
+    <string name="legeazakoSorginaIzenburua">Lezeagako sorgina</string>
+    <string name="azkenEbaluazioaIzenburua">Azken ebaluazioa</string>
+
+    <!-- Profila Fragment -->
+    <string name="profilArgazkia">Aldatu profileko argazkia</string>
+    <string name="etEposta">Eposta</string>
+    <string name="etIzena">Izena</string>
+    <string name="etAbizenak">Abizenak</string>
+    <string name="etKurtsoa">Kurtsoa</string>
+    <string name="btnAldatuPass">Aldatu Pasahitza</string>
+    <string name="btnItxiSaioa">Itxi saioa</string>
+    <string name="btnDelAcc">Ezabatu kontua</string>
+
+    <string name="descriptionEditIzena">Izena editatzeko botoia</string>
+    <string name="descriptionEditAbizenak">Abizenak editatzeko botoiak</string>
+
+    <string name="aldaketakGorde">Aldaketak gorde nahi dituzu?</string>
+    <string name="bai">Bai</string>
+    <string name="ez">Ez</string>
+
+    <string name="pasahitzBerria">Pasahitz berria sartu:</string>
+    <string name="aldatu">Aldatu</string>
+    <string name="ezeztatu">Ezeztatu</string>
+
+    <string name="pasahitzaHutsik">Pasahitza ezin da hutsik egon</string>
+    <string name="pasahitzaOndoAldatuta">Zure pasahitza eguneratu da</string>
+    <string name="pasahitzaGaizkiAldatuta">Ezin izan da pasahitza aldatu</string>
+    <string name="internetKonexioEz">Internet konexio gabe. Saiatu berriro beranduago.</string>
+    <string name="pasahitzFormaEz">Gutxienez 6 karaktereko luzeera eduki behar du</string>
+
+    <string name="kontuaEzabatuGaldera">Ziur zaude zure kontua ezabatu nahi duzula?</string>
+    <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
+    <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
+
+    //laberintoa
+    <string name="btnAurrera">GORA</string>
+    <string name="btnAtzera">BEHERA</string>
+    <string name="btnEzkerra">EZKERRA</string>
+    <string name="btnEskuma">ESKUMA</string>
+
+    //informazioa_dialog
+    <string name="prest">Prest zaude jokoa hasteko?</string>
+    <string name="prestEz">Arauak ikusi</string>
+    <string name="prestBai">Jokatu</string>
+
+    //zorionak_dialog
+    <string name="aurrera">Aurrera</string>
+    <string name="berriroJolastu">Berriro jolastu</string>
+    <string name="tituloaZorionak">ZORIONAK!!</string>
+    <string name="testuaZorionak">Oso ondo segui horrela!!</string>
+
+
 </resources>
