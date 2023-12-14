@@ -59,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        db = Datubase.getInstance(getApplicationContext());
-        db.clearAllTables();
-
-        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
-        IkasleaDao iDAO = db.ikasleaDao();
-        iDAO.insertAll(i);
+//        db = Datubase.getInstance(getApplicationContext());
+//        db.clearAllTables();
+//
+//        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
+//        IkasleaDao iDAO = db.ikasleaDao();
+//        iDAO.insertAll(i);
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");

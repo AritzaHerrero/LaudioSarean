@@ -22,7 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
-import com.talde3.laudiosarean.Jolasak.Puzlea.PuzlearenArauak;
+import com.talde3.laudiosarean.Jolasak.Arauak;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
 
 import java.io.IOException;
@@ -309,7 +309,7 @@ public class GuneInformazioa extends Activity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(GuneInformazioa.this, PuzlearenArauak.class);
+                Intent intent = new Intent(GuneInformazioa.this, Arauak.class);
                 startActivity(intent);
             }
         });
