@@ -113,8 +113,8 @@
     <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
 
     //laberintoa
-    <string name="btnAurrera">AURRERA</string>
-    <string name="btnAtzera">ATZERA</string>
+    <string name="btnAurrera">GORA</string>
+    <string name="btnAtzera">BEHERA</string>
     <string name="btnEzkerra">EZKERRA</string>
     <string name="btnEskuma">ESKUMA</string>
 

@@ -62,9 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         db = Datubase.getInstance(getApplicationContext());
         db.clearAllTables();
 
-        /*Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "DAM 2");
+        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
         IkasleaDao iDAO = db.ikasleaDao();
-        iDAO.insertAll(i);*/
+        iDAO.insertAll(i);
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");
@@ -151,6 +151,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            etEposta.setText("");
+                            etPasahitza.setText("");
                             aktibatuUI();
                             // Toast.makeText(MainActivity.this, getResources().getString(R.string.ongiEtorri), Toast.LENGTH_SHORT).show();
                         } else {

@@ -62,10 +62,12 @@ public class Erregistroa extends AppCompatActivity {
         btnErregistratu = findViewById(R.id.btnErregistratu);
 
         ArrayList<String> klaseak = new ArrayList<>();
-        klaseak.add("DAM 1");
-        klaseak.add("DAW 1");
-        klaseak.add("DAM 2");
-        klaseak.add("DAW 2");
+        klaseak.add("LH 1");
+        klaseak.add("LH 2");
+        klaseak.add("LH 3");
+        klaseak.add("LH 4");
+        klaseak.add("LH 5");
+        klaseak.add("LH 6");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, klaseak);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,10 +136,10 @@ public class Erregistroa extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
                                 // Log.i(TAG, izena + " " + abizenak + " " + eposta + " " +pasahitza1 + " " + kurtsoa);
-                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
-                                // Log.i(TAG, String.valueOf(ikaslea.getId()));
-                                IkasleaDao iDAO = LoginActivity.db.ikasleaDao();
-                                iDAO.insertAll(ikaslea);
+//                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
+//                                // Log.i(TAG, String.valueOf(ikaslea.getId()));
+//                                IkasleaDao iDAO = LoginActivity.db.ikasleaDao();
+//                                iDAO.insertAll(ikaslea);
 
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
