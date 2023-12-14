@@ -7,19 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link rankingFragment#newInstance} factory method to
+ * Use the {@link RankingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class rankingFragment extends Fragment {
+public class RankingFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +28,7 @@ public class rankingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public rankingFragment() {
+    public RankingFragment() {
         // Required empty public constructor
     }
 
@@ -43,8 +41,8 @@ public class rankingFragment extends Fragment {
      * @return A new instance of fragment ItxiSaioaFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static rankingFragment newInstance(String param1, String param2) {
-        rankingFragment fragment = new rankingFragment();
+    public static RankingFragment newInstance(String param1, String param2) {
+        RankingFragment fragment = new RankingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

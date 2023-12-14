@@ -68,9 +68,10 @@
 
     <!-- Botttom Navigation-->
     <string name="guneak">Guneak</string>
+    <string name="mapa">Mapa</string>
     <string name="profila">Profila</string>
     <string name="ranking">Rankinga</string>
-    
+
     <!-- Guneak Fragmet -->
     <string name="santutegiaIzenburua">Yermoko Andre Mariaren Santutegia</string>
     <string name="burdinHestiaIzenburua">Burdin Hesia</string>
