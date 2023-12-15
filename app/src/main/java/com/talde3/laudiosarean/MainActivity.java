@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(guneakFragment);
         navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // Mapa kargatzeko
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
     }
 
