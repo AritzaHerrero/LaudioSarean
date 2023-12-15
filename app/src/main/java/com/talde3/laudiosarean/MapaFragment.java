@@ -1,5 +1,6 @@
 package com.talde3.laudiosarean;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -136,6 +138,34 @@ public class MapaFragment extends Fragment {
                     }
                     @Override
                     public boolean onItemLongPress(final int index, final OverlayItem item) {
+
+                        // Aukeratzen den kokalekuko gunea zabaltzen du activity berrian
+                        Intent intent = new Intent(getActivity(), GuneInformazioa.class);
+                        if (item.getTitle() == "Yermoko Andre Mariaren Santutegia") {
+                            intent.putExtra("aukeratutakoGunea", 1);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Burdin Hesia") {
+                            intent.putExtra("aukeratutakoGunea", 2);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Santa Aguedako ermita") {
+                            intent.putExtra("aukeratutakoGunea", 3);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Katuxako jauregia") {
+                            intent.putExtra("aukeratutakoGunea", 4);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Lamuzako San Pedro eliza") {
+                            intent.putExtra("aukeratutakoGunea", 5);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Lamuza jauregia") {
+                            intent.putExtra("aukeratutakoGunea", 6);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Lezeagako sorgina") {
+                            intent.putExtra("aukeratutakoGunea", 7);
+                            startActivity(intent);
+                        } else if (item.getTitle() == "Trivia") {
+                            intent.putExtra("aukeratutakoGunea", 8);
+                            startActivity(intent);
+                        }
                         return false;
                     }
                 });
