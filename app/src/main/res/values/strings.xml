@@ -92,6 +92,9 @@
     <string name="btnItxiSaioa">Itxi saioa</string>
     <string name="btnDelAcc">Ezabatu kontua</string>
 
+    <!-- Mapa Fragment -->
+    <string name="mapaInfo">Behean Laudioko mapa ikusi ahal dugu 8 gune desberdinen kokalekuekin. Klick egiten badugu gune batean, kokalekuaren izena eta inforamzio txiki bat ikusi ahalko dugu. Klick-a mantzentzen badugu gunean, gune horren barrura eramango digu, bertan informazio gehiago eta argazki desberdinak ikusi ahal izateko.</string>
+
     <string name="descriptionEditIzena">Izena editatzeko botoia</string>
     <string name="descriptionEditAbizenak">Abizenak editatzeko botoiak</string>
 
@@ -113,18 +116,18 @@
     <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
     <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
 
-    //laberintoa
+    <!-- laberintoa -->
     <string name="btnAurrera">GORA</string>
     <string name="btnAtzera">BEHERA</string>
     <string name="btnEzkerra">EZKERRA</string>
     <string name="btnEskuma">ESKUMA</string>
 
-    //informazioa_dialog
+    <!-- informazioa_dialog -->
     <string name="prest">Prest zaude jokoa hasteko?</string>
     <string name="prestEz">Arauak ikusi</string>
     <string name="prestBai">Jokatu</string>
 
-    //zorionak_dialog
+    <!-- zorionak_dialog -->
     <string name="aurrera">Aurrera</string>
     <string name="berriroJolastu">Berriro jolastu</string>
     <string name="tituloaZorionak">ZORIONAK!!</string>

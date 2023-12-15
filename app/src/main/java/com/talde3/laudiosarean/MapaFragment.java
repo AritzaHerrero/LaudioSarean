@@ -127,11 +127,22 @@ public class MapaFragment extends Fragment {
                         return false;
                     }
                 });
+        Drawable markerChurch = ContextCompat.getDrawable(requireContext(), R.drawable.church_mapa_24);
+        Drawable markerCastle = ContextCompat.getDrawable(requireContext(), R.drawable.castle_mapa_24);
+        Drawable markerErmita = ContextCompat.getDrawable(requireContext(), R.drawable.ermita_24);
+        Drawable markerFence = ContextCompat.getDrawable(requireContext(), R.drawable.fence_24);
+        Drawable markerSorgina = ContextCompat.getDrawable(requireContext(), R.drawable.sorgina_mapa_24);
+        Drawable markerTrivia = ContextCompat.getDrawable(requireContext(), R.drawable.trivia_24);
 
-        Drawable markerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.church_mapa_24);
-        for (OverlayItem item : items) {
-            item.setMarker(markerDrawable);
-        }
+        // Asignar marcadores a los OverlayItems
+        items.get(0).setMarker(markerChurch);
+        items.get(1).setMarker(markerFence);
+        items.get(2).setMarker(markerErmita);
+        items.get(3).setMarker(markerCastle);
+        items.get(4).setMarker(markerChurch);
+        items.get(5).setMarker(markerCastle);
+        items.get(6).setMarker(markerSorgina);
+        items.get(7).setMarker(markerTrivia);
 
         overlay.setFocusItemsOnTap(true);
         overlay.setMarkerBackgroundColor(getResources().getColor(R.color.green_light2));
