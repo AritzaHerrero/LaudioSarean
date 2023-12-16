@@ -4,7 +4,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,13 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
-import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
-
-import java.io.File;
-import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
     public static Datubase db;
@@ -51,20 +44,29 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton ibPasahitza;
     private ProgressBar pbKarga;
 
-    private static final int PERMISSION_REQUEST_CODE = 123;
-
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        db = Datubase.getInstance(getApplicationContext());
+        db = Datubase.getInstance(getApplicationContext());
+
+        Intent intent = getIntent();
+
+        if(intent != null) {
+            Bundle bundle = intent.getExtras();
+            if(bundle != null) {
+                Ikaslea ikaslea = (Ikaslea) bundle.getSerializable("ikaslea");
+                Log.i(TAG, ikaslea.getIzena());
+                db.ikasleaDao().insert(ikaslea);
+            }
+        }
 //        db.clearAllTables();
 //
 //        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
 //        IkasleaDao iDAO = db.ikasleaDao();
-//        iDAO.insertAll(i);
+//        iDAO.insert(i);
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");

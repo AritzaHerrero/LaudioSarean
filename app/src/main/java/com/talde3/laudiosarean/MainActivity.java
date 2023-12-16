@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.osmdroid.config.Configuration;
+//import org.osmdroid.config.Configuration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Mapa kargatzeko
-        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {

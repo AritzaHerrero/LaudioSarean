@@ -13,7 +13,6 @@ import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
 import com.talde3.laudiosarean.Room.Dao.PuntuazioaDao;
 import com.talde3.laudiosarean.Room.Dao.RecordDao;
-import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 import com.talde3.laudiosarean.Room.Entities.Erantzuna;
 import com.talde3.laudiosarean.Room.Entities.Galdera;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
@@ -42,9 +41,9 @@ public abstract class Datubase extends RoomDatabase {
     public abstract ErantzunaDao erantzunaDao();
     public abstract PuntuazioaDao puntuazioaDao();
 
-    private static volatile Datubase instance;
+    private static Datubase instance;
 
-    public static Datubase getInstance(Context context) {
+    public static synchronized Datubase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             Datubase.class, "LaudioDB")

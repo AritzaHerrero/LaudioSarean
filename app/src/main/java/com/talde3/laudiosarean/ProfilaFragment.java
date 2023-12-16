@@ -50,7 +50,7 @@ public class ProfilaFragment extends Fragment {
     private EditText etEposta;
     private EditText etIzena;
     private ImageButton ibEditIzena;
-    private EditText etAbizena;
+    private EditText etAbizenak;
     private ImageButton ibEditAbizena;
     private EditText etKurtsoa;
     private Button btnAldatuPasahitza;
@@ -97,7 +97,7 @@ public class ProfilaFragment extends Fragment {
         etEposta = view.findViewById(R.id.etEposta);
         etIzena = view.findViewById(R.id.etIzena);
         ibEditIzena = view.findViewById(R.id.ibEditIzenaProfila);
-        etAbizena = view.findViewById(R.id.etAbizena);
+        etAbizenak = view.findViewById(R.id.etAbizenak);
         ibEditAbizena = view.findViewById(R.id.ibEditAbizenaProfila);
         etKurtsoa = view.findViewById(R.id.etKurtsoaProfila);
         btnAldatuPasahitza = view.findViewById(R.id.btnAldatuPasahitza);
@@ -107,13 +107,13 @@ public class ProfilaFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         // Erabiltzailearen informazioa datu basetik hartzen da
-//        ikaselaDao = LoginActivity.db.ikasleaDao();
-//        Ikaslea ikaslea = ikaselaDao.getUserByEmail(mAuth.getCurrentUser().getEmail());
-//
-//        etEposta.setText(ikaslea.getEmail());
-//        etIzena.setText(ikaslea.getIzena());
-//        etAbizena.setText(ikaslea.getAbizenak());
-//        etKurtsoa.setText(ikaslea.getKurtsoa());
+        ikaselaDao = LoginActivity.db.ikasleaDao();
+        Ikaslea ikaslea = ikaselaDao.getUserByEmail(mAuth.getCurrentUser().getEmail());
+
+        etEposta.setText(ikaslea.getEmail());
+        etIzena.setText(ikaslea.getIzena());
+        etAbizenak.setText(ikaslea.getAbizenak());
+        etKurtsoa.setText(ikaslea.getKurtsoa());
 
         ibEditIzena.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,20 +128,25 @@ public class ProfilaFragment extends Fragment {
                     builder.setMessage(getString(R.string.aldaketakGorde))
                             .setPositiveButton(getString(R.string.bai), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    ikaslea.setIzena(etIzena.getText().toString());
+                                    LoginActivity.db.ikasleaDao().update(ikaslea);
+                                    etIzena.setText(ikaslea.getIzena());
                                     etIzena.setEnabled(false);
                                     ibEditIzena.setImageResource(R.drawable.edit_pencil_24);
                                 }
                             })
                             .setNegativeButton(getString(R.string.ez), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    etIzena.setText("");
+                                    etIzena.setText(ikaslea.getIzena());
+                                    etIzena.setEnabled(false);
                                     dialog.dismiss();
+                                    ibEditIzena.setImageResource(R.drawable.edit_pencil_24);
                                 }
                             })
                             .setOnDismissListener(new DialogInterface.OnDismissListener() {
                                 @Override
                                 public void onDismiss(DialogInterface dialogInterface) {
-                                    etIzena.setText("");
+                                    etIzena.setText(ikaslea.getIzena());
                                 }
                             });
                     builder.create().show();
@@ -152,30 +157,35 @@ public class ProfilaFragment extends Fragment {
         ibEditAbizena.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isEnabled = etAbizena.isEnabled();
+                boolean isEnabled = etAbizenak.isEnabled();
 
                 if (!isEnabled) {
-                    etAbizena.setEnabled(true);
+                    etAbizenak.setEnabled(true);
                     ibEditAbizena.setImageResource(R.drawable.save_24);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(getString(R.string.aldaketakGorde))
                             .setPositiveButton(getString(R.string.bai), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    etAbizena.setEnabled(false);
+                                    ikaslea.setAbizenak(etAbizenak.getText().toString());
+                                    LoginActivity.db.ikasleaDao().update(ikaslea);
+                                    etAbizenak.setText(ikaslea.getAbizenak());
+                                    etAbizenak.setEnabled(false);
                                     ibEditAbizena.setImageResource(R.drawable.edit_pencil_24);
                                 }
                             })
                             .setNegativeButton(getString(R.string.ez), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    etAbizena.setText("");
+                                    etAbizenak.setText(ikaslea.getAbizenak());
+                                    etAbizenak.setEnabled(false);
                                     dialog.dismiss();
+                                    ibEditAbizena.setImageResource(R.drawable.edit_pencil_24);
                                 }
                             })
                             .setOnDismissListener(new DialogInterface.OnDismissListener() {
                                 @Override
                                 public void onDismiss(DialogInterface dialogInterface) {
-                                    etAbizena.setText("");
+                                    etAbizenak.setText(ikaslea.getAbizenak());
                                 }
                             });
                     builder.create().show();
@@ -204,6 +214,9 @@ public class ProfilaFragment extends Fragment {
                                     FirebaseUser erabiltzailea = mAuth.getCurrentUser();
                                     if (erabiltzailea != null) {
                                         // Pasahitza eguneratu
+                                        ikaslea.setPasahitza(newPassword);
+                                        LoginActivity.db.ikasleaDao().update(ikaslea);
+
                                         erabiltzailea.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -227,7 +240,7 @@ public class ProfilaFragment extends Fragment {
                                                 });
                                     }
                                 } else {
-                                    // La nueva contraseña está vacía
+                                    // Pasahitza berria hutsik egonda
                                     Toast.makeText(getContext(), getString(R.string.pasahitzaHutsik), Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -262,6 +275,7 @@ public class ProfilaFragment extends Fragment {
                                 // Kontua ezabatu
                                 FirebaseUser erabiltzailea = FirebaseAuth.getInstance().getCurrentUser();
                                 if (erabiltzailea != null) {
+                                    LoginActivity.db.ikasleaDao().delete(ikaslea);
                                     erabiltzailea.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
