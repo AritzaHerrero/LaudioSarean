@@ -108,7 +108,7 @@ public class ProfilaFragment extends Fragment {
 
         // Erabiltzailearen informazioa datu basetik hartzen da
         ikaselaDao = LoginActivity.db.ikasleaDao();
-        Ikaslea ikaslea = ikaselaDao.getUserByEmail(mAuth.getCurrentUser().getEmail());
+        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(mAuth.getCurrentUser().getEmail());
 
         etEposta.setText(ikaslea.getEmail());
         etIzena.setText(ikaslea.getIzena());

@@ -30,7 +30,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
+import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,6 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         db = Datubase.getInstance(getApplicationContext());
+        /*db.clearAllTables();
+        dbKarga();
+        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
+        IkasleaDao iDAO = db.ikasleaDao();
+        iDAO.insert(i);*/
 
         Intent intent = getIntent();
 
@@ -62,11 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 db.ikasleaDao().insert(ikaslea);
             }
         }
-//        db.clearAllTables();
-//
-//        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
-//        IkasleaDao iDAO = db.ikasleaDao();
-//        iDAO.insert(i);
 
         /*try {
             File currentDB = getDatabasePath("LaudioDB");
@@ -226,5 +228,34 @@ public class LoginActivity extends AppCompatActivity {
         ibPasahitza.setEnabled(true);
         cbPasahitzaGorde.setEnabled(true);
         pbKarga.setVisibility(View.INVISIBLE);
+    }
+
+    private void dbKarga(){
+        Gunea gunea1 = new Gunea("YERMOKO MARIA ANDREAREN SANTUTEGIA", "Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu." +
+                "    \n" +
+                "    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta\n" +
+                "    santutegiaren alboan ermita txiki bat dago, Santa Luzia izena daukana.\n" +
+                "    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.\n" +
+                "    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta\n" +
+                "    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden\n" +
+                "    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.", "43.17181637427461, -2.9715944481866505", "yermokoandremariarensantutegia", "yermoko_andre_mariaren_santutegia");
+        db.guneaDao().insert(gunea1);
+        Gunea gunea2 = new Gunea("BURDIN HESIA", "", "43.17181637427461, -2.9715944481866505", "burdinhesia.mp4", "burdin_hesia.png");
+        db.guneaDao().insert(gunea2);
+        Gunea gunea3 = new Gunea("SANTA AGUEDA ERMITA", "Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal\n" +
+                "    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen\n" +
+                "    den santa kristauari.\n" +
+                "    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko\n" +
+                "    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko\n" +
+                "    jai eta tradizioei lotuta egoten dira.", "43.150580414475016, -2.981593474706786", "santaaguedakoermita.mp4", "santa_aguedako_ermita.png");
+        db.guneaDao().insert(gunea3);
+        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "", "43.13531794275091, -2.970229297221", "katuxakojauregia.mp4", "katuxako_jauregia.png");
+        db.guneaDao().insert(gunea4);
+        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza.mp4", "lamuzako_san_pedro_eliza.png");
+        db.guneaDao().insert(gunea5);
+        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "", "43.145421312014555, -2.96395062240496", "lamuzajauregia.mp4", "lamuza_jauregia.png");
+        db.guneaDao().insert(gunea6);
+        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "", "43.14497314413745, -2.964500273328657", "lezeagakosorgina.mp4", "lezeagako_sorgina.png");
+        db.guneaDao().insert(gunea7);
     }
 }

@@ -29,7 +29,7 @@ import java.nio.channels.FileChannel;
 
 @Database(
         entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class, Puntuazioa.class, Erantzuna.class},
-        version = 2,
+        version = 4,
         exportSchema = false
 )
 public abstract class Datubase extends RoomDatabase {
@@ -48,6 +48,7 @@ public abstract class Datubase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             Datubase.class, "LaudioDB")
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

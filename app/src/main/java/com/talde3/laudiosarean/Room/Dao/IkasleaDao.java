@@ -15,7 +15,7 @@ public interface IkasleaDao {
     @Query("SELECT * FROM Ikaslea")
     List<Ikaslea> getAll();
     @Query("SELECT * FROM Ikaslea WHERE email = :email")
-    Ikaslea getUserByEmail(String email);
+    Ikaslea getIkasleaByEmail(String email);
     @Insert
     void insert(Ikaslea ikaslea);
     @Update

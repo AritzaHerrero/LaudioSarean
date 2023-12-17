@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
 import com.talde3.laudiosarean.Jolasak.Arauak;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
+import com.talde3.laudiosarean.Room.Entities.Gunea;
 
 import java.io.IOException;
 
@@ -70,10 +71,12 @@ public class GuneInformazioa extends Activity {
 
         switch (botoia) {
             case 1:
-                audioResource = R.raw.yermokoandremariarensantutegia;
-                imgGunea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
-                tituloa.setText(getString(R.string.izenburuaGunea1));
-                informazioa.setText(getString(R.string.informazioGunea1));
+                Gunea gunea = LoginActivity.db.guneaDao().getGuneaById(1);
+                //audioResource = R.raw.yermokoandremariarensantutegia;
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia(), "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
                 int[] yermo = {R.drawable.yermoko_andre_mari2, R.drawable.yermoko_andre_mari3, R.drawable.yermoko_andre_mari4,  R.drawable.yermoko_andre_mari5};
                 ImageSliderAdapter adapterYermo = new ImageSliderAdapter(this, yermo);
                 viewPager.setAdapter(adapterYermo);
