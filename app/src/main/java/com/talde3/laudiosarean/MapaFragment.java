@@ -87,7 +87,7 @@ public class MapaFragment extends Fragment {
         mapController.setCenter(geoPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(new OverlayItem("Yermoko Andre Mariaren Santutegia", "Info, ",
+        items.add(new OverlayItem("Yermoko Andre Mariaren Santutegia", "",
                 new GeoPoint(43.17177, -2.97165))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
         items.add(new OverlayItem("Burdin Hesia", "Info, ",

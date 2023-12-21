@@ -122,10 +122,16 @@
     <string name="btnEzkerra">EZKERRA</string>
     <string name="btnEskuma">ESKUMA</string>
 
+    <!-- kokalekua_dialog -->
+    <string name="kokalekuaHasi">Zure kokalekuko gunea hasi nahi duzu?</string>
+    <string name="kokalekuaEz">Ez</string>
+    <string name="kokalekuaBai">Bai</string>
+
     <!-- informazioa_dialog -->
     <string name="prest">Prest zaude jokoa hasteko?</string>
     <string name="prestEz">Arauak ikusi</string>
     <string name="prestBai">Jokatu</string>
+
 
     <!-- zorionak_dialog -->
     <string name="aurrera">Aurrera</string>
