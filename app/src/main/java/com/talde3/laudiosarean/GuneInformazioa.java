@@ -45,6 +45,7 @@ public class GuneInformazioa extends Activity {
     private int audioarenPosizioa = 0;
     private int botoia= 0;
     private int audioResource = 0;
+    private Gunea gunea;
 
 
     @SuppressLint("MissingInflatedId")
@@ -71,13 +72,12 @@ public class GuneInformazioa extends Activity {
 
         switch (botoia) {
             case 1:
-                Gunea gunea = LoginActivity.db.guneaDao().getGuneaById(1);
-                //audioResource = R.raw.yermokoandremariarensantutegia;
+                gunea = LoginActivity.db.guneaDao().getGuneaById(1);
                 audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
-                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia(), "drawable", getPackageName()));
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
                 tituloa.setText(gunea.getIzena());
                 informazioa.setText(gunea.getDeskribapena());
-                int[] yermo = {R.drawable.yermoko_andre_mari2, R.drawable.yermoko_andre_mari3, R.drawable.yermoko_andre_mari4,  R.drawable.yermoko_andre_mari5};
+                int[] yermo = {getResources().getIdentifier(gunea.getIrudia().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudia().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudia().split(",")[3], "drawable", getPackageName()),  getResources().getIdentifier(gunea.getIrudia().split(",")[4], "drawable", getPackageName())};
                 ImageSliderAdapter adapterYermo = new ImageSliderAdapter(this, yermo);
                 viewPager.setAdapter(adapterYermo);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +89,14 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 2:
-                audioResource = R.raw.burdinhesia;
-                imgGunea.setImageResource(R.drawable.burdin_hesia);
+                gunea = LoginActivity.db.guneaDao().getGuneaById(2);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] burdinHesia = {getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName())};
+                ImageSliderAdapter burdinHesiaAdapter = new ImageSliderAdapter(this, burdinHesia);
+                viewPager.setAdapter(burdinHesiaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -101,11 +107,12 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 3:
-                audioResource = R.raw.santaaguedakoermita;
-                imgGunea.setImageResource(R.drawable.santa_aguedako_ermita);
-                tituloa.setText(getString(R.string.izenburuaGunea2));
-                informazioa.setText(getString(R.string.informazioGunea2));
-                int[] santaAgueda = {R.drawable.santa_aguedako_ermita1, R.drawable.santa_aguedako_ermita2, R.drawable.santa_aguedako_ermita3};
+                gunea = LoginActivity.db.guneaDao().getGuneaById(3);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] santaAgueda = {getResources().getIdentifier(gunea.getIrudia().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudia().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudia().split(",")[3], "drawable", getPackageName())};
                 ImageSliderAdapter santaAguedaAdapter = new ImageSliderAdapter(this, santaAgueda);
                 viewPager.setAdapter(santaAguedaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +124,14 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 4:
-                audioResource = R.raw.katuxakojauregia;
-                imgGunea.setImageResource(R.drawable.katuxako_jauregia);
+                gunea = LoginActivity.db.guneaDao().getGuneaById(4);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] katuxakoJaureguia = {getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName())};
+                ImageSliderAdapter katuxakoJaureguiaAdapter = new ImageSliderAdapter(this, katuxakoJaureguia);
+                viewPager.setAdapter(katuxakoJaureguiaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -129,8 +142,14 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 5:
-                audioResource = R.raw.lamuzakosanpedroeliza;
-                imgGunea.setImageResource(R.drawable.lamuzako_san_pedro_eliza);
+                gunea = LoginActivity.db.guneaDao().getGuneaById(5);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] lamuzakosanpedroeliza = {getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName())};
+                ImageSliderAdapter lamuzakosanpedroelizaAdapter = new ImageSliderAdapter(this, lamuzakosanpedroeliza);
+                viewPager.setAdapter(lamuzakosanpedroelizaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -141,8 +160,14 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 6:
-                audioResource = R.raw.lamuzajauregia;
-                imgGunea.setImageResource(R.drawable.lamuza_jauregia);
+                gunea = LoginActivity.db.guneaDao().getGuneaById(6);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] lamuzajauregia = {getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName())};
+                ImageSliderAdapter lamuzajauregiaAdapter = new ImageSliderAdapter(this, lamuzajauregia);
+                viewPager.setAdapter(lamuzajauregiaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -153,8 +178,14 @@ public class GuneInformazioa extends Activity {
                 });
                 break;
             case 7:
-                audioResource = R.raw.lezeagakosorgina;
-                imgGunea.setImageResource(R.drawable.lezeagako_sorgina);
+                gunea = LoginActivity.db.guneaDao().getGuneaById(7);
+                audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
+                imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName()));
+                tituloa.setText(gunea.getIzena());
+                informazioa.setText(gunea.getDeskribapena());
+                int[] lezeagakosorgina = {getResources().getIdentifier(gunea.getIrudia().split(",")[0], "drawable", getPackageName())};
+                ImageSliderAdapter lezeagakosorginaAdapter = new ImageSliderAdapter(this, lezeagakosorgina);
+                viewPager.setAdapter(lezeagakosorginaAdapter);
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

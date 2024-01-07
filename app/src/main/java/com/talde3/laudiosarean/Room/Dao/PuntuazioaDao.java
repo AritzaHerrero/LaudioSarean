@@ -14,7 +14,7 @@ public interface PuntuazioaDao {
     @Query("Select * from Puntuazioa")
     List<Puntuazioa> getAll();
     @Insert
-    void InsertAll(Puntuazioa puntuazioa);
+    void insert(Puntuazioa puntuazioa);
     @Delete
     void delete(Puntuazioa puntuazioa);
 }

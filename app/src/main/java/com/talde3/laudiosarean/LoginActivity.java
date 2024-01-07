@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,8 +33,14 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
+import com.talde3.laudiosarean.Room.Entities.Errekor;
+import com.talde3.laudiosarean.Room.Entities.Galdera;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
+
+import java.io.File;
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
     public static Datubase db;
@@ -58,6 +65,11 @@ public class LoginActivity extends AppCompatActivity {
         Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
         IkasleaDao iDAO = db.ikasleaDao();
         iDAO.insert(i);*/
+
+        if (isFirstRun()) {
+            dbKarga();
+            markFirstRun();
+        }
 
         Intent intent = getIntent();
 
@@ -230,7 +242,27 @@ public class LoginActivity extends AppCompatActivity {
         pbKarga.setVisibility(View.INVISIBLE);
     }
 
+    private boolean isFirstRun() {
+        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
+        return preferences.getBoolean("KEY_FIRST_RUN", true);
+    }
+
+    private void markFirstRun() {
+        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("KEY_FIRST_RUN", false);
+        editor.apply();
+    }
+
     private void dbKarga(){
+        // Ikasleen datuen karga
+        Ikaslea ikaslea1 = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
+        db.ikasleaDao().insert(ikaslea1);
+
+        Ikaslea ikaslea2 = new Ikaslea("Unax", "Zulaika Fuente", "unaxz05@gmail.com", "12345678", "LH 1");
+        db.ikasleaDao().insert(ikaslea2);
+
+        // Guneen datuen karga
         Gunea gunea1 = new Gunea("YERMOKO MARIA ANDREAREN SANTUTEGIA", "Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu." +
                 "    \n" +
                 "    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta\n" +
@@ -238,24 +270,36 @@ public class LoginActivity extends AppCompatActivity {
                 "    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.\n" +
                 "    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta\n" +
                 "    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden\n" +
-                "    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.", "43.17181637427461, -2.9715944481866505", "yermokoandremariarensantutegia", "yermoko_andre_mariaren_santutegia");
+                "    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.", "43.17181637427461, -2.9715944481866505", "yermokoandremariarensantutegia", "yermoko_andre_mariaren_santutegia,yermoko_andre_mari2,yermoko_andre_mari3,yermoko_andre_mari4,yermoko_andre_mari5");
         db.guneaDao().insert(gunea1);
-        Gunea gunea2 = new Gunea("BURDIN HESIA", "", "43.17181637427461, -2.9715944481866505", "burdinhesia.mp4", "burdin_hesia.png");
+        Gunea gunea2 = new Gunea("BURDIN HESIA", "", "43.17181637427461, -2.9715944481866505", "burdinhesia", "burdin_hesia,");
         db.guneaDao().insert(gunea2);
         Gunea gunea3 = new Gunea("SANTA AGUEDA ERMITA", "Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal\n" +
                 "    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen\n" +
                 "    den santa kristauari.\n" +
                 "    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko\n" +
                 "    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko\n" +
-                "    jai eta tradizioei lotuta egoten dira.", "43.150580414475016, -2.981593474706786", "santaaguedakoermita.mp4", "santa_aguedako_ermita.png");
+                "    jai eta tradizioei lotuta egoten dira.", "43.150580414475016, -2.981593474706786", "santaaguedakoermita", "santa_aguedako_ermita,santa_aguedako_ermita1,santa_aguedako_ermita2,santa_aguedako_ermita3");
         db.guneaDao().insert(gunea3);
-        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "", "43.13531794275091, -2.970229297221", "katuxakojauregia.mp4", "katuxako_jauregia.png");
+        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "", "43.13531794275091, -2.970229297221", "katuxakojauregia", "katuxako_jauregia,");
         db.guneaDao().insert(gunea4);
-        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza.mp4", "lamuzako_san_pedro_eliza.png");
+        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza", "lamuzako_san_pedro_eliza,");
         db.guneaDao().insert(gunea5);
-        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "", "43.145421312014555, -2.96395062240496", "lamuzajauregia.mp4", "lamuza_jauregia.png");
+        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "", "43.145421312014555, -2.96395062240496", "lamuzajauregia", "lamuza_jauregia,");
         db.guneaDao().insert(gunea6);
-        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "", "43.14497314413745, -2.964500273328657", "lezeagakosorgina.mp4", "lezeagako_sorgina.png");
+        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "", "43.14497314413745, -2.964500273328657", "lezeagakosorgina", "lezeagako_sorgina,");
         db.guneaDao().insert(gunea7);
+
+        // Puntuazio karga
+        Puntuazioa puntuazioa1 = new Puntuazioa(1001, 1, 1);
+        db.puntuazioaDao().insert(puntuazioa1);
+        Puntuazioa puntuazioa2 = new Puntuazioa(1002, 2, 2);
+        db.puntuazioaDao().insert(puntuazioa2);
+
+        // Record karga
+        Errekor errekor1 = new Errekor(1);
+        db.errekorDao().insert(errekor1);
+        Errekor errekor2 = new Errekor(2);
+        db.errekorDao().insert(errekor2);
     }
 }

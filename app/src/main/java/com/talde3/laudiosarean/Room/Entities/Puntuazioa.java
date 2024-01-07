@@ -25,8 +25,7 @@ public class Puntuazioa {
     private int id_gunea;
 
     // Constructor
-    public Puntuazioa(int id_puntuazioa, int puntuazioa, int id_ikaslea, int id_gunea) {
-        this.id_puntuazioa = id_puntuazioa;
+    public Puntuazioa(int puntuazioa, int id_ikaslea, int id_gunea) {
         this.puntuazioa = puntuazioa;
         this.id_ikaslea = id_ikaslea;
         this.id_gunea = id_gunea;

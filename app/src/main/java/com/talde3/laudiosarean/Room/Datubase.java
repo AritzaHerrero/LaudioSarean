@@ -12,14 +12,14 @@ import com.talde3.laudiosarean.Room.Dao.GuneaDao;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
 import com.talde3.laudiosarean.Room.Dao.PuntuazioaDao;
-import com.talde3.laudiosarean.Room.Dao.RecordDao;
+import com.talde3.laudiosarean.Room.Dao.ErrekorDao;
 import com.talde3.laudiosarean.Room.Entities.Erantzuna;
 import com.talde3.laudiosarean.Room.Entities.Galdera;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
-import com.talde3.laudiosarean.Room.Entities.Record;
+import com.talde3.laudiosarean.Room.Entities.Errekor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 @Database(
-        entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Record.class, Puntuazioa.class, Erantzuna.class},
+        entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Errekor.class, Puntuazioa.class, Erantzuna.class},
         version = 4,
         exportSchema = false
 )
@@ -37,7 +37,7 @@ public abstract class Datubase extends RoomDatabase {
     public abstract IrakasleaDao irakasleaDao();
     public abstract GalderaDao galderaDao();
     public abstract GuneaDao guneaDao();
-    public abstract RecordDao recordDao();
+    public abstract ErrekorDao errekorDao();
     public abstract ErantzunaDao erantzunaDao();
     public abstract PuntuazioaDao puntuazioaDao();
 
@@ -46,7 +46,7 @@ public abstract class Datubase extends RoomDatabase {
     public static synchronized Datubase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                            Datubase.class, "LaudioDB")
+                            Datubase.class, "LaudioDB.db")
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build();
