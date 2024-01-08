@@ -259,7 +259,7 @@ public class LoginActivity extends AppCompatActivity {
         Ikaslea ikaslea1 = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
         db.ikasleaDao().insert(ikaslea1);
 
-        Ikaslea ikaslea2 = new Ikaslea("Unax", "Zulaika Fuente", "unaxz05@gmail.com", "12345678", "LH 1");
+        Ikaslea ikaslea2 = new Ikaslea("Unax", "Zulaika Fuente", "unaxz05@gmail.com", "proba1", "LH 1");
         db.ikasleaDao().insert(ikaslea2);
 
         // Guneen datuen karga
@@ -272,7 +272,22 @@ public class LoginActivity extends AppCompatActivity {
                 "    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden\n" +
                 "    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.", "43.17181637427461, -2.9715944481866505", "yermokoandremariarensantutegia", "yermoko_andre_mariaren_santutegia,yermoko_andre_mari2,yermoko_andre_mari3,yermoko_andre_mari4,yermoko_andre_mari5");
         db.guneaDao().insert(gunea1);
-        Gunea gunea2 = new Gunea("BURDIN HESIA", "", "43.17181637427461, -2.9715944481866505", "burdinhesia", "burdin_hesia,");
+        Gunea gunea2 = new Gunea("BURDIN HESIA", "Burdin Hesia, orain dela 80 urte guerra garaian sortu zen hesi defendatzaile bat izan da. Orain\n" +
+                "funtzionamenduan ez dagoen arren, 1936tik 1939ra martxan egon zen. Momentu horretan Espainian\n" +
+                "gatazka bat sortu egin zen, gizon batek, Francisco Franco, Espainiako gobernua indarrez hartu egin\n" +
+                "zuen, eta bi bando sortu egin ziren. Euskadiko gehienak ez zeudelako bere ideiekin ados, horregatik,\n" +
+                "Burdin hesia erakitzea erabaki zuten, Euskadi Frankoren erasoengatik defendatzeko. Hesia luze-luzea\n" +
+                "izan zen, bertan, bunkerrak, tunelak eta lubakiakezarri ziren eta 80 kilometrotan zehar banatzen ziren.\n" +
+                "\n" +
+                "Laudioko Burdin Hesiaren ibilbidea Yermoko Andre Mariaren Santutegitik abiatzen da. Bunker\n" +
+                "horietan, herritarrak sartzen ziren artilleriatik, abiaziotik edota bonbardaketetatik babesteko, hauek\n" +
+                "burdinaz eta hormigoiz egindako eraikinak ziren. Bestalde, lubakietan sartzen ziren etsaiaren\n" +
+                "estalpean tiro egiteko eta tunel horietatik abiatzen ziren leku batetik bestera babestuta mugitu ahal\n" +
+                "izateko.\n" +
+                "\n" +
+                "Gaur egun, Burdin Hesiko lubaki edo bunker asko kontserbatzen dira oraindik. Eremu osoa\n" +
+                "seinaleztatuta dago, eta, horri esker, bisitariek nahi bezala egin dezakete ibilbide osoa, lau ordu baino\n" +
+                "gehiagoko iraupenarekin.", "43.17181637427461, -2.9715944481866505", "burdinhesia", "burdin_hesia,burdin_hesia1,burdin_hesia2,burdin_hesia3,burdin_hesia4");
         db.guneaDao().insert(gunea2);
         Gunea gunea3 = new Gunea("SANTA AGUEDA ERMITA", "Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal\n" +
                 "    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen\n" +
@@ -281,13 +296,51 @@ public class LoginActivity extends AppCompatActivity {
                 "    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko\n" +
                 "    jai eta tradizioei lotuta egoten dira.", "43.150580414475016, -2.981593474706786", "santaaguedakoermita", "santa_aguedako_ermita,santa_aguedako_ermita1,santa_aguedako_ermita2,santa_aguedako_ermita3");
         db.guneaDao().insert(gunea3);
-        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "", "43.13531794275091, -2.970229297221", "katuxakojauregia", "katuxako_jauregia,");
+        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "Jauregia XVII.mendekoa da.\n" +
+                "Jauregiaren aurpegi nagusia Nerbioi ibaiera begira dago. Eraikuntza, teila okertuak dituen sabai\n" +
+                "triangeluar bat duen kubo handi bat bezala ikusten da. Hiru solairu ditu: bat behean, bat erdian eta bat\n" +
+                "goian.\n" +
+                "Eraikinaren aurpegi nagusia oso polita da eta harriz egina dago. Beheko solairuan, ate handi bat dago,\n" +
+                "goiko aldean arkuak dituena, zubi bat bezala. Atearen alboetan leihoak ere badaude. Lehenengo\n" +
+                "pisuan, irteten diren lau balkoi eta erdian marrazkiak dituen armarri bat daude. Goiko aldean, lau leiho\n" +
+                "txiki daude.\n" +
+                "Eraikinaren alboetako aurpegiak ez dira parekoak bezain politak. Harri xumeagoz eginak daude eta ez\n" +
+                "dute hainbeste xehetasun politik. Leiho gutxiago ere badituzte.\n" +
+                "Eraikinaren barruan, lehen solairuan, jendea sartzen den atari bat dago. Handik, eskailera batzuk igo\n" +
+                "daitezke jendea bizi den geletara iristeko. Eraikinaren atzetik beste ate batera daraman korridore luze\n" +
+                "bat ere badago.", "43.13531794275091, -2.970229297221", "katuxakojauregia", "katuxako_jauregia,katuxako_jauregia1,katuxako_jauregia2,katuxako_jauregia3,katuxako_jauregia4");
         db.guneaDao().insert(gunea4);
-        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza", "lamuzako_san_pedro_eliza,");
+        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "Lamuzako San Pedro eliza oso zaharra da, duela urte asko eraiki zen, XVI. mendean. Baina lehenago,\n" +
+                "XI. mendean, beste eraikin bat zegoen haren ordez, tenplu bat. Handik denbora batera, eliza luzaroan\n" +
+                "konpondu eta aldatu zuten, XVIII. mendera arte.\n" +
+                "Elizaren bereziena kanpaiak dauden dorre garaia da, eta elizaren barruan irudi oso politak daude\n" +
+                "zizelkatuta.\n" +
+                "Herriko plazan dago eliza, udaletxeko plazan, herriaren erdian. Lamuzako jendearentzat leku\n" +
+                "garrantzitsua da.", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza", "lamuzako_san_pedro_eliza,laudio_san_pedro1,laudio_san_pedro2,laudio_san_pedro3,laudio_san_pedro4,laudio_san_pedro5");
         db.guneaDao().insert(gunea5);
-        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "", "43.145421312014555, -2.96395062240496", "lamuzajauregia", "lamuza_jauregia,");
+        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "Lamuzako jauregia Urkixoko markesen jauregia izan zen garai batean. XVIII. mendeko eraikin\n" +
+                "originala da.\n" +
+                "8,5 hektarea baino gehiagoko parke zabala inguratzen du, zuhaitz ugari eta aberatsekin. Hori guztia\n" +
+                "Urkixoko markeserriaren finkako lorategiak ziren.\n" +
+                "Gaur egun 79 zuhaitz-espezie daude, eta horien artean azpimarratzekoak dira Monterreyko altzifrea,\n" +
+                "130 urte dituena, Japoniako aranondo gorriakd eo Libanoko zedroa.\n" +
+                "Jauregiko eraikinek eta gainerako gelek Kultur Etxea hartzen dute. Kasinoaren eraikinak, urmael\n" +
+                "batek eta harlanduzko frontoi batek osatzen dute marko hau.\n" +
+                "Herriaren bihotzean kokatua, antzinako jabeek hain apeta eta arreta handiz marraztu eta zaindu\n" +
+                "zutena, bisitari guztiei irekia dago, udal parke aparta bihurtua.", "43.145421312014555, -2.96395062240496", "lamuzajauregia", "lamuza_jauregia,lamuzako_jauregia1,lamuzako_jauregia2,lamuzako_jauregia3");
         db.guneaDao().insert(gunea6);
-        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "", "43.14497314413745, -2.964500273328657", "lezeagakosorgina", "lezeagako_sorgina,");
+        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "Lezeagako sorgina, Laudioko aratuzteetako pertsonaia nagusia da. Karnabesetan zehar sorginaren\n" +
+                "panpina kaletik paseatzen dute, baina hauek bukatzen direnean suan erretzen dute. Hala ere, hurrengo\n" +
+                "urtean sorginaren beste panpin berri bat izango dute.\n" +
+                "Hau ez da pertsonaia asmatu bat. Orain dela urte asko bizi izan zen emakume batean oinarritzen da\n" +
+                "kondaira. Iñarrondoko amildegiaren behealdean bizi zen emakumeari sorgina deitzen zioten, eta gune\n" +
+                "horretatik egiten zituen bere bihurrikeriak, hala ere, pertsonaia ez gaizto gisa gogoratzen zaio.\n" +
+                "Baina Lezeagako sorgina ez da betidanik Laudioko aratuzteetako pertsonaia izan. Orain dela zenbait\n" +
+                "urte Espainian ez ziren aratusteak ospatu, ospakizun paganoa delako, hau da, ez duela zer ikusirik\n" +
+                "ospakizun erlijiosoekin. Hori dela eta, Franco boterera heldu zenean ez zuen utzi ospatzen. Berak\n" +
+                "bakarrik onartzen zituelako kristautasunean oinarritzen ziren tradizioak. Horregatik, garai hori\n" +
+                "bukatzean herrialdeak karnabasak berriz ospatzen hasi zen eta pertsonaia bat sortzea erabaki zuten,\n" +
+                "Lezagako sorgina. 1982an panpina desfilatu zuen lehen urtea izan zen.", "43.14497314413745, -2.964500273328657", "lezeagakosorgina", "lezeagako_sorgina,legazako_sorgina1,legazako_sorgina2");
         db.guneaDao().insert(gunea7);
 
         // Puntuazio karga
