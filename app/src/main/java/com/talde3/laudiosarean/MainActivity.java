@@ -51,10 +51,21 @@ public class MainActivity extends AppCompatActivity {
     private LocationInfo carrefourLocation;
     private LocationInfo eroskiLocation;
     private LocationInfo plazaLocation;
+    private LocationInfo Yermo;
+    private LocationInfo BurdinHesia;
+    private LocationInfo SantaAguedaErmita;
+    private LocationInfo KatuxakoJauregia;
+    private LocationInfo LamuzaSanPedroJauregia;
+    private LocationInfo LamuzaJauregia;
+    private LocationInfo LezeagakoSorgina;
 
-    private boolean Carrefour = false;
-    private boolean Eroski = false;
-    private boolean Plaza = false;
+    private boolean YermoBool = false;
+    private boolean BurdinHesiaBool = false;
+    private boolean SantaAguedaErmitaBool = false;
+    private boolean KatuxakoJauregiaBool = false;
+    private boolean LamuzaSanPedroJauregiaBool = false;
+    private boolean LamuzaJauregiaBool = false;
+    private boolean LezeagakoSorginaBool = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         carrefourLocation = new LocationInfo("Carrefour", 43.28329, -2.96332, 150);
         eroskiLocation = new LocationInfo("Eroski", 43.28239, -2.96010, 150);
         plazaLocation = new LocationInfo("Plaza", 43.28176, -2.96285, 50);
+
+        Yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
+        BurdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
+        SantaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
+        KatuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
+        LamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
+        LamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
+        LezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162,-2.96202, 75);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -159,8 +178,9 @@ public class MainActivity extends AppCompatActivity {
          //   Toast.makeText(this, locationInfo.getLocationName(), Toast.LENGTH_SHORT).show();
 
 
-            if ("Carrefour".equals(locationInfo.getLocationName()) && !Carrefour) {
-                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
+            if ("Yermo".equals(locationInfo.getLocationName()) && !YermoBool) {
+                YermoBool = kokalekuaZabaldu(1);
+                /*View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
                 Button prestBai = view.findViewById(R.id.kokalekuaBai);
                 Button prestEz = view.findViewById(R.id.kokalekuaEz);
 
@@ -192,21 +212,31 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 }
 
-                alertDialog.show();
+                alertDialog.show();*/
             }
 
-            if ("Eroski".equals(locationInfo.getLocationName()) && !Eroski) {
-                Intent BurdinHesiaIntent = new Intent(MainActivity.this, GuneInformazioa.class);
-                BurdinHesiaIntent.putExtra("aukeratutakoGunea", 2);
-                Eroski = true;
-                startActivity(BurdinHesiaIntent);
+            if ("BurdinHesia".equals(locationInfo.getLocationName()) && !BurdinHesiaBool) {
+                BurdinHesiaBool = kokalekuaZabaldu(2);
             }
 
-            if ("Plaza".equals(locationInfo.getLocationName()) && !Plaza) {
-                Intent SantaAguedakoErmitaIntent = new Intent(MainActivity.this, GuneInformazioa.class);
-                SantaAguedakoErmitaIntent.putExtra("aukeratutakoGunea", 3);
-                Plaza = true;
-                startActivity(SantaAguedakoErmitaIntent);
+            if ("SantaAguedaErmita".equals(locationInfo.getLocationName()) && !SantaAguedaErmitaBool) {
+                SantaAguedaErmitaBool = kokalekuaZabaldu(3);
+            }
+
+            if ("KatuxakoJauregia".equals(locationInfo.getLocationName()) && !KatuxakoJauregiaBool) {
+                KatuxakoJauregiaBool = kokalekuaZabaldu(4);
+            }
+
+            if ("LamuzaSanPedroJauregia".equals(locationInfo.getLocationName()) && !LamuzaSanPedroJauregiaBool) {
+                LamuzaSanPedroJauregiaBool = kokalekuaZabaldu(5);
+            }
+
+            if ("LamuzaJauregia".equals(locationInfo.getLocationName()) && !LamuzaJauregiaBool) {
+                LamuzaJauregiaBool = kokalekuaZabaldu(6);
+            }
+
+            if ("LezeagakoSorgina".equals(locationInfo.getLocationName()) && !LezeagakoSorginaBool) {
+                LezeagakoSorginaBool = kokalekuaZabaldu(7);
             }
         }
     }
@@ -237,6 +267,42 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permiso denegado. La aplicación no puede acceder a la ubicación.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public boolean kokalekuaZabaldu(int aukeratutakoGunea) {
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
+        Button prestBai = view.findViewById(R.id.kokalekuaBai);
+        Button prestEz = view.findViewById(R.id.kokalekuaEz);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+
+        prestEz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        prestBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
+                intent.putExtra("aukeratutakoGunea", aukeratutakoGunea);
+                startActivity(intent);
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        alertDialog.show();
+
+        return true;
     }
 
     private static class LocationInfo {

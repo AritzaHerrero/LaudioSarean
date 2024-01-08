@@ -106,7 +106,7 @@ public class MapaFragment extends Fragment {
                 new GeoPoint(43.14462, -2.96441))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
         items.add(new OverlayItem("Lezeagako sorgina", "Info, ",
-                new GeoPoint(43.14303, -2.96248))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
+                new GeoPoint(43.14162,-2.96202))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
         items.add(new OverlayItem("Trivia", "Info, ",
                 new GeoPoint(43.14322, -2.96269))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
