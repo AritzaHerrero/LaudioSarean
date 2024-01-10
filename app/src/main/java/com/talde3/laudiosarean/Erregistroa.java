@@ -58,12 +58,10 @@ public class Erregistroa extends AppCompatActivity {
         btnErregistratu = findViewById(R.id.btnErregistratu);
 
         ArrayList<String> klaseak = new ArrayList<>();
-        klaseak.add("LH 1");
-        klaseak.add("LH 2");
-        klaseak.add("LH 3");
-        klaseak.add("LH 4");
-        klaseak.add("LH 5");
-        klaseak.add("LH 6");
+        klaseak.add("A");
+        klaseak.add("B");
+        klaseak.add("D");
+        klaseak.add("E");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, klaseak);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
