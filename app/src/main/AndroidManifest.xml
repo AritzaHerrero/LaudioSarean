@@ -22,6 +22,9 @@
         android:theme="@style/Theme.LaudioSarean"
         tools:targetApi="31">
         <activity
+            android:name=".Jolasak.TestGune4.Galderak"
+            android:exported="false" />
+        <activity
             android:name=".Jolasak.Kruzigrama.Kruzigrama"
             android:exported="false" />
         <activity

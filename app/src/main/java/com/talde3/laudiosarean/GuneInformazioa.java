@@ -25,6 +25,7 @@ import com.talde3.laudiosarean.Jolasak.Kruzigrama.Kruzigrama;
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
 import com.talde3.laudiosarean.Jolasak.Arauak;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
+import com.talde3.laudiosarean.Jolasak.TestGune4.Galderak;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 
 import java.io.IOException;
@@ -136,9 +137,8 @@ public class GuneInformazioa extends Activity {
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
-                        startActivity(intent);*/
-                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                        Galderak galderak = new Galderak();
+                        erakutsiMezua(galderak);
                     }
                 });
                 break;
