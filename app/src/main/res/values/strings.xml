@@ -118,5 +118,16 @@
     <string name="tituloaZorionak">ZORIONAK!!</string>
     <string name="testuaZorionak">Oso ondo segui horrela!!</string>
 
+    <!-- Kruzigrama -->
+    <string name="btnKonpronatu"> Konprobatu </string>
+    <string name="definizioa1"> 1. Norbaitek, beste norbaiten edo zerbaiten itxura hartzeko, edo inork ezagut ez dezan, jartzen dituen jantzien edo bestelakoen multzoa.</string>
+    <string name="definizioa2"> 2. Urteko bigarren hila, urte arruntetan 28 egun eta bisurteetan 29 egun dituena.</string>
+    <string name="definizioa3"> 3. Pertsona-talde bat jendearen aurretik ilaran igarotzea; bereziki, soldadu-talde bat agintarien aurretik ilaran igarotzea.</string>
+    <string name="definizioa4"> 4. Su handia.</string>
+    <string name="definizioa5"> 5. Herri sineskeriaren arabera, deabruarekiko hitzarmen baten ondorioz-edo, indar ezkutuen jabe den pertsona.</string>
+    <string name="definizioa6"> 6. Laudioko sorginaren izena.</string>
+
+
+
 
 </resources>

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.talde3.laudiosarean.Jolasak.Kruzigrama.Kruzigrama;
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
 import com.talde3.laudiosarean.Jolasak.Arauak;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
@@ -189,9 +190,8 @@ public class GuneInformazioa extends Activity {
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
-                        startActivity(intent);*/
-                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                        Kruzigrama kruzigrama = new Kruzigrama();
+                        erakutsiMezua(kruzigrama);
                     }
                 });
                 break;
