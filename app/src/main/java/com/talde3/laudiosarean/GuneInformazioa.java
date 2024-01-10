@@ -102,9 +102,8 @@ public class GuneInformazioa extends Activity {
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent = new Intent(GuneInformazioa.this, PuzzleActivity.class);
-                        startActivity(intent);*/
-                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
+                        Galderak galderak = new Galderak();
+                        erakutsiMezua(galderak);
                     }
                 });
                 break;
@@ -137,8 +136,7 @@ public class GuneInformazioa extends Activity {
                 btnPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Galderak galderak = new Galderak();
-                        erakutsiMezua(galderak);
+                        Toast.makeText(GuneInformazioa.this, "Jokoa ez dago eskuragarri momentu honetan", Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
