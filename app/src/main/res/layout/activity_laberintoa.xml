@@ -6,35 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Jolasak.Laberintoa.Laberintoa">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutMenua"
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtKronometroa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="00:00"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:layout_margin="16dp" />
-
-        <TextView
-            android:id="@+id/txtPuntuazioa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="10000"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:layout_margin="16dp" />
-
-    </LinearLayout>
 
     <GridLayout
         android:id="@+id/gridLayout"
