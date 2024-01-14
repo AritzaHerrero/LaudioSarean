@@ -214,7 +214,6 @@ public class ProfilaFragment extends Fragment {
                                     FirebaseUser erabiltzailea = mAuth.getCurrentUser();
                                     if (erabiltzailea != null) {
                                         // Pasahitza eguneratu
-                                        ikaslea.setPasahitza(newPassword);
                                         LoginActivity.db.ikasleaDao().update(ikaslea);
 
                                         erabiltzailea.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {

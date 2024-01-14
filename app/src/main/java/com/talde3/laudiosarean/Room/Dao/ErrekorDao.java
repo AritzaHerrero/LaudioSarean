@@ -17,4 +17,6 @@ public interface ErrekorDao {
     void insert(Errekor errekor);
     @Delete
     void delete(Errekor errekor);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Errekor'")
+    void resetPrimaryKeyAutoIncrementValueErrekor();
 }

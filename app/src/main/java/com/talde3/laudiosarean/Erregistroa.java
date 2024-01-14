@@ -131,7 +131,7 @@ public class Erregistroa extends AppCompatActivity {
                                 // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
 
-                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
+                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta, kurtsoa);
 
                                 Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
                                 intent.putExtra("ikaslea", ikaslea);

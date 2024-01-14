@@ -31,6 +31,8 @@ public class Puntuazioa {
         this.id_gunea = id_gunea;
     }
 
+    public Puntuazioa(){}
+
     // Getters
     public int getId_puntuazioa() {
         return id_puntuazioa;

@@ -18,15 +18,15 @@ public class Ikaslea implements Serializable {
     private String izena;
     private String abizenak;
     private String email;
-    private String pasahitza;
     private String kurtsoa;
-    public Ikaslea(String izena, String abizenak, String email, String pasahitza, String kurtsoa) {
+    public Ikaslea(String izena, String abizenak, String email, String kurtsoa) {
         this.izena = izena;
         this.abizenak = abizenak;
         this.email = email;
-        this.pasahitza = pasahitza;
         this.kurtsoa = kurtsoa;
     }
+
+    public Ikaslea(){}
 
     // Getters
     public int getId_ikaslea() { return id_ikaslea; }
@@ -38,9 +38,6 @@ public class Ikaslea implements Serializable {
     }
     public String getEmail() {
         return email;
-    }
-    public String getPasahitza() {
-        return pasahitza;
     }
     public String getKurtsoa() {
         return kurtsoa;
@@ -56,9 +53,6 @@ public class Ikaslea implements Serializable {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public void setPasahitza(String pasahitza) {
-        this.pasahitza = pasahitza;
     }
     public void setKurtsoa(String kurtsoa) {
         this.kurtsoa = kurtsoa;

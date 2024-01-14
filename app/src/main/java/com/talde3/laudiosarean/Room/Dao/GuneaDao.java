@@ -19,4 +19,6 @@ public interface GuneaDao {
     void insert(Gunea gunea);
     @Delete
     void delete(Gunea gunea);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Gunea'")
+    void resetPrimaryKeyAutoIncrementValueGunea();
 }

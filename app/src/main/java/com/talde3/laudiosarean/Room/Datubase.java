@@ -29,7 +29,7 @@ import java.nio.channels.FileChannel;
 
 @Database(
         entities = {Irakaslea.class, Ikaslea.class, Galdera.class, Gunea.class, Errekor.class, Puntuazioa.class, Erantzuna.class},
-        version = 4,
+        version = 5,
         exportSchema = false
 )
 public abstract class Datubase extends RoomDatabase {

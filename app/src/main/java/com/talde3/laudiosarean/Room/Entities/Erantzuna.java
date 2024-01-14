@@ -30,6 +30,8 @@ public class Erantzuna {
         this.id_galdera = id_galdera;
     }
 
+    public Erantzuna(){}
+
     // Getters
     public int getId_erantzuna() {
         return id_erantzuna;

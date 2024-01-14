@@ -22,4 +22,6 @@ public interface IkasleaDao {
     void update(Ikaslea ikaslea);
     @Delete
     void delete(Ikaslea ikaslea);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Ikaslea'")
+    void resetPrimaryKeyAutoIncrementValueIkaslea();
 }

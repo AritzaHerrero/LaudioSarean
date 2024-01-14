@@ -16,4 +16,6 @@ public interface IrakasleaDao {
     void insertAll(Irakaslea irakaslea);
     @Insert
     void delete(Irakaslea irakaslea);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Irakaslea'")
+    void resetPrimaryKeyAutoIncrementValueIrakaslea();
 }

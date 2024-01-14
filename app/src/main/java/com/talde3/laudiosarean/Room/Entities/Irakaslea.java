@@ -24,6 +24,8 @@ public class Irakaslea implements Serializable {
         this.kurtsoa = kurtsoa;
     }
 
+    public Irakaslea(){}
+
     // Getters
     public int getId_irakaslea() { return id_irakaslea; }
     public String getIzena() {

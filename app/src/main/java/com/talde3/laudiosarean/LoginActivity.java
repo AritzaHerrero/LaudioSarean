@@ -1,6 +1,5 @@
 package com.talde3.laudiosarean;
-
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,41 +8,47 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.talde3.laudiosarean.Room.Datubase;
 import com.talde3.laudiosarean.Room.Entities.Errekor;
-import com.talde3.laudiosarean.Room.Entities.Galdera;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     public static Datubase db;
+    public static FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private EditText etEposta;
     private EditText etPasahitza;
@@ -59,17 +64,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        db = Datubase.getInstance(getApplicationContext());
-        /*db.clearAllTables();
-        dbKarga();
-        Ikaslea i = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
-        IkasleaDao iDAO = db.ikasleaDao();
-        iDAO.insert(i);*/
+        // Datu baseko instantziak
+        firestore = FirebaseFirestore.getInstance(); // Firestore
 
-        if (isFirstRun()) {
-            dbKarga();
-            markFirstRun();
-        }
+        db = Datubase.getInstance(getApplicationContext()); // Room
+
+        // Datuak kargatu
+        dbKarga();
 
         Intent intent = getIntent();
 
@@ -77,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if(bundle != null) {
                 Ikaslea ikaslea = (Ikaslea) bundle.getSerializable("ikaslea");
-                Log.i(TAG, ikaslea.getIzena());
                 db.ikasleaDao().insert(ikaslea);
             }
         }
@@ -105,93 +105,81 @@ public class LoginActivity extends AppCompatActivity {
         lehentasunakKargatu();
 
         aktibatuUI();
-        btnSaioahasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String posta = etEposta.getText().toString().trim();
-                String pasahitza = etPasahitza.getText().toString().trim();
+        btnSaioahasi.setOnClickListener(v -> {
+            String posta = etEposta.getText().toString().trim();
+            String pasahitza = etPasahitza.getText().toString().trim();
 
-                if (TextUtils.isEmpty(posta)) {
-                    String sartuEposta = getResources().getString(R.string.sartuEposta);
-                    etEposta.setError(sartuEposta);
-                } else if (TextUtils.isEmpty(pasahitza)) {
-                    String sartuPasahitza = getResources().getString(R.string.sartuPasahitza);
-                    etPasahitza.setError(sartuPasahitza);
-                } else {
-                    saioaHasi(posta, pasahitza);
-                }
+            if (TextUtils.isEmpty(posta)) {
+                String sartuEposta = getResources().getString(R.string.sartuEposta);
+                etEposta.setError(sartuEposta);
+            } else if (TextUtils.isEmpty(pasahitza)) {
+                String sartuPasahitza = getResources().getString(R.string.sartuPasahitza);
+                etPasahitza.setError(sartuPasahitza);
+            } else {
+                saioaHasi(posta, pasahitza);
             }
         });
 
-        tvErregistratuEmen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Acción a realizar cuando se hace clic en el TextView
-                Intent erregistroIntent = new Intent(LoginActivity.this, Erregistroa.class);
-                startActivity(erregistroIntent);
-            }
+        tvErregistratuEmen.setOnClickListener(v -> {
+            // Acción a realizar cuando se hace clic en el TextView
+            Intent erregistroIntent = new Intent(LoginActivity.this, Erregistroa.class);
+            startActivity(erregistroIntent);
         });
 
-        ibPasahitza.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int currentInputType = etPasahitza.getInputType();
+        ibPasahitza.setOnClickListener(v -> {
+            int currentInputType = etPasahitza.getInputType();
 
-                if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                    etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    etPasahitza.setTypeface(Typeface.DEFAULT);
-                    ibPasahitza.setImageResource(R.drawable.begia_off_24);
-                } else {
-                    etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    etPasahitza.setTypeface(Typeface.DEFAULT);
-                    ibPasahitza.setImageResource(R.drawable.begia_24);
-                }
-
-                // Mover el cursor al final del texto para mantener la visibilidad
-                etPasahitza.setSelection(etPasahitza.getText().length());
+            if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                etPasahitza.setTypeface(Typeface.DEFAULT);
+                ibPasahitza.setImageResource(R.drawable.begia_off_24);
+            } else {
+                etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etPasahitza.setTypeface(Typeface.DEFAULT);
+                ibPasahitza.setImageResource(R.drawable.begia_24);
             }
+
+            // Mover el cursor al final del texto para mantener la visibilidad
+            etPasahitza.setSelection(etPasahitza.getText().length());
         });
     }
 
    private void saioaHasi(String eposta, String pasahitza) {
         desaktibatuUI();
         mAuth.signInWithEmailAndPassword(eposta, pasahitza)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Saioa ondo hasi da
-                            cbPasahitzaGorde = findViewById(R.id.cbPasahitzaGorde);
-                            if(cbPasahitzaGorde.isChecked()) {
-                                lehentasunakGorde();
-                            }
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            etEposta.setText("");
-                            etPasahitza.setText("");
-                            aktibatuUI();
-                            // Toast.makeText(MainActivity.this, getResources().getString(R.string.ongiEtorri), Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Saioa ondo hasi da
+                        cbPasahitzaGorde = findViewById(R.id.cbPasahitzaGorde);
+                        if(cbPasahitzaGorde.isChecked()) {
+                            lehentasunakGorde();
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        etEposta.setText("");
+                        etPasahitza.setText("");
+                        aktibatuUI();
+                        // Toast.makeText(MainActivity.this, getResources().getString(R.string.ongiEtorri), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Exception exception = task.getException();
+                        aktibatuUI();
+                        if (exception instanceof FirebaseNetworkException) {
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.erKonexioaLogin), Toast.LENGTH_SHORT).show();
+                        } else if (exception instanceof FirebaseAuthInvalidUserException) {
+                            // Eposta ez da aurkitu
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.erEpostaLogin), Toast.LENGTH_SHORT).show();
+                        } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                            // Saio-hasierako kredentzial baliogabeak (eposta edp pasahitz baliogabeak)
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.erPasahitzaLogin), Toast.LENGTH_SHORT).show();
                         } else {
-                            Exception exception = task.getException();
-                            aktibatuUI();
-                            if (exception instanceof FirebaseNetworkException) {
-                                Toast.makeText(LoginActivity.this, getResources().getString(R.string.erKonexioaLogin), Toast.LENGTH_SHORT).show();
-                            } else if (exception instanceof FirebaseAuthInvalidUserException) {
-                                // Eposta ez da aurkitu
-                                Toast.makeText(LoginActivity.this, getResources().getString(R.string.erEpostaLogin), Toast.LENGTH_SHORT).show();
-                            } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                // Saio-hasierako kredentzial baliogabeak (eposta edp pasahitz baliogabeak)
-                                Toast.makeText(LoginActivity.this, getResources().getString(R.string.erPasahitzaLogin), Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Otro error no manejado específicamente
-                                Toast.makeText(LoginActivity.this, getResources().getString(R.string.erLoginLogin), Toast.LENGTH_SHORT).show();
-                            }
+                            // Otro error no manejado específicamente
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.erLoginLogin), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    private void lehentasunakKargatu() {
+   private void lehentasunakKargatu() {
         // kredentzialak.xml kargatzen du (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
 
@@ -202,9 +190,9 @@ public class LoginActivity extends AppCompatActivity {
         // editText-etan ipintzen du kargatutako informazioa
         etEposta.setText(eposta);
         etPasahitza.setText(pasahitza);
-    }
+   }
 
-    private void lehentasunakGorde() {
+   private void lehentasunakGorde() {
         // kredentzialak.xml kargatzen da informazioa gordetzeko (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
         // sartutako erabiltzaile eta pasahitzak eskuratzen dira
@@ -219,10 +207,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("pass", pasahitza);
 
         // dena gordeko da xml-an.
-        editor.commit();
-    }
+        editor.apply(); // antes -> editor.commit();
+   }
 
-    private void desaktibatuUI() {
+   private void desaktibatuUI() {
         etEposta.setEnabled(false);
         etPasahitza.setEnabled(false);
         btnSaioahasi.setEnabled(false);
@@ -230,9 +218,9 @@ public class LoginActivity extends AppCompatActivity {
         ibPasahitza.setEnabled(false);
         cbPasahitzaGorde.setEnabled(false);
         pbKarga.setVisibility(View.VISIBLE);
-    }
+   }
 
-    private void aktibatuUI() {
+   private void aktibatuUI() {
         etEposta.setEnabled(true);
         etPasahitza.setEnabled(true);
         btnSaioahasi.setEnabled(true);
@@ -240,119 +228,96 @@ public class LoginActivity extends AppCompatActivity {
         ibPasahitza.setEnabled(true);
         cbPasahitzaGorde.setEnabled(true);
         pbKarga.setVisibility(View.INVISIBLE);
-    }
+   }
 
-    private boolean isFirstRun() {
-        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
-        return preferences.getBoolean("KEY_FIRST_RUN", true);
-    }
+   private void dbKarga(){
+        db.clearAllTables();
+        db.ikasleaDao().resetPrimaryKeyAutoIncrementValueIkaslea();
+        db.guneaDao().resetPrimaryKeyAutoIncrementValueGunea();
+        db.puntuazioaDao().resetPrimaryKeyAutoIncrementValuePuntuazioa();
+        db.errekorDao().resetPrimaryKeyAutoIncrementValueErrekor();
 
-    private void markFirstRun() {
-        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("KEY_FIRST_RUN", false);
-        editor.apply();
-    }
+        loadIkasleakData();
+   }
 
-    private void dbKarga(){
-        // Ikasleen datuen karga
-        Ikaslea ikaslea1 = new Ikaslea("Aingeru", "Siranaula Santos", "aingeru@gmail.com", "12345678", "LH 1");
-        db.ikasleaDao().insert(ikaslea1);
+   private void loadIkasleakData() {
+        firestore.collection("Ikasleak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.ikasleaDao().insert(document.toObject(Ikaslea.class));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
 
-        Ikaslea ikaslea2 = new Ikaslea("Unax", "Zulaika Fuente", "unaxz05@gmail.com", "proba1", "LH 1");
-        db.ikasleaDao().insert(ikaslea2);
+                            // Después de cargar Ikasleak, carga Guneak
+                            loadGuneakData();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+   }
 
-        // Guneen datuen karga
-        Gunea gunea1 = new Gunea("YERMOKO MARIA ANDREAREN SANTUTEGIA", "Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu." +
-                "    \n" +
-                "    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta\n" +
-                "    santutegiaren alboan ermita txiki bat dago, Santa Luzia izena daukana.\n" +
-                "    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.\n" +
-                "    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta\n" +
-                "    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden\n" +
-                "    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.", "43.17181637427461, -2.9715944481866505", "yermokoandremariarensantutegia", "yermoko_andre_mariaren_santutegia,yermoko_andre_mari2,yermoko_andre_mari3,yermoko_andre_mari4,yermoko_andre_mari5");
-        db.guneaDao().insert(gunea1);
-        Gunea gunea2 = new Gunea("BURDIN HESIA", "Burdin Hesia, orain dela 80 urte guerra garaian sortu zen hesi defendatzaile bat izan da. Orain\n" +
-                "funtzionamenduan ez dagoen arren, 1936tik 1939ra martxan egon zen. Momentu horretan Espainian\n" +
-                "gatazka bat sortu egin zen, gizon batek, Francisco Franco, Espainiako gobernua indarrez hartu egin\n" +
-                "zuen, eta bi bando sortu egin ziren. Euskadiko gehienak ez zeudelako bere ideiekin ados, horregatik,\n" +
-                "Burdin hesia erakitzea erabaki zuten, Euskadi Frankoren erasoengatik defendatzeko. Hesia luze-luzea\n" +
-                "izan zen, bertan, bunkerrak, tunelak eta lubakiakezarri ziren eta 80 kilometrotan zehar banatzen ziren.\n" +
-                "\n" +
-                "Laudioko Burdin Hesiaren ibilbidea Yermoko Andre Mariaren Santutegitik abiatzen da. Bunker\n" +
-                "horietan, herritarrak sartzen ziren artilleriatik, abiaziotik edota bonbardaketetatik babesteko, hauek\n" +
-                "burdinaz eta hormigoiz egindako eraikinak ziren. Bestalde, lubakietan sartzen ziren etsaiaren\n" +
-                "estalpean tiro egiteko eta tunel horietatik abiatzen ziren leku batetik bestera babestuta mugitu ahal\n" +
-                "izateko.\n" +
-                "\n" +
-                "Gaur egun, Burdin Hesiko lubaki edo bunker asko kontserbatzen dira oraindik. Eremu osoa\n" +
-                "seinaleztatuta dago, eta, horri esker, bisitariek nahi bezala egin dezakete ibilbide osoa, lau ordu baino\n" +
-                "gehiagoko iraupenarekin.", "43.17181637427461, -2.9715944481866505", "burdinhesia", "burdin_hesia,burdin_hesia1,burdin_hesia2,burdin_hesia3,burdin_hesia4");
-        db.guneaDao().insert(gunea2);
-        Gunea gunea3 = new Gunea("SANTA AGUEDA ERMITA", "Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal\n" +
-                "    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen\n" +
-                "    den santa kristauari.\n" +
-                "    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko\n" +
-                "    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko\n" +
-                "    jai eta tradizioei lotuta egoten dira.", "43.150580414475016, -2.981593474706786", "santaaguedakoermita", "santa_aguedako_ermita,santa_aguedako_ermita1,santa_aguedako_ermita2,santa_aguedako_ermita3");
-        db.guneaDao().insert(gunea3);
-        Gunea gunea4 = new Gunea("KATUXAKO JAUREGIA", "Jauregia XVII.mendekoa da.\n" +
-                "Jauregiaren aurpegi nagusia Nerbioi ibaiera begira dago. Eraikuntza, teila okertuak dituen sabai\n" +
-                "triangeluar bat duen kubo handi bat bezala ikusten da. Hiru solairu ditu: bat behean, bat erdian eta bat\n" +
-                "goian.\n" +
-                "Eraikinaren aurpegi nagusia oso polita da eta harriz egina dago. Beheko solairuan, ate handi bat dago,\n" +
-                "goiko aldean arkuak dituena, zubi bat bezala. Atearen alboetan leihoak ere badaude. Lehenengo\n" +
-                "pisuan, irteten diren lau balkoi eta erdian marrazkiak dituen armarri bat daude. Goiko aldean, lau leiho\n" +
-                "txiki daude.\n" +
-                "Eraikinaren alboetako aurpegiak ez dira parekoak bezain politak. Harri xumeagoz eginak daude eta ez\n" +
-                "dute hainbeste xehetasun politik. Leiho gutxiago ere badituzte.\n" +
-                "Eraikinaren barruan, lehen solairuan, jendea sartzen den atari bat dago. Handik, eskailera batzuk igo\n" +
-                "daitezke jendea bizi den geletara iristeko. Eraikinaren atzetik beste ate batera daraman korridore luze\n" +
-                "bat ere badago.", "43.13531794275091, -2.970229297221", "katuxakojauregia", "katuxako_jauregia,katuxako_jauregia1,katuxako_jauregia2,katuxako_jauregia3,katuxako_jauregia4");
-        db.guneaDao().insert(gunea4);
-        Gunea gunea5 = new Gunea("LAMUZAKO SAN PEDRO ELIZA", "Lamuzako San Pedro eliza oso zaharra da, duela urte asko eraiki zen, XVI. mendean. Baina lehenago,\n" +
-                "XI. mendean, beste eraikin bat zegoen haren ordez, tenplu bat. Handik denbora batera, eliza luzaroan\n" +
-                "konpondu eta aldatu zuten, XVIII. mendera arte.\n" +
-                "Elizaren bereziena kanpaiak dauden dorre garaia da, eta elizaren barruan irudi oso politak daude\n" +
-                "zizelkatuta.\n" +
-                "Herriko plazan dago eliza, udaletxeko plazan, herriaren erdian. Lamuzako jendearentzat leku\n" +
-                "garrantzitsua da.", "43.143806461303576, -2.9621836509130417", "lamuzakosanpedroeliza", "lamuzako_san_pedro_eliza,laudio_san_pedro1,laudio_san_pedro2,laudio_san_pedro3,laudio_san_pedro4,laudio_san_pedro5");
-        db.guneaDao().insert(gunea5);
-        Gunea gunea6 = new Gunea("LAMUZAKO JAUREGIA", "Lamuzako jauregia Urkixoko markesen jauregia izan zen garai batean. XVIII. mendeko eraikin\n" +
-                "originala da.\n" +
-                "8,5 hektarea baino gehiagoko parke zabala inguratzen du, zuhaitz ugari eta aberatsekin. Hori guztia\n" +
-                "Urkixoko markeserriaren finkako lorategiak ziren.\n" +
-                "Gaur egun 79 zuhaitz-espezie daude, eta horien artean azpimarratzekoak dira Monterreyko altzifrea,\n" +
-                "130 urte dituena, Japoniako aranondo gorriakd eo Libanoko zedroa.\n" +
-                "Jauregiko eraikinek eta gainerako gelek Kultur Etxea hartzen dute. Kasinoaren eraikinak, urmael\n" +
-                "batek eta harlanduzko frontoi batek osatzen dute marko hau.\n" +
-                "Herriaren bihotzean kokatua, antzinako jabeek hain apeta eta arreta handiz marraztu eta zaindu\n" +
-                "zutena, bisitari guztiei irekia dago, udal parke aparta bihurtua.", "43.145421312014555, -2.96395062240496", "lamuzajauregia", "lamuza_jauregia,lamuzako_jauregia1,lamuzako_jauregia2,lamuzako_jauregia3");
-        db.guneaDao().insert(gunea6);
-        Gunea gunea7 = new Gunea("LEZEAGAKO SORGINA", "Lezeagako sorgina, Laudioko aratuzteetako pertsonaia nagusia da. Karnabesetan zehar sorginaren\n" +
-                "panpina kaletik paseatzen dute, baina hauek bukatzen direnean suan erretzen dute. Hala ere, hurrengo\n" +
-                "urtean sorginaren beste panpin berri bat izango dute.\n" +
-                "Hau ez da pertsonaia asmatu bat. Orain dela urte asko bizi izan zen emakume batean oinarritzen da\n" +
-                "kondaira. Iñarrondoko amildegiaren behealdean bizi zen emakumeari sorgina deitzen zioten, eta gune\n" +
-                "horretatik egiten zituen bere bihurrikeriak, hala ere, pertsonaia ez gaizto gisa gogoratzen zaio.\n" +
-                "Baina Lezeagako sorgina ez da betidanik Laudioko aratuzteetako pertsonaia izan. Orain dela zenbait\n" +
-                "urte Espainian ez ziren aratusteak ospatu, ospakizun paganoa delako, hau da, ez duela zer ikusirik\n" +
-                "ospakizun erlijiosoekin. Hori dela eta, Franco boterera heldu zenean ez zuen utzi ospatzen. Berak\n" +
-                "bakarrik onartzen zituelako kristautasunean oinarritzen ziren tradizioak. Horregatik, garai hori\n" +
-                "bukatzean herrialdeak karnabasak berriz ospatzen hasi zen eta pertsonaia bat sortzea erabaki zuten,\n" +
-                "Lezagako sorgina. 1982an panpina desfilatu zuen lehen urtea izan zen.", "43.14497314413745, -2.964500273328657", "lezeagakosorgina", "lezeagako_sorgina,legazako_sorgina1,legazako_sorgina2");
-        db.guneaDao().insert(gunea7);
+   private void loadGuneakData() {
+        firestore.collection("Guneak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.guneaDao().insert(document.toObject(Gunea.class));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
 
-        // Puntuazio karga
-        Puntuazioa puntuazioa1 = new Puntuazioa(1001, 1, 1);
-        db.puntuazioaDao().insert(puntuazioa1);
-        Puntuazioa puntuazioa2 = new Puntuazioa(1002, 2, 2);
-        db.puntuazioaDao().insert(puntuazioa2);
+                            // Después de cargar Guneak, carga Puntuazioak
+                            loadPuntuazioakData();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+   }
+   private void loadPuntuazioakData() {
+        firestore.collection("Puntuazioak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.puntuazioaDao().insert(document.toObject(Puntuazioa.class));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
 
-        // Record karga
-        Errekor errekor1 = new Errekor(1);
-        db.errekorDao().insert(errekor1);
-        Errekor errekor2 = new Errekor(2);
-        db.errekorDao().insert(errekor2);
-    }
+                            // Después de cargar Puntuazioak, carga Errekorrak
+                            loadErrekorData();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+   }
+
+   private void loadErrekorData(){
+        firestore.collection("Errekorrak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.errekorDao().insert(document.toObject(Errekor.class));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+   }
+
 }

@@ -25,6 +25,8 @@ public class Galdera {
         this.id_gunea = id_gunea;
     }
 
+    public Galdera(){}
+
     // Getters
     public int getId_galdera() {
         return id_galdera;

@@ -22,17 +22,19 @@ public class Gunea {
     private String koordenadak;
     @ColumnInfo(name = "audioa")
     private String audioa;
-    @ColumnInfo(name = "irudia")
-    private String irudia;
+    @ColumnInfo(name = "irudiak")
+    private String irudiak;
 
     // Constructor
-    public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudia) {
+    public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudiak) {
         this.izena = izena;
         this.deskribapena = deskribapena;
         this.koordenadak = koordenadak;
         this.audioa = audioa;
-        this.irudia = irudia;
+        this.irudiak = irudiak;
     }
+
+    public Gunea(){}
 
     // Getters
     public int getId_gunea() {
@@ -50,8 +52,8 @@ public class Gunea {
     public String getAudioa() {
         return audioa;
     }
-    public String getIrudia() {
-        return irudia;
+    public String getIrudiak() {
+        return irudiak;
     }
 
     // Setters
@@ -70,7 +72,7 @@ public class Gunea {
     public void setAudioa(String audioa) {
         this.audioa = audioa;
     }
-    public void setIrudia(String irudia) {
-        this.irudia = irudia;
+    public void setIrudiak(String irudiak) {
+        this.irudiak = irudiak;
     }
 }

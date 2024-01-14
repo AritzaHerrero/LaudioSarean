@@ -23,6 +23,8 @@ public class Errekor {
         this.id_puntuazioa = id_puntuazioa;
     }
 
+    public Errekor(){}
+
     //Getters
     public int getId_errekor() {
         return id_errekor;
