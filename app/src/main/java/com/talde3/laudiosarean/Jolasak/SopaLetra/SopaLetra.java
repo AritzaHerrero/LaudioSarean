@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
+import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
 import com.talde3.laudiosarean.R;
 
 import java.util.ArrayList;
@@ -23,10 +26,48 @@ public class SopaLetra extends AppCompatActivity {
     private ArrayList<String> hitzAurkituak = new ArrayList<>();
     private ArrayList <Integer> idTextView = new ArrayList<>();
 
+    private int unekoPuntuazioa;
+    private long hasierakoDenbora = 0L;
+    private JolasakMetodoak jolasakMetodoak;
+    private TextView txtPuntuazioa;
+    private Handler koronoHandler = new Handler();
+
+    //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
+    private Runnable kronoRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
+            int segundoak = (int) (milisegundoak / 1000);
+            int minutuak = segundoak / 60;
+            segundoak = segundoak % 60;
+
+            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
+            txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+
+            String time = String.format("%02d:%02d", minutuak, segundoak);
+            txtKronometroa.setText(time);
+
+            // Actualizar puntuación según el tiempo transcurrido
+            unekoPuntuazioa= jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
+            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
+
+            koronoHandler.postDelayed(this, 10);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sopa_letra);
+
+        hasierakoDenbora = System.currentTimeMillis();
+        koronoHandler.postDelayed(kronoRunnable, 0);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new JokoDatuakFragment())
+                    .commit();
+        }
 
         GridLayout gridLayout = findViewById(R.id.gridLayoutSopaLetras);
 
