@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 
 import com.talde3.laudiosarean.GuneInformazioa;
 import com.talde3.laudiosarean.GuneakFragment;
+import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
 import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
 
@@ -87,6 +88,12 @@ public class Laberintoa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laberintoa);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new JokoDatuakFragment())
+                    .commit();
+        }
 
         jugadorX = hasieraPuntuaX;
         jugadorY = hasieraPuntuaY;

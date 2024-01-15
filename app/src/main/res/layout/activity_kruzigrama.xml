@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Jolasak.Kruzigrama.Kruzigrama">
+
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- Tu GridLayout existente -->
+
+    <!-- LinearLayout con los TextView -->
+
+    <GridLayout
+        android:id="@+id/gridLayoutKruzigrama"
+        android:layout_width="359dp"
+        android:layout_height="324dp"
+        android:layout_margin="8dp"
+        android:columnCount="11"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        android:rowCount="11"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.162"
+        tools:ignore="MissingConstraints"></GridLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnKonprobatu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayoutKruzigrama">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa2"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa3"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa4"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa5"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definizioa6"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Tu botón existente -->
+    <Button
+        android:id="@+id/btnKonprobatu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnKonpronatu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayoutKruzigrama"
+        app:layout_constraintVertical_bias="0.951" />
+</androidx.constraintlayout.widget.ConstraintLayout>

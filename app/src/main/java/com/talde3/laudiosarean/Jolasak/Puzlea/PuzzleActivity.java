@@ -32,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
+import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
 import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
 import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
@@ -46,6 +48,7 @@ public class PuzzleActivity extends AppCompatActivity {
     ArrayList<PuzlearenPieza> piezak;
     private int unekoPuntuazioa;
     private long hasierakoDenbora = 0L;
+    private JolasakMetodoak jolasakMetodoak;
     private TextView txtPuntuazioa;
     private Handler koronoHandler = new Handler();
 
@@ -59,25 +62,29 @@ public class PuzzleActivity extends AppCompatActivity {
             segundoak = segundoak % 60;
 
             TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-             txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+            txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
 
             String time = String.format("%02d:%02d", minutuak, segundoak);
             txtKronometroa.setText(time);
 
             // Actualizar puntuación según el tiempo transcurrido
-            unekoPuntuazioa = puntazioaKalkulatu(milisegundoak);
+            unekoPuntuazioa= jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
             txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
 
             koronoHandler.postDelayed(this, 10);
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new JokoDatuakFragment())
+                    .commit();
+        }
 
         final RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
         final ImageView imgPuzlea = findViewById(R.id.imgPuzlea);
@@ -316,28 +323,9 @@ public class PuzzleActivity extends AppCompatActivity {
     public void egiaztatuJokuAmaiera() {
         if (amaitutaDago()) {
             koronoHandler.removeCallbacks(kronoRunnable);
+//            jolasakMetodoak.erakutsiMezua(txtPuntuazioa, this, hasierakoDenbora, koronoHandler);
             erakutsiMezua(txtPuntuazioa);
         }
-    }
-
-    private int puntazioaKalkulatu (long totalTimeInMillis) {
-        int maxPuntuazioa = 10000;
-        int milisegundoak = (int) totalTimeInMillis;
-        int puntuazioa;
-
-        if (milisegundoak <= 10000){
-            puntuazioa=10000;
-        } else if(milisegundoak<=20000){
-            puntuazioa = maxPuntuazioa - ((milisegundoak-10000)*128)/1000;
-        } else if(milisegundoak<=30000){
-            puntuazioa = maxPuntuazioa - 1280 - ((milisegundoak-20000)*64)/1000;
-        } else{
-            puntuazioa = maxPuntuazioa -  1920 - ((milisegundoak-30000)*32)/1000;
-        }
-        if (puntuazioa < 0) {
-            puntuazioa = 0;
-        }
-        return puntuazioa;
     }
 
     private boolean amaitutaDago() {
@@ -350,7 +338,6 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
-        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
         View view = LayoutInflater.from(PuzzleActivity.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
         Button berriroJolastu = view.findViewById(R.id.berriroJolastu);

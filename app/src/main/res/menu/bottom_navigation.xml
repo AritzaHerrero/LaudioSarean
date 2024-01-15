@@ -6,6 +6,10 @@
         android:icon="@drawable/guneak_24"
         android:title="@string/guneak" />
     <item
+        android:id="@+id/mapaFragment"
+        android:icon="@drawable/map_24"
+        android:title="@string/mapa" />
+    <item
         android:id="@+id/profilaFragment"
         android:icon="@drawable/profile_24"
         android:title="@string/profila" />

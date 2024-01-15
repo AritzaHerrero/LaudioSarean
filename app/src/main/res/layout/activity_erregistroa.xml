@@ -13,7 +13,7 @@
         android:ems="10"
         android:hint="@string/eposta"
         android:inputType="textEmailAddress"
-        android:minHeight="48dp"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -29,7 +29,7 @@
         android:ems="10"
         android:hint="@string/izena"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -45,7 +45,7 @@
         android:ems="10"
         android:hint="@string/abizenak"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -61,7 +61,7 @@
         android:ems="10"
         android:hint="@string/pasahitza1"
         android:inputType="textPassword"
-        android:minHeight="48dp"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -77,7 +77,7 @@
         android:ems="10"
         android:hint="@string/pasahitza2"
         android:inputType="textPassword"
-        android:minHeight="48dp"
+        android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -86,20 +86,31 @@
         app:layout_constraintVertical_bias="0.1"
         tools:ignore="Autofill,TextContrastCheck" />
 
-    <Spinner
-        android:id="@+id/spinnerKlasea"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65sp"
-        android:layout_marginEnd="140sp"
-        android:backgroundTint="@color/black"
-        android:minHeight="48dp"
+        android:text="Ikasgela:"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasahitza2"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.176" />
+
+    <Spinner
+        android:id="@+id/spinnerKlasea"
+        android:layout_width="132sp"
+        android:layout_height="49sp"
+        android:backgroundTint="@color/black"
+        android:minHeight="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.752" />
 
     <Button
         android:id="@+id/btnErregistratu"
@@ -112,5 +123,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerKlasea"
         app:layout_constraintVertical_bias="0.884" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

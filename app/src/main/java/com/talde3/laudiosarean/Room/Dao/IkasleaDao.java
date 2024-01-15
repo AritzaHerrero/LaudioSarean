@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
@@ -14,9 +15,13 @@ public interface IkasleaDao {
     @Query("SELECT * FROM Ikaslea")
     List<Ikaslea> getAll();
     @Query("SELECT * FROM Ikaslea WHERE email = :email")
-    Ikaslea getUserByEmail(String email);
+    Ikaslea getIkasleaByEmail(String email);
     @Insert
-    void insertAll(Ikaslea... ikaslea);
+    void insert(Ikaslea ikaslea);
+    @Update
+    void update(Ikaslea ikaslea);
     @Delete
     void delete(Ikaslea ikaslea);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Ikaslea'")
+    void resetPrimaryKeyAutoIncrementValueIkaslea();
 }

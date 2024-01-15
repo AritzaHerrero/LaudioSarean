@@ -14,7 +14,9 @@ public interface PuntuazioaDao {
     @Query("Select * from Puntuazioa")
     List<Puntuazioa> getAll();
     @Insert
-    void InsertAll(Puntuazioa puntuazioa);
+    void insert(Puntuazioa puntuazioa);
     @Delete
     void delete(Puntuazioa puntuazioa);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Puntuazioa'")
+    void resetPrimaryKeyAutoIncrementValuePuntuazioa();
 }

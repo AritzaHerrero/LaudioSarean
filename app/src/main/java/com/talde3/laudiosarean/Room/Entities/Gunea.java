@@ -6,10 +6,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Gunea",
-        foreignKeys = {
-            @ForeignKey(entity= Record.class, parentColumns = "id_record", childColumns = "id_record", onDelete = ForeignKey.CASCADE)
-        }
+import java.util.ArrayList;
+
+@Entity(tableName = "Gunea"
 )
 public class Gunea {
     @PrimaryKey(autoGenerate = true)
@@ -23,20 +22,19 @@ public class Gunea {
     private String koordenadak;
     @ColumnInfo(name = "audioa")
     private String audioa;
-    @ColumnInfo(name = "irudia")
-    private String irudia;
-    @ColumnInfo(name = "id_record")
-    private int id_record;
+    @ColumnInfo(name = "irudiak")
+    private String irudiak;
 
     // Constructor
-    public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudia, int id_record) {
+    public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudiak) {
         this.izena = izena;
         this.deskribapena = deskribapena;
         this.koordenadak = koordenadak;
         this.audioa = audioa;
-        this.irudia = irudia;
-        this.id_record = id_record;
+        this.irudiak = irudiak;
     }
+
+    public Gunea(){}
 
     // Getters
     public int getId_gunea() {
@@ -54,11 +52,8 @@ public class Gunea {
     public String getAudioa() {
         return audioa;
     }
-    public String getIrudia() {
-        return irudia;
-    }
-    public int getId_record() {
-        return id_record;
+    public String getIrudiak() {
+        return irudiak;
     }
 
     // Setters
@@ -77,10 +72,7 @@ public class Gunea {
     public void setAudioa(String audioa) {
         this.audioa = audioa;
     }
-    public void setIrudia(String irudia) {
-        this.irudia = irudia;
-    }
-    public void setId_record(int id_record) {
-        this.id_record = id_record;
+    public void setIrudiak(String irudiak) {
+        this.irudiak = irudiak;
     }
 }

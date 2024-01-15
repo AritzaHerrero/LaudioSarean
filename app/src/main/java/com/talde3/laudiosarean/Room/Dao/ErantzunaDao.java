@@ -17,4 +17,6 @@ public interface ErantzunaDao {
     void InsertAll(Erantzuna erantzuna);
     @Delete
     void delete(Erantzuna erantzuna);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Erantzuna'")
+    void resetPrimaryKeyAutoIncrementValueErantzuna();
 }

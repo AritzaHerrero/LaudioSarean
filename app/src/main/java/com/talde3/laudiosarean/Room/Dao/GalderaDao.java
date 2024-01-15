@@ -17,4 +17,6 @@ public interface GalderaDao {
     void InsertAll(Galdera galdera);
     @Delete
     void delete(Galdera galdera);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Galdera'")
+    void resetPrimaryKeyAutoIncrementValueGaldera();
 }

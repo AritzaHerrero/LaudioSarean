@@ -42,35 +42,15 @@
     <string name="izenburuaGunea"></string>
     <string name="informazioGunea"></string>
 
-    <string name="izenburuaGunea1">YERMOKO MARIA ANDREAREN SANTUTEGIA</string>
-    <string name="informazioGunea1"> Argazkietan ikusi dezakegun erakina, Yermoko Maria Andrearen Santutegia deritzo. XVI. mendean
-    eraiki zenez, horregatik, 500 urte inguru dituela jakin dezakegu.
-    Kamaraka mendiaren hegalean kokatzen da, Torrontegieta izeneko muino harritsu batean, eta
-    santutegiaren alboan ermita txiki bat dago, Santa Luzia izena daukana.
-    Eraikinaren barrukaldean, zenbait kapera daude, hauek mesa emateko lekuak izaten dira normalean.
-    Era berean, sakristia bat dago, hemen barruan apaizak mesak emateko behar duen guztia gordeta
-    dago. Bestaldetik, elizpea, erakinaren kalpoaldean kokatzen da, harrizko kontrahormen artean dauden
-    erdi-puntuko sei arkuen bidez irekitzen da. Honi ere harrera-gunea esan diezaiokegu.
-    </string>
-
-    <string name="izenburuaGunea2">SANTA AGUEDA ERMITA</string>
-    <string name="informazioGunea2">Laudioko Santa Ageda ermita leku erlijiosoa da, Laudion kokatua, Arabako probintzian, Euskal
-    Autonomia Erkidegoan, Espainian. Ermita hau Santa Agedari eskainia dago, Eliza Katolikoan gurtzen
-    den santa kristauari.
-    Ermita izaera erlijiosoa duen eraikina da, mezak, prozesioak edo bestelako jarduera erlijiosoak egiteko
-    erabiltzen dena. Toki horiek garrantzitsuak izaten dira tokiko komunitatearentzat, eta, askotan, tokiko
-    jai eta tradizioei lotuta egoten dira.
-    </string>
-
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Botttom Navigation-->
     <string name="guneak">Guneak</string>
+    <string name="mapa">Mapa</string>
     <string name="profila">Profila</string>
     <string name="ranking">Rankinga</string>
-    
+
     <!-- Guneak Fragmet -->
     <string name="santutegiaIzenburua">Yermoko Andre Mariaren Santutegia</string>
     <string name="burdinHestiaIzenburua">Burdin Hesia</string>
@@ -90,6 +70,9 @@
     <string name="btnAldatuPass">Aldatu Pasahitza</string>
     <string name="btnItxiSaioa">Itxi saioa</string>
     <string name="btnDelAcc">Ezabatu kontua</string>
+
+    <!-- Mapa Fragment -->
+    <string name="mapaInfo">Behean Laudioko mapa ikusi ahal dugu 8 gune desberdinen kokalekuekin. Klick egiten badugu gune batean, kokalekuaren izena eta inforamzio txiki bat ikusi ahalko dugu. Klick-a mantzentzen badugu gunean, gune horren barrura eramango digu, bertan informazio gehiago eta argazki desberdinak ikusi ahal izateko.</string>
 
     <string name="descriptionEditIzena">Izena editatzeko botoia</string>
     <string name="descriptionEditAbizenak">Abizenak editatzeko botoiak</string>
@@ -112,22 +95,47 @@
     <string name="kontuaEzabatuta">Zure kontua ondo ezabatu da</string>
     <string name="kontuaEzEzabatuta">Ezin izan da zure kontua ezabatu, saiatu berriro geroago</string>
 
-    //laberintoa
+    <!-- laberintoa -->
     <string name="btnAurrera">GORA</string>
     <string name="btnAtzera">BEHERA</string>
     <string name="btnEzkerra">EZKERRA</string>
     <string name="btnEskuma">ESKUMA</string>
 
-    //informazioa_dialog
+    <!-- kokalekua_dialog -->
+    <string name="kokalekuaHasi">Zure kokalekuko gunea hasi nahi duzu?</string>
+    <string name="kokalekuaEz">Ez</string>
+    <string name="kokalekuaBai">Bai</string>
+
+    <!-- informazioa_dialog -->
     <string name="prest">Prest zaude jokoa hasteko?</string>
     <string name="prestEz">Arauak ikusi</string>
     <string name="prestBai">Jokatu</string>
 
-    //zorionak_dialog
+
+    <!-- zorionak_dialog -->
     <string name="aurrera">Aurrera</string>
     <string name="berriroJolastu">Berriro jolastu</string>
     <string name="tituloaZorionak">ZORIONAK!!</string>
     <string name="testuaZorionak">Oso ondo segui horrela!!</string>
+
+    <!-- Kruzigrama -->
+    <string name="btnKonpronatu"> Konprobatu </string>
+    <string name="definizioa1"> 1. Norbaitek, beste norbaiten edo zerbaiten itxura hartzeko, edo inork ezagut ez dezan, jartzen dituen jantzien edo bestelakoen multzoa.</string>
+    <string name="definizioa2"> 2. Urteko bigarren hila, urte arruntetan 28 egun eta bisurteetan 29 egun dituena.</string>
+    <string name="definizioa3"> 3. Pertsona-talde bat jendearen aurretik ilaran igarotzea; bereziki, soldadu-talde bat agintarien aurretik ilaran igarotzea.</string>
+    <string name="definizioa4"> 4. Su handia.</string>
+    <string name="definizioa5"> 5. Herri sineskeriaren arabera, deabruarekiko hitzarmen baten ondorioz-edo, indar ezkutuen jabe den pertsona.</string>
+    <string name="definizioa6"> 6. Laudioko sorginaren izena.</string>
+
+    <!-- Galderak -->
+    <string name="erantzunaAukeratu">Erantzun bat aukeratu, mesedez</string>
+
+    <!-- erantzun_zuzena_dialog -->
+    <string name="hurrengoGaldera">Hurrengo galdera</string>
+
+    <!-- erantzun_zuzena_dialog -->
+    <string name="tituloaOkerra">ERANTZUN OKERRA</string>
+    <string name="testuaOkerra">Hurrengoan hobeago egingo duzu</string>
 
 
 </resources>

@@ -11,10 +11,14 @@ import java.util.List;
 
 @Dao
 public interface GuneaDao {
-    @Query("Select * from Gunea")
+    @Query("SELECT * FROM Gunea")
     List<Gunea> getAll();
+    @Query("SELECT * FROM Gunea WHERE id_gunea = :id")
+    Gunea getGuneaById(int id);
     @Insert
-    void InsertAll(Gunea gunea);
+    void insert(Gunea gunea);
     @Delete
     void delete(Gunea gunea);
+    @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Gunea'")
+    void resetPrimaryKeyAutoIncrementValueGunea();
 }

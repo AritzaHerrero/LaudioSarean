@@ -1,13 +1,10 @@
 package com.talde3.laudiosarean;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
-import com.talde3.laudiosarean.Room.Entities.Erabiltzailea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 import java.util.ArrayList;
@@ -62,12 +58,10 @@ public class Erregistroa extends AppCompatActivity {
         btnErregistratu = findViewById(R.id.btnErregistratu);
 
         ArrayList<String> klaseak = new ArrayList<>();
-        klaseak.add("LH 1");
-        klaseak.add("LH 2");
-        klaseak.add("LH 3");
-        klaseak.add("LH 4");
-        klaseak.add("LH 5");
-        klaseak.add("LH 6");
+        klaseak.add("A");
+        klaseak.add("B");
+        klaseak.add("D");
+        klaseak.add("E");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, klaseak);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -135,14 +129,12 @@ public class Erregistroa extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
-                                // Log.i(TAG, izena + " " + abizenak + " " + eposta + " " +pasahitza1 + " " + kurtsoa);
-//                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta,  pasahitza1, kurtsoa);
-//                                // Log.i(TAG, String.valueOf(ikaslea.getId()));
-//                                IkasleaDao iDAO = LoginActivity.db.ikasleaDao();
-//                                iDAO.insertAll(ikaslea);
-
                                 Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
+
+                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta, kurtsoa);
+
                                 Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
+                                intent.putExtra("ikaslea", ikaslea);
                                 startActivity(intent);
                             } else {
                                 // Erregistro okerra. Errore konkretuentzako mezu desberdinekin.
