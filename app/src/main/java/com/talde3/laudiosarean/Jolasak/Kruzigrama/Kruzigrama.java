@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
-import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
 import com.talde3.laudiosarean.R;
 
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class Kruzigrama extends AppCompatActivity {
 
     private int aciertos = 0;
     private String[] hitzak;
-    JokoDatuakFragment jokoDatuakFragment;
+    private JokoDatuakFragment jokoDatuakFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,7 @@ public class Kruzigrama extends AppCompatActivity {
         jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
         if (savedInstanceState == null) {
+            jokoDatuakFragment = new JokoDatuakFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new JokoDatuakFragment())
                     .commit();
@@ -271,7 +271,7 @@ public class Kruzigrama extends AppCompatActivity {
             // Aquí se mantiene el resto del código
             if (isKruzigramaCompletado()==true) {
                 TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
-                    erakutsiMezua(txtPuntuazioa);
+                erakutsiMezua(txtPuntuazioa);
             } else {
                 // El crucigrama no está completado
                 Toast.makeText(Kruzigrama.this, "Ez da kruzigrama osatuta", Toast.LENGTH_SHORT).show();
@@ -281,6 +281,7 @@ public class Kruzigrama extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
+        jokoDatuakFragment.detenerCronometro();
         View view = LayoutInflater.from(Kruzigrama.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
         Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
@@ -323,8 +324,9 @@ public class Kruzigrama extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+                jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                jokoDatuakFragment.reiniciarJokoDatuakFragment();
                 reiniciarKruzigrama();
-                Toast.makeText(Kruzigrama.this, "KAAAAAAAAAA", Toast.LENGTH_SHORT).show();
             }
         });
         if (alertDialog.getWindow() != null) {
@@ -352,11 +354,10 @@ public class Kruzigrama extends AppCompatActivity {
                     editText.setText("");
                     editText.setBackgroundColor(Color.TRANSPARENT);
                     editText.setEnabled(true);
+                    editText.setBackgroundResource(R.drawable.cell_background);
                 }
             }
         }
         aciertos = 0;
     }
-
-
 }

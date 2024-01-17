@@ -12,20 +12,52 @@ import androidx.fragment.app.Fragment;
 import com.talde3.laudiosarean.R;
 
 public class JokoDatuakFragment extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
     private int unekoPuntuazioa;
     private long hasierakoDenbora = 0L;
-    private JolasakMetodoak jolasakMetodoak;
     private TextView txtPuntuazioa;
     private Handler koronoHandler = new Handler();
 
     // Constructor por defecto
     public JokoDatuakFragment() {
         // Required empty public constructor
+    }
+    public void detenerCronometro() {
+        koronoHandler.removeCallbacks(kronoRunnable);
+    }
+
+
+
+    public void reiniciarJokoDatuakFragment() {
+        // Reiniciar variables
+        hasierakoDenbora = System.currentTimeMillis();
+
+        // Reiniciar el cronómetro
+        koronoHandler.postDelayed(kronoRunnable, 0);
+    }
+
+
+    public static int puntazioaKalkulatu(long totalTimeInMillis) {
+        int maxPuntuazioa = 10000;
+        int milisegundoak = (int) totalTimeInMillis;
+        int puntuazioa;
+
+        if (milisegundoak <= 10000) {
+            puntuazioa = 10000;
+        } else if (milisegundoak <= 20000) {
+            puntuazioa = maxPuntuazioa - ((milisegundoak - 10000) * 128) / 1000;
+        } else if (milisegundoak <= 30000) {
+            puntuazioa = maxPuntuazioa - 1280 - ((milisegundoak - 20000) * 64) / 1000;
+        } else {
+            puntuazioa = maxPuntuazioa - 1920 - ((milisegundoak - 30000) * 32) / 1000;
+        }
+        if (puntuazioa < 0) {
+            puntuazioa = 0;
+        }
+        return puntuazioa;
     }
 
     // Método de fábrica para crear una nueva instancia del fragmento
@@ -74,7 +106,7 @@ public class JokoDatuakFragment extends Fragment {
             txtKronometroa.setText(time);
 
             // Actualizar puntuación según el tiempo transcurrido
-            unekoPuntuazioa = jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
+            unekoPuntuazioa = puntazioaKalkulatu(milisegundoak);
             txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
 
             koronoHandler.postDelayed(this, 10);

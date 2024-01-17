@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.talde3.laudiosarean.Jolasak.GalderaDatuakFragment;
+import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
 import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
 import com.talde3.laudiosarean.R;
 
@@ -29,11 +31,22 @@ public class Galderak extends AppCompatActivity {
 
     private List<Question> questions;
     private int currentQuestionIndex;
+    private GalderaDatuakFragment galderaDatuakFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galderak);
+
+        galderaDatuakFragment = (GalderaDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+        if (savedInstanceState == null) {
+            galderaDatuakFragment = new GalderaDatuakFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new GalderaDatuakFragment())
+                    .commit();
+        }
 
         questionTextView = findViewById(R.id.questionTextView);
         answerRadioGroup = findViewById(R.id.answerRadioGroup);

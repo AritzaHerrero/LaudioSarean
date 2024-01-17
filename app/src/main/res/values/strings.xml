@@ -127,6 +127,14 @@
     <string name="definizioa5"> 5. Herri sineskeriaren arabera, deabruarekiko hitzarmen baten ondorioz-edo, indar ezkutuen jabe den pertsona.</string>
     <string name="definizioa6"> 6. Laudioko sorginaren izena.</string>
 
+    <!-- Sopa letra -->
+    <string name="txtTunnelak">TUNELAK</string>
+    <string name="txtArtilleria">ARTILLERIA</string>
+    <string name="txtAbiazioa">ABIAZIOA</string>
+    <string name="txtTropa">TROPA</string>
+    <string name="txtLubaki">LUBAKI</string>
+    <string name="txtBunkerrak">BUNKERRAK</string>
+
     <!-- Galderak -->
     <string name="erantzunaAukeratu">Erantzun bat aukeratu, mesedez</string>
 

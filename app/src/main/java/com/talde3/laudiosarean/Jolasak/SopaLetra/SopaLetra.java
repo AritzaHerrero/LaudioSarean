@@ -4,72 +4,62 @@ import static android.view.View.generateViewId;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Paint;
 
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
-import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
+import com.talde3.laudiosarean.Jolasak.Kruzigrama.Kruzigrama;
 import com.talde3.laudiosarean.R;
 
 import java.util.ArrayList;
 
 public class SopaLetra extends AppCompatActivity {
-
+    private  GridLayout gridLayout;
+    private  String[] hitzak;
+    private TextView txtTunelak;
+    private TextView txtArtilleria;
+    private TextView txtAbiazioa;
+    private TextView txtTropa;
+    private TextView txtLubaki;
+    private TextView txtBunkerrak;
     private TextView lastClickedTextView;
     private ArrayList<String> hitzAurkituak = new ArrayList<>();
     private ArrayList <Integer> idTextView = new ArrayList<>();
-
-    private int unekoPuntuazioa;
-    private long hasierakoDenbora = 0L;
-    private JolasakMetodoak jolasakMetodoak;
-    private TextView txtPuntuazioa;
-    private Handler koronoHandler = new Handler();
-
-    //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
-    private Runnable kronoRunnable = new Runnable() {
-        @Override
-        public void run() {
-            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
-            int segundoak = (int) (milisegundoak / 1000);
-            int minutuak = segundoak / 60;
-            segundoak = segundoak % 60;
-
-            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-            txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
-
-            String time = String.format("%02d:%02d", minutuak, segundoak);
-            txtKronometroa.setText(time);
-
-            // Actualizar puntuación según el tiempo transcurrido
-            unekoPuntuazioa= jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
-            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
-
-            koronoHandler.postDelayed(this, 10);
-        }
-    };
+    private JokoDatuakFragment jokoDatuakFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sopa_letra);
 
-        hasierakoDenbora = System.currentTimeMillis();
-        koronoHandler.postDelayed(kronoRunnable, 0);
+        jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
         if (savedInstanceState == null) {
+            jokoDatuakFragment = new JokoDatuakFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new JokoDatuakFragment())
                     .commit();
         }
 
-        GridLayout gridLayout = findViewById(R.id.gridLayoutSopaLetras);
+        gridLayout = findViewById(R.id.gridLayoutSopaLetras);
+        txtAbiazioa = findViewById(R.id.txtAbiazioa);
+        txtTunelak = findViewById(R.id.txtTunnelak);
+        txtArtilleria = findViewById(R.id.txtArtilleria);
+        txtTropa = findViewById(R.id.txtTropa);
+        txtLubaki = findViewById(R.id.txtLubaki);
+        txtBunkerrak = findViewById(R.id.txtBunkerrak);
 
         char[][] letters = {
                 {'A', 'B', 'B', 'D', 'T', 'U', 'N', 'E', 'L', 'A', 'K', 'E', 'E', 'A'},
@@ -86,7 +76,7 @@ public class SopaLetra extends AppCompatActivity {
                 {'N', 'B', 'U', 'N', 'K', 'E', 'R', 'R', 'A', 'K', 'X', 'U', 'A', 'A'}
         };
 
-        String[] palabras = {"TUNELAK", "BONBARDAKETA", "ARTILLERIA", "ABIAZIOA", "BABESTU", "APORT", "LUBAKI", "BUNKERRAK"};
+        hitzak = new String[]{"TUNELAK", "ARTILLERIA", "ABIAZIOA", "APORT", "LUBAKI", "BUNKERRAK"};
 
 
         for (int i = 0; i < letters.length; i++) {
@@ -144,16 +134,16 @@ public class SopaLetra extends AppCompatActivity {
                                 }
                                 String aukeratutakoHitza = word.toString();
 
-                                boolean encontrado = false;
+                                boolean aurkituta = false;
 
-                                for (String palabra : palabras) {
-                                    if (aukeratutakoHitza.equals(palabra)) {
-                                        encontrado = true;
+                                for (String hitza : hitzak) {
+                                    if (aukeratutakoHitza.equals(hitza)) {
+                                        aurkituta = true;
                                         break;
                                     }
                                 }
 
-                                if (encontrado) {
+                                if (aurkituta) {
                                     for (int r = minRow; r <= maxRow; r++) {
                                         for (int c = minCol; c <= maxCol; c++) {
                                             int index = r * letters[0].length + c;
@@ -165,7 +155,32 @@ public class SopaLetra extends AppCompatActivity {
                                         }
                                     }
                                     hitzAurkituak.add(aukeratutakoHitza);
-//                                    mostrarIdTextView();
+
+                                    if(comprobarSopaAcabada()==true){
+                                        TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+                                        erakutsiMezua(txtPuntuazioa);
+                                    }
+
+                                    switch (aukeratutakoHitza) {
+                                        case "ABIAZIOA":
+                                            txtAbiazioa.setBackgroundColor(Color.GREEN);
+                                            break;
+                                        case "TUNELAK":
+                                            txtTunelak.setBackgroundColor(Color.GREEN);
+                                            break;
+                                        case "ARTILLERIA":
+                                            txtArtilleria.setBackgroundColor(Color.GREEN);
+                                            break;
+                                        case "APORT":
+                                            txtTropa.setBackgroundColor(Color.GREEN);
+                                            break;
+                                        case "LUBAKI":
+                                            txtLubaki.setBackgroundColor(Color.GREEN);
+                                            break;
+                                        case "BUNKERRAK":
+                                            txtBunkerrak.setBackgroundColor(Color.GREEN);
+                                            break;
+                                    }
                                 } else {
                                     boolean idEncontrado = false;
                                     for (int r = minRow; r <= maxRow; r++) {
@@ -204,7 +219,7 @@ public class SopaLetra extends AppCompatActivity {
                                     }
                                 }
                                 if (!idEncontrado) {
-                                    Toast.makeText(getApplicationContext(), "La palabra no está en el array.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Hitz hori ez da zuzena.", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -215,13 +230,92 @@ public class SopaLetra extends AppCompatActivity {
             }
         }
     }
+    private void erakutsiMezua(TextView puntuaizoa) {
+        jokoDatuakFragment.detenerCronometro();
+        View view = LayoutInflater.from(SopaLetra.this).inflate(R.layout.zorionak_dialog, null);
+        Button successDone = view.findViewById(R.id.successDone);
+        Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
 
-//    private void mostrarIdTextView() {
-//        StringBuilder textoIds = new StringBuilder();
-//        for (Integer id : idTextView) {
-//            textoIds.append(id).append(" ,");
-//        }
-//        Toast.makeText(getApplicationContext(), textoIds.toString(), Toast.LENGTH_LONG).show();
-//    }
+        // Obtener la referencia correcta de successDesc desde la vista inflada 'view'
+        TextView successDesc = view.findViewById(R.id.successDesc);
+        TextView successTitle= view.findViewById(R.id.successTitle);
+
+        if (successDesc != null) {
+            String puntuaizoText = puntuaizoa.getText().toString();
+            successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+            int puntuaizoInt = Integer.parseInt(puntuaizoText);
+            if(puntuaizoInt>8000) {
+                successTitle.setText("Hobeezina!!!");
+            } else if (puntuaizoInt>6000) {
+                successTitle.setText("Oso ondo!!");
+            } else if (puntuaizoInt>3500) {
+                successTitle.setText("Ondo!");
+            } else {
+                successTitle.setText("Hurrengoan hobeto egingo duzu!");
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(SopaLetra.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+
+
+        successDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                finish();
+            }
+        });
+
+        berriroJolastu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                jokoDatuakFragment.reiniciarJokoDatuakFragment();
+                reiniciarSopaLetra();
+            }
+        });
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        alertDialog.show();
+    }
+
+    private boolean comprobarSopaAcabada() {
+        boolean sopaAcabada = true;
+
+        for (String palabra : hitzak) {
+            if (!hitzAurkituak.contains(palabra)) {
+                sopaAcabada = false;
+                break;
+            }
+        }
+        return sopaAcabada;
+    }
+
+    private void reiniciarSopaLetra() {
+        // Restablecer colores de fondo de los TextViews en el GridLayout
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            TextView textView = (TextView) gridLayout.getChildAt(i);
+            textView.setBackgroundResource(R.drawable.cell_background);
+        }
+
+        // Limpiar listas de palabras encontradas y IDs de TextViews
+        hitzAurkituak.clear();
+        idTextView.clear();
+
+        // También puedes reiniciar los colores de fondo de los TextViews de las palabras debajo de la pantalla
+        txtAbiazioa.setBackgroundColor(Color.TRANSPARENT);
+        txtTunelak.setBackgroundColor(Color.TRANSPARENT);
+        txtArtilleria.setBackgroundColor(Color.TRANSPARENT);
+        txtTropa.setBackgroundColor(Color.TRANSPARENT);
+        txtLubaki.setBackgroundColor(Color.TRANSPARENT);
+        txtBunkerrak.setBackgroundColor(Color.TRANSPARENT);
+    }
+
 
 }

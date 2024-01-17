@@ -40,31 +40,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/txtTunnelak"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TUNELAK"
+                android:text="@string/txtTunnelak"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
+
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txtArtilleria"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="BONBARDAKETA"
+                android:text="@string/txtArtilleria"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ARTILLERIA"
-                android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -74,31 +68,24 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/txtAbiazioa"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ABIAZIOA"
+                android:text="@string/txtAbiazioa"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/txtTropa"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="BABESTU"
+                android:text="@string/txtTropa"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TROPA"
-                android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -108,24 +95,27 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/txtLubaki"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="LUBAKI"
+                android:text="@string/txtLubaki"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/txtBunkerrak"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="BUNKERRAK"
+                android:text="@string/txtBunkerrak"
                 android:background="@drawable/black_border"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:gravity="center" />
 
         </LinearLayout>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

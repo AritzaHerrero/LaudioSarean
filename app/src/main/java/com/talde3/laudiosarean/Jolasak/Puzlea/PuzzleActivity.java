@@ -3,10 +3,8 @@ package com.talde3.laudiosarean.Jolasak.Puzlea;
 import static java.lang.Math.abs;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,20 +20,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
-import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
-import com.talde3.laudiosarean.Jolasak.Laberintoa.Laberintoa;
-import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
 
 import java.io.IOException;
@@ -45,42 +38,17 @@ import java.util.Collections;
 import java.util.Random;
 
 public class PuzzleActivity extends AppCompatActivity {
+    private JokoDatuakFragment jokoDatuakFragment;
     ArrayList<PuzlearenPieza> piezak;
-    private int unekoPuntuazioa;
-    private long hasierakoDenbora = 0L;
-    private JolasakMetodoak jolasakMetodoak;
-    private TextView txtPuntuazioa;
-    private Handler koronoHandler = new Handler();
-
-    //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
-    private Runnable kronoRunnable = new Runnable() {
-        @Override
-        public void run() {
-            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
-            int segundoak = (int) (milisegundoak / 1000);
-            int minutuak = segundoak / 60;
-            segundoak = segundoak % 60;
-
-            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-            txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
-
-            String time = String.format("%02d:%02d", minutuak, segundoak);
-            txtKronometroa.setText(time);
-
-            // Actualizar puntuación según el tiempo transcurrido
-            unekoPuntuazioa= jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
-            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
-
-            koronoHandler.postDelayed(this, 10);
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
+        jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
         if (savedInstanceState == null) {
+            jokoDatuakFragment = new JokoDatuakFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new JokoDatuakFragment())
                     .commit();
@@ -90,9 +58,6 @@ public class PuzzleActivity extends AppCompatActivity {
         final ImageView imgPuzlea = findViewById(R.id.imgPuzlea);
 
         imgPuzlea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
-
-        hasierakoDenbora = System.currentTimeMillis();
-        koronoHandler.postDelayed(kronoRunnable, 0);
 
         imgPuzlea.post(new Runnable() {
             @Override
@@ -321,9 +286,8 @@ public class PuzzleActivity extends AppCompatActivity {
 
 
     public void egiaztatuJokuAmaiera() {
-        if (amaitutaDago()) {
-            koronoHandler.removeCallbacks(kronoRunnable);
-//            jolasakMetodoak.erakutsiMezua(txtPuntuazioa, this, hasierakoDenbora, koronoHandler);
+        if (amaitutaDago()==true) {
+            TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
             erakutsiMezua(txtPuntuazioa);
         }
     }
@@ -338,6 +302,7 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
+        jokoDatuakFragment.detenerCronometro();
         View view = LayoutInflater.from(PuzzleActivity.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
         Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
@@ -380,8 +345,8 @@ public class PuzzleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                hasierakoDenbora = System.currentTimeMillis();
-                koronoHandler.postDelayed(kronoRunnable, 0);
+                jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                jokoDatuakFragment.reiniciarJokoDatuakFragment();
                 puzzleBerrezarri();
             }
         });
@@ -409,12 +374,5 @@ public class PuzzleActivity extends AppCompatActivity {
             lParams.topMargin = relativeLayout.getHeight() - pieza.piezarenAltuera;
             pieza.setLayoutParams(lParams);
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        koronoHandler.removeCallbacks(kronoRunnable);
     }
 }

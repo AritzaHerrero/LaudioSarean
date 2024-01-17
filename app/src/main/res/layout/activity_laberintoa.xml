@@ -12,73 +12,77 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="375dp"
+        android:layout_height="477dp"
+        android:layout_margin="16dp"
         android:layout_weight="1"
         android:columnCount="25"
         android:rowCount="30"
-        android:layout_margin="16dp"
         app:layout_constraintBottom_toTopOf="@id/btnArriba"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.772" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnDerecha"
-        android:backgroundTint="@color/green_light"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnEskuma"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/btnEskuma"
+        android:src="@drawable/arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAbajo"
-        app:layout_constraintTop_toBottomOf="@+id/btnArriba" />
+        app:layout_constraintTop_toBottomOf="@+id/btnArriba"
+        tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnArriba"
-        android:backgroundTint="@color/green_light"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnAurrera"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/btnAurrera"
+        android:src="@drawable/arrow_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        app:layout_constraintVertical_bias="0.881"
+        tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnAbajo"
-        android:backgroundTint="@color/green_light"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnAtzera"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/btnAtzera"
+        android:src="@drawable/arrow_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnArriba"
-        app:layout_constraintVertical_bias="0.666" />
+        tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnIzquierda"
-        android:backgroundTint="@color/green_light"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnEzkerra"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/btnEzkerra"
+        android:src="@drawable/arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnAbajo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnArriba" />
+        app:layout_constraintTop_toBottomOf="@+id/btnArriba"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
