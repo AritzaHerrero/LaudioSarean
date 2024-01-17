@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -24,50 +23,22 @@ import android.widget.Toast;
 
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
 import com.talde3.laudiosarean.Jolasak.JolasakMetodoak;
-import com.talde3.laudiosarean.Jolasak.Puzlea.PuzzleActivity;
 import com.talde3.laudiosarean.R;
 
 import java.util.HashMap;
 
 public class Kruzigrama extends AppCompatActivity {
 
-
-    private int unekoPuntuazioa;
-    private long hasierakoDenbora = 0L;
-    private JolasakMetodoak jolasakMetodoak;
-    private TextView txtPuntuazioa;
-    private Handler koronoHandler = new Handler();
-
-    //Metodo honek segunduro egiten da, denbora kalkulatzeko eta puntuazizoa unean ikusteko balio du
-    private Runnable kronoRunnable = new Runnable() {
-        @Override
-        public void run() {
-            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
-            int segundoak = (int) (milisegundoak / 1000);
-            int minutuak = segundoak / 60;
-            segundoak = segundoak % 60;
-
-            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
-            txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
-
-            String time = String.format("%02d:%02d", minutuak, segundoak);
-            txtKronometroa.setText(time);
-
-            // Actualizar puntuación según el tiempo transcurrido
-            unekoPuntuazioa= jolasakMetodoak.puntazioaKalkulatu(milisegundoak);
-            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
-
-            koronoHandler.postDelayed(this, 10);
-        }
-    };
+    private int aciertos = 0;
+    private String[] hitzak;
+    JokoDatuakFragment jokoDatuakFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kruzigrama);
 
-        hasierakoDenbora = System.currentTimeMillis();
-        koronoHandler.postDelayed(kronoRunnable, 0);
+        jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -91,19 +62,33 @@ public class Kruzigrama extends AppCompatActivity {
         hitzakPosizioaMap.put("SORGIN", sorgin);
         hitzakPosizioaMap.put("LEZEAGA", lezeaga);
 
-        String[] hitzak = {"DESFILE", "SUTZAR", "MOZORRO", "OTSAILA", "SORGIN", "LEZEAGA"};
+        hitzak = new String[]{"DESFILE", "SUTZAR", "MOZORRO", "OTSAILA", "SORGIN", "LEZEAGA"};
+//        char[][] letters = {
+//                {'X', 'X', 'X', 'X', 'X', '5', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'X', 'X', 'X', '4', ' ', ' ', ' ', ' ', ' ', ' ',},
+//                {'X', 'X', 'X', '3', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', '1', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+//                {'2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X',},
+//                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', ' ', '6', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X',},
+//                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//        };
+
         char[][] letters = {
                 {'X', 'X', 'X', 'X', 'X', '5', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'X', 'X', 'X', '4', ' ', ' ', ' ', ' ', ' ', ' ',},
-                {'X', 'X', 'X', '3', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-                {'X', '1', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-                {'2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X',},
-                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-                {'X', ' ', '6', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X',},
-                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-                {'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'X', 'X', 'X', '4', 'S', 'U', 'T', 'Z', 'A', 'R',},
+                {'X', 'X', 'X', '3', 'X', 'O', 'X', 'X', 'X', 'X', 'X',},
+                {'X', '1', 'X', 'D', 'X', 'R', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'M', 'X', 'E', 'X', 'G', 'X', 'X', 'X', 'X', 'X',},
+                {'2', 'O', 'T', 'S', 'A', 'I', 'L', 'A', 'X', 'X', 'X',},
+                {'X', 'Z', 'X', 'F', 'X', 'N', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'O', 'X', 'I', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'R', '6', 'L', 'E', 'Z', 'E', 'A', 'G', 'A', 'X',},
+                {'X', 'R', 'X', 'E', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
         };
 
         GridLayout gridLayout = findViewById(R.id.gridLayoutKruzigrama);
@@ -127,6 +112,7 @@ public class Kruzigrama extends AppCompatActivity {
                     editText.setGravity(Gravity.CENTER);
                     editText.setPadding(5, 5, 5, 5);
                     editText.setTextColor(Color.BLACK);
+                    editTextArray[i][j] = editText;
                     int id = generateViewId();
                     editText.setId(id);
                     editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
@@ -225,9 +211,13 @@ public class Kruzigrama extends AppCompatActivity {
         }
 
         btnKonprobatu.setOnClickListener(view -> {
+            aciertos = 0;
+
             for (String hitza : hitzak) {
+                boolean encontrado = false;  // Rastrea si una palabra fue encontrada en este bucle
                 for (int i = 0; i < letters.length; i++) {
                     for (int j = 0; j < letters[i].length - hitza.length() + 1; j++) {
+                        // Verificar horizontalmente
                         StringBuilder horizontal = new StringBuilder();
                         for (int k = 0; k < hitza.length(); k++) {
                             if (letters[i][j + k] != 'X') {
@@ -235,21 +225,59 @@ public class Kruzigrama extends AppCompatActivity {
                             }
                         }
                         if (horizontal.toString().trim().equalsIgnoreCase(hitza)) {
-                            // Verificar la posición
+                            // Verificar la posición horizontal
                             HitzPosizioa hitzPosizioa = hitzakPosizioaMap.get(hitza);
                             if (hitzPosizioa != null && hitzPosizioa.isMatch(i, j)) {
-                                // La palabra está en la posición correcta
+                                // La palabra está en la posición correcta horizontalmente
                                 for (int m = 0; m < hitza.length(); m++) {
                                     editTextArray[i][j + m].setBackgroundColor(Color.GREEN);
                                     editTextArray[i][j + m].setEnabled(false);
                                 }
-                                break;
+                                encontrado = true;
+                                break;  // Salir del bucle interno (horizontal) si se encontró una coincidencia
+                            }
+                        }
+
+                        // Verificar verticalmente
+                        StringBuilder vertical = new StringBuilder();
+                        for (int k = 0; k < hitza.length(); k++) {
+                            if (i + k < letters.length && letters[i + k][j] != 'X') {
+                                vertical.append(editTextArray[i + k][j].getText().toString());
+                            }
+                        }
+                        if (vertical.toString().trim().equalsIgnoreCase(hitza)) {
+                            // Verificar la posición vertical
+                            HitzPosizioa hitzPosizioa = hitzakPosizioaMap.get(hitza);
+                            if (hitzPosizioa != null && hitzPosizioa.isMatch(i, j)) {
+                                // La palabra está en la posición correcta verticalmente
+                                for (int m = 0; m < hitza.length(); m++) {
+                                    editTextArray[i + m][j].setBackgroundColor(Color.GREEN);
+                                    editTextArray[i + m][j].setEnabled(false);
+                                }
+                                encontrado = true;
+                                break;  // Salir del bucle interno (vertical) si se encontró una coincidencia
                             }
                         }
                     }
+                    if (encontrado) {
+                        break;  // Salir del bucle externo si se encontró una coincidencia
+                    }
+                }
+                if (encontrado) {
+                    aciertos++;
                 }
             }
+
+            // Aquí se mantiene el resto del código
+            if (isKruzigramaCompletado()==true) {
+                TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+                    erakutsiMezua(txtPuntuazioa);
+            } else {
+                // El crucigrama no está completado
+                Toast.makeText(Kruzigrama.this, "Ez da kruzigrama osatuta", Toast.LENGTH_SHORT).show();
+            }
         });
+
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
@@ -295,16 +323,40 @@ public class Kruzigrama extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                hasierakoDenbora = System.currentTimeMillis();
-                koronoHandler.postDelayed(kronoRunnable, 0);
+                reiniciarKruzigrama();
                 Toast.makeText(Kruzigrama.this, "KAAAAAAAAAA", Toast.LENGTH_SHORT).show();
             }
         });
-
         if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
         alertDialog.show();
     }
+    private boolean isKruzigramaCompletado() {
+        boolean amaituta = false;
+        if(aciertos == hitzak.length){
+            amaituta=true;
+        }
+        return amaituta;
+    }
+    private void reiniciarKruzigrama() {
+        GridLayout gridLayout = findViewById(R.id.gridLayoutKruzigrama);
+
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            View child = gridLayout.getChildAt(i);
+            if (child instanceof EditText) {
+                EditText editText = (EditText) child;
+                if (!Character.isDigit(editText.getText().charAt(0))) {
+                    // Solo reiniciar letras, mantener números
+                    editText.setText("");
+                    editText.setBackgroundColor(Color.TRANSPARENT);
+                    editText.setEnabled(true);
+                }
+            }
+        }
+        aciertos = 0;
+    }
+
+
 }
