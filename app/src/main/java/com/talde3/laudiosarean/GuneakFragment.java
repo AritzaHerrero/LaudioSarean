@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.talde3.laudiosarean.Jolasak.Ruleta.Ruleta;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GuneakFragment#newInstance} factory method to
@@ -146,7 +148,7 @@ public class GuneakFragment extends Fragment {
         ibAzkenEbaluazioa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AzkenEbaluazioaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
                 startActivity(AzkenEbaluazioaIntent);
             }
         });
