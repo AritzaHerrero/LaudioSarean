@@ -70,7 +70,10 @@ public class LoginActivity extends AppCompatActivity {
         db = Datubase.getInstance(getApplicationContext()); // Room
 
         // Datuak kargatu
-        dbKarga();
+        if (isFirstRun()) {
+            dbKarga();
+            markFirstRun();
+        }
 
         Intent intent = getIntent();
 
@@ -320,4 +323,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
    }
 
+   private boolean isFirstRun() {
+        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
+        return preferences.getBoolean("KEY_FIRST_RUN", true);
+   }
+
+    private void markFirstRun() {
+        SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("KEY_FIRST_RUN", false);
+        editor.apply();
+    }
 }
