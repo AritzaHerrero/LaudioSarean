@@ -1,7 +1,6 @@
 package com.talde3.laudiosarean;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

@@ -1,113 +1,156 @@
 package com.talde3.laudiosarean.Jolasak.Ruleta;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.talde3.laudiosarean.Jolasak.Kruzigrama.Kruzigrama;
+import com.talde3.laudiosarean.LoginActivity;
+import com.talde3.laudiosarean.MainActivity;
 import com.talde3.laudiosarean.R;
 
 import java.util.Random;
 
 public class Ruleta extends AppCompatActivity {
 
-    private ImageView ruleta;
-    private Button btnGirar;
+    Button button;
+    TextView textView;
+    ImageView iv_wheel;
 
-    private Handler handler;
+    Random r;
+
+    int degree = 0, degree_old = 0;
+
+    private static final float FACTOR = 4.86f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ruleta);
 
-        ruleta = findViewById(R.id.btnRuleta);
-        btnGirar = findViewById(R.id.btnGirar);
+        button = findViewById(R.id.button);
+        textView = findViewById(R.id.textView);
+        iv_wheel = findViewById(R.id.iv_wheel);
 
-        handler = new Handler();
+        r = new Random();
 
-        btnGirar.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Inicia la rotación con una velocidad aleatoria
-                Random rand = new Random();
-                int velocidadInicial = rand.nextInt(70) + 120;
-                girarConDesaceleracion(velocidadInicial);
+            public void onClick(View view) {
+                button.setEnabled(false);
+                degree_old = degree % 360;
+                degree = r.nextInt(3600) + 720;
+                RotateAnimation rotate = new RotateAnimation(degree_old, degree,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(3600);
+                rotate.setFillAfter(true);
+                rotate.setInterpolator(new DecelerateInterpolator());
+                rotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        textView.setText("");
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        currentNumber(360 - (degree % 360));
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                iv_wheel.startAnimation(rotate);
             }
         });
     }
+    private void currentNumber(int degrees) {
+        String text = "";
+        Log.d("TAG", "DEGREES " + degrees);
+        if ((degrees >= (FACTOR * 1) && degrees < (FACTOR * 5.3)) || degrees == 360) {
+            text = "Lamuza jauregia";
+            alertDialog(text);
+        }
 
-    private void girarConDesaceleracion(final int velocidadActual) {
-        final int retraso = 100; // Ajusta según sea necesario
+        if (degrees >= (FACTOR * 5.3) && degrees < (FACTOR * 16)) {
+            text = "Lezeagako sorgina";
+            alertDialog(text);
+        }
 
-        // Realiza la rotación actual
-        int rotacion = (int) ruleta.getRotation();
-        ruleta.setRotation(rotacion + velocidadActual);
+        if (degrees >= (FACTOR * 16) && degrees < (FACTOR * 26.5)) {
+            text = "Yermoko Andre Mariren Santutegia";
+            alertDialog(text);
+        }
 
-        // Verifica si debemos continuar la desaceleración
-        if (velocidadActual > 1) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    girarConDesaceleracion(velocidadActual - 1);
-                }
-            }, retraso);
-        } else {
-            float angleFinal = ruleta.getRotation() / 360;
-            Toast.makeText(Ruleta.this, "Desaceleración completa " + angleFinal, Toast.LENGTH_SHORT).show();
-            kalkulatuZenbakia(angleFinal);
+        if (degrees >= (FACTOR * 26.5) && degrees < (FACTOR * 37)) {
+            text = "Burdin Hesia";
+            alertDialog(text);
+        }
 
+        if (degrees >= (FACTOR * 37) && degrees < (FACTOR * 47.7)) {
+            text = "Santa Aguedako ermita";
+            alertDialog(text);
+        }
+
+        if (degrees >= (FACTOR * 47.7) && degrees < (FACTOR * 58.1)) {
+            text = "Katutxako jauregia";
+            alertDialog(text);
+        }
+
+        if (degrees >= (FACTOR * 58.1) && degrees < (FACTOR * 69)) {
+            text = "Lamuzako San Pedro eliza";
+            alertDialog(text);
+        }
+
+        if (degrees >= (FACTOR * 69) && degrees < (FACTOR * 73)) {
+            text = "Lamuza jauregia";
+            alertDialog(text);
+        }
+
+        if ((degrees >= (FACTOR * 73) && degrees < 360) || (degrees >= 0 && degrees < (FACTOR * 1))) {
+            text = "Lamuza jauregia";
+            alertDialog(text);
         }
     }
 
-    private void kalkulatuZenbakia(float angleFinal) {
-        // Aquí puedes implementar la lógica para determinar el número en el que se detiene la ruleta
-        // Utiliza la rotación para calcular el número
-        String angleFinalString =  String.valueOf(angleFinal);
-        String emaitza = new String();
-        if (angleFinal >= 0 && angleFinal <= 51) {
-            erakutsiMezua("Lamuza jauregia");
-            emaitza = "Lamuza jauregia";
-        }
-        if (angleFinal >= 52 && angleFinal <= 102) {
-            erakutsiMezua("Lezeagako sorgina");
-            emaitza = "Lezeagako sorgina";
-        }
-        if (angleFinal >= 103 && angleFinal <= 154) {
-            erakutsiMezua("Yermoko Andre Mariren Santutegia");
-            emaitza = "Yermoko Andre Mariren Santutegia";
-        }
-        if (angleFinal >= 155 && angleFinal <= 205) {
-            erakutsiMezua("Burdin Hesia");
-            emaitza = "Burdin hesia";
-        }
-        if (angleFinal >= 206 && angleFinal <= 257) {
-            erakutsiMezua("Santa Aguedako ermita");
-            emaitza = "Santa Aguedako ermita";
-        }
-        if (angleFinal >= 206 && angleFinal <= 258) {
-            erakutsiMezua("Santa Aguedako ermita");
-            emaitza = "Santa Aguedako ermita";
-        }
-        if (angleFinal >= 259 && angleFinal <= 308) {
-            erakutsiMezua("Katuxako jauregia");
-            emaitza = "Katuxako jauregia";
-        }
-        if (angleFinal >= 309 && angleFinal <= 360) {
-            erakutsiMezua("Lamuzako San Pedro eliza");
-            emaitza = "Lamuzako San Pedro eliza";
-        }
+    private void alertDialog(String text) {
+        View view = LayoutInflater.from(Ruleta.this).inflate(R.layout.ruleta_emaitza_dialog, null);
+        Button jolastu = view.findViewById(R.id.jolastu);
+        TextView testua = view.findViewById(R.id.successTitle);
+        ImageView icon = view.findViewById(R.id.succesImage);
 
-        if (emaitza.equals("")) {
-            emaitza = "vacio";
-        }
-    }
+        testua.setText(text);
+        String testuaString = (String) testua.getText();
 
-    private void erakutsiMezua(String txt) {
-        Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(Ruleta.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+
+        jolastu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Ruleta.this, Galderak.class);
+                intent.putExtra("Gunea",  testuaString);
+                startActivity(intent);
+                alertDialog.dismiss();
+                button.setEnabled(true);
+            }
+        });
+
+        alertDialog.show();
     }
 }

@@ -145,5 +145,7 @@
     <string name="tituloaOkerra">ERANTZUN OKERRA</string>
     <string name="testuaOkerra">Hurrengoan hobeago egingo duzu</string>
 
+    <!-- Ruleta dialog -->
+    <string name="btnJolastu">Jolastu</string>
 
 </resources>
