@@ -1,4 +1,4 @@
-package com.talde3.laudiosarean.Jolasak.Ruleta;
+package com.talde3.laudiosarean.Jolasak;
 
 public class Question {
     private String question;
