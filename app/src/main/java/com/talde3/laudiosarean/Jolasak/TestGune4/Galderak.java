@@ -173,7 +173,7 @@ public class Galderak extends AppCompatActivity {
         }
     }
 
-    public class Question {
+    public static class Question {
         private String question;
         private String optionA;
         private String optionB;

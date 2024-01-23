@@ -23,7 +23,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:paddingTop="10dp"
-            android:src="@drawable/roulette"
+            android:src="@drawable/ruleta1"
             app:layout_constraintBottom_toTopOf="@id/successTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
