@@ -1,5 +1,6 @@
 package com.talde3.laudiosarean.Jolasak.Puzlea;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static java.lang.Math.abs;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +50,7 @@ public class PuzzleActivity extends AppCompatActivity {
     private JokoDatuakFragment jokoDatuakFragment;
     ArrayList<PuzlearenPieza> piezak;
     private FirebaseAuth mAuth;
-    public static FirebaseFirestore firestore;
+    public static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -332,13 +334,15 @@ public class PuzzleActivity extends AppCompatActivity {
 
             int puntukant = LoginActivity.db.puntuazioaDao().countPuntuazioa();
             puntukant ++;
+            String puntukantString = String.valueOf(puntukant);
             Puntuazioa puntuazioa = new Puntuazioa();
             puntuazioa.setId_puntuazioa(puntukant);
             puntuazioa.setId_gunea(1);
             puntuazioa.setId_ikaslea(ikaslea.getId_ikaslea());
             puntuazioa.setPuntuazioa(Integer.parseInt(puntuaizoText));
             LoginActivity.db.puntuazioaDao().insert(puntuazioa);
-            firestore.collection("Puntuazioak").document(String.valueOf(puntukant)).set(puntuazioa);
+            Log.i(TAG, String.valueOf(puntuazioa.getPuntuazioa()));
+            firestore.collection("Puntuazioak").document(puntukantString).set(puntuazioa);
 
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
