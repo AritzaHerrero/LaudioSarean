@@ -148,4 +148,15 @@
     <!-- Ruleta dialog -->
     <string name="btnJolastu">Jolastu</string>
 
+    <!-- Galderak (Ruleta) -->
+    <string name="zuzenduBtn">Zuzendu</string>
+    <string name="bukatuBtn">Bukatu</string>
+
+    <string name="galderaZuzena1">1. Galdera: Zuzena</string>
+    <string name="galderaOkerra1">1. Galdera: Okerra</string>
+    <string name="galderaZuzena2">2. Galdera: Zuzena</string>
+    <string name="galderaOkerra2">2. Galdera: Okerra</string>
+
+    <string name="gunekoErantzunGuztiak">guneko eratzun guztiak egin dituzu</string>
+
 </resources>
