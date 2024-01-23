@@ -105,7 +105,7 @@ public class Ruleta extends AppCompatActivity {
         }
 
         if (degrees >= (FACTOR * 47.7) && degrees < (FACTOR * 58.1)) {
-            text = "Katutxako jauregia";
+            text = "Katuxako jauregia";
             alertDialog(text);
         }
 
