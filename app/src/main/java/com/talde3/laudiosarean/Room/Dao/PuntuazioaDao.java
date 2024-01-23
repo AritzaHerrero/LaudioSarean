@@ -19,4 +19,6 @@ public interface PuntuazioaDao {
     void delete(Puntuazioa puntuazioa);
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Puntuazioa'")
     void resetPrimaryKeyAutoIncrementValuePuntuazioa();
+    @Query("Select count(*) from Puntuazioa")
+    int countPuntuazioa();
 }

@@ -28,18 +28,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
+import com.talde3.laudiosarean.LoginActivity;
 import com.talde3.laudiosarean.R;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class PuzzleActivity extends AppCompatActivity {
     private JokoDatuakFragment jokoDatuakFragment;
     ArrayList<PuzlearenPieza> piezak;
+    private FirebaseAuth mAuth;
+    public static FirebaseFirestore firestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -302,6 +311,10 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
+        // Authentification
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         jokoDatuakFragment.detenerCronometro();
         View view = LayoutInflater.from(PuzzleActivity.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
@@ -314,6 +327,19 @@ public class PuzzleActivity extends AppCompatActivity {
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
             successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+
+            Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
+
+            int puntukant = LoginActivity.db.puntuazioaDao().countPuntuazioa();
+            puntukant ++;
+            Puntuazioa puntuazioa = new Puntuazioa();
+            puntuazioa.setId_puntuazioa(puntukant);
+            puntuazioa.setId_gunea(1);
+            puntuazioa.setId_ikaslea(ikaslea.getId_ikaslea());
+            puntuazioa.setPuntuazioa(Integer.parseInt(puntuaizoText));
+            LoginActivity.db.puntuazioaDao().insert(puntuazioa);
+            firestore.collection("Puntuazioak").document(String.valueOf(puntukant)).set(puntuazioa);
+
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
                 successTitle.setText("Hobeezina!!!");
