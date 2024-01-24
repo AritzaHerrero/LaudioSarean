@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             if(bundle != null) {
                 Ikaslea ikaslea = (Ikaslea) bundle.getSerializable("ikaslea");
                 db.ikasleaDao().insert(ikaslea);
+                firestore.collection("Ikasleak").document(ikaslea.getEmail()).set(ikaslea);
             }
         }
 
