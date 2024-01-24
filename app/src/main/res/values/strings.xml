@@ -16,6 +16,8 @@
     <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
     <string name="ongiEtorri">Ongi etorri</string>
 
+    <string name="ubiError">Baimena ukatua. Aplikazioak ezin izango du kokalekua eskuratu.</string>
+
     <!-- MainActivity.xml -->
     <string name="pasahitzaBegia">Pasahitza erakutsi/ezkutatu</string>
 

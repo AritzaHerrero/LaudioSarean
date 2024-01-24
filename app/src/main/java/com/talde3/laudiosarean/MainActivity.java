@@ -29,12 +29,17 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
 import com.talde3.laudiosarean.Jolasak.Arauak;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 import org.osmdroid.config.Configuration;
 
 public class MainActivity extends AppCompatActivity {
 
+    private IkasleaDao ikaselaDao;
+    private FirebaseAuth mAuth;
     GuneakFragment guneakFragment = new GuneakFragment();
     MapaFragment mapaFragment = new MapaFragment();
     ProfilaFragment profilaFragment = new ProfilaFragment();
@@ -72,38 +77,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
-        loadFragment(guneakFragment);
-        navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener);
+        mAuth = FirebaseAuth.getInstance();
+        ikaselaDao = LoginActivity.db.ikasleaDao();
+        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(mAuth.getCurrentUser().getEmail());
 
-        // Mapa kargatzeko
-        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-
-        // Inicializar ubicaciones
-        carrefourLocation = new LocationInfo("Carrefour", 43.28329, -2.96332, 150);
-        eroskiLocation = new LocationInfo("Eroski", 43.28239, -2.96010, 150);
-        plazaLocation = new LocationInfo("Plaza", 43.28176, -2.96285, 50);
-
-        Yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
-        BurdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
-        SantaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
-        KatuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
-        LamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
-        LamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
-        LezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162,-2.96202, 75);
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSION_REQUEST_CODE
-            );
+        if (ikaslea.getEmail().equals("irakaslea@gmail.com")) {
+            erakutsiIrakasleMenua();
         } else {
-            startLocationUpdates();
+            erakutsiIkasleMenua();
         }
+
     }
 
     private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {
@@ -264,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 startLocationUpdates();
             } else {
                 // Manejar el caso en que el usuario deniega los permisos
-                Toast.makeText(this, "Permiso denegado. La aplicación no puede acceder a la ubicación.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.ubiError), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -332,6 +315,53 @@ public class MainActivity extends AppCompatActivity {
 
         public float getTargetDistance() {
             return targetDistanceMeters;
+        }
+    }
+
+    private void erakutsiIrakasleMenua() {
+        BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
+        BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);
+        navigationIkasle.setVisibility(View.GONE);
+        navigationIrakasle.setVisibility(View.VISIBLE);
+        loadFragment(rankingFragment); // Irakaslearen fragmenta kargatzen du
+        navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+    }
+
+    private void erakutsiIkasleMenua() {
+        BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
+        BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);
+        navigationIkasle.setVisibility(View.VISIBLE);
+        navigationIrakasle.setVisibility(View.GONE);
+        loadFragment(guneakFragment); // Ikaslearen fragmenta kargatzen du
+        navigationIkasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+
+        // Mapa kargatzeko
+        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+
+        // Inicializar ubicaciones
+        carrefourLocation = new LocationInfo("Carrefour", 43.28329, -2.96332, 150);
+        eroskiLocation = new LocationInfo("Eroski", 43.28239, -2.96010, 150);
+        plazaLocation = new LocationInfo("Plaza", 43.28176, -2.96285, 50);
+
+        Yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
+        BurdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
+        SantaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
+        KatuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
+        LamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
+        LamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
+        LezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162,-2.96202, 75);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_REQUEST_CODE
+            );
+        } else {
+            startLocationUpdates();
         }
     }
 }

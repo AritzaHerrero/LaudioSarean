@@ -2,16 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/guneakFragment"
-        android:icon="@drawable/guneak_24"
-        android:title="@string/guneak" />
-    <item
-        android:id="@+id/mapaFragment"
-        android:icon="@drawable/map_24"
-        android:title="@string/mapa" />
+        android:id="@+id/rankingFragment"
+        android:icon="@drawable/ranking_24"
+        android:title="@string/ranking" />
+
     <item
         android:id="@+id/profilaFragment"
         android:icon="@drawable/profile_24"
         android:title="@string/profila" />
+
 
 </menu>
