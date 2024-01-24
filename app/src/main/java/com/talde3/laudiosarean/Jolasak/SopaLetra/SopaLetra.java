@@ -162,22 +162,22 @@ public class SopaLetra extends AppCompatActivity {
 
                                     switch (aukeratutakoHitza) {
                                         case "ABIAZIOA":
-                                            txtAbiazioa.setBackgroundColor(Color.GREEN);
+                                            txtAbiazioa.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                         case "TUNELAK":
-                                            txtTunelak.setBackgroundColor(Color.GREEN);
+                                            txtTunelak.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                         case "ARTILLERIA":
-                                            txtArtilleria.setBackgroundColor(Color.GREEN);
+                                            txtArtilleria.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                         case "APORT":
-                                            txtTropa.setBackgroundColor(Color.GREEN);
+                                            txtTropa.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                         case "LUBAKI":
-                                            txtLubaki.setBackgroundColor(Color.GREEN);
+                                            txtLubaki.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                         case "BUNKERRAK":
-                                            txtBunkerrak.setBackgroundColor(Color.GREEN);
+                                            txtBunkerrak.setBackgroundResource(R.drawable.blackborder_greenbackground);
                                             break;
                                     }
                                 } else {
