@@ -79,7 +79,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         Spinner spin = view.findViewById(R.id.spin);
 
         // Obtén la lista de cadenas desde tu parámetro
-        List<Integer> guneak = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> guneak = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
         // Crea un ArrayAdapter utilizando la lista de cadenas
         ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, guneak);
@@ -116,7 +116,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
             textView.setTextSize(18);
             textView.setText((x + 1) + ". " + topi.get(x).getIzena() + ": " + topi.get(x).getPuntuazioa());
 
-            layoutParams.setMargins(60, 0, 60, 0); // Aquí estableces los márgenes
+            layoutParams.setMargins(80, 80, 80, 0); // Aquí estableces los márgenes
             textView.setLayoutParams(layoutParams);
 
             // Agrega el TextView al LinearLayout
