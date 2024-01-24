@@ -6,11 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".Jolasak.SopaLetra.SopaLetra">
 
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
+    <LinearLayout
+        android:id="@+id/linearLayoutMenua"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Kronometro TextView -->
+        <TextView
+            android:id="@+id/txtKronometroa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="00:00"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:background="@drawable/rounded_bg_kronometro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtPuntuazioa"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Puntuazioa TextView -->
+        <TextView
+            android:id="@+id/txtPuntuazioa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="10000"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:background="@drawable/rounded_bg_puntuazioa"
+            app:layout_constraintStart_toEndOf="@+id/txtKronometroa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <GridLayout
         android:id="@+id/gridLayoutSopaLetras"

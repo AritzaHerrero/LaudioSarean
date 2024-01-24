@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,21 +38,19 @@ public class SopaLetra extends AppCompatActivity {
     private TextView lastClickedTextView;
     private ArrayList<String> hitzAurkituak = new ArrayList<>();
     private ArrayList <Integer> idTextView = new ArrayList<>();
-    private JokoDatuakFragment jokoDatuakFragment;
+    private int unekoPuntuazioa;
+    private long hasierakoDenbora = 0L;
+    private TextView txtPuntuazioa;
+    private Handler koronoHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sopa_letra);
 
-        jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-
-        if (savedInstanceState == null) {
-            jokoDatuakFragment = new JokoDatuakFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, new JokoDatuakFragment())
-                    .commit();
-        }
+        hasierakoDenbora = System.currentTimeMillis();
+        koronoHandler.postDelayed(kronoRunnable, 0);
+        txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
 
         gridLayout = findViewById(R.id.gridLayoutSopaLetras);
         txtAbiazioa = findViewById(R.id.txtAbiazioa);
@@ -231,7 +230,7 @@ public class SopaLetra extends AppCompatActivity {
         }
     }
     private void erakutsiMezua(TextView puntuaizoa) {
-        jokoDatuakFragment.detenerCronometro();
+        detenerCronometro();
         View view = LayoutInflater.from(SopaLetra.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
         Button berriroJolastu = view.findViewById(R.id.berriroJolastu);
@@ -274,8 +273,7 @@ public class SopaLetra extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                jokoDatuakFragment = (JokoDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                jokoDatuakFragment.reiniciarJokoDatuakFragment();
+                reiniciarJokoDatuakFragment();
                 reiniciarSopaLetra();
             }
         });
@@ -317,5 +315,55 @@ public class SopaLetra extends AppCompatActivity {
         txtBunkerrak.setBackgroundColor(Color.TRANSPARENT);
     }
 
+    public void detenerCronometro() {
+        koronoHandler.removeCallbacks(kronoRunnable);
+    }
+    public void reiniciarJokoDatuakFragment() {
+        // Reiniciar variables
+        hasierakoDenbora = System.currentTimeMillis();
 
+        // Reiniciar el cronómetro
+        koronoHandler.postDelayed(kronoRunnable, 0);
+    }
+
+    public static int puntazioaKalkulatu(long totalTimeInMillis) {
+        int maxPuntuazioa = 10000;
+        int milisegundoak = (int) totalTimeInMillis;
+        int puntuazioa;
+
+        if (milisegundoak <= 10000) {
+            puntuazioa = 10000;
+        } else if (milisegundoak <= 20000) {
+            puntuazioa = maxPuntuazioa - ((milisegundoak - 10000) * 128) / 1000;
+        } else if (milisegundoak <= 30000) {
+            puntuazioa = maxPuntuazioa - 1280 - ((milisegundoak - 20000) * 64) / 1000;
+        } else {
+            puntuazioa = maxPuntuazioa - 1920 - ((milisegundoak - 30000) * 32) / 1000;
+        }
+        if (puntuazioa < 0) {
+            puntuazioa = 0;
+        }
+        return puntuazioa;
+    }
+
+    private Runnable kronoRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long milisegundoak = System.currentTimeMillis() - hasierakoDenbora;
+            int segundoak = (int) (milisegundoak / 1000);
+            int minutuak = segundoak / 60;
+            segundoak = segundoak % 60;
+
+            TextView txtKronometroa = findViewById(R.id.txtKronometroa);
+
+            String time = String.format("%02d:%02d", minutuak, segundoak);
+            txtKronometroa.setText(time);
+
+            // Actualizar puntuación según el tiempo transcurrido
+            unekoPuntuazioa = puntazioaKalkulatu(milisegundoak);
+            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
+
+            koronoHandler.postDelayed(this, 10);
+        }
+    };
 }

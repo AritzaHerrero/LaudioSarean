@@ -2,6 +2,7 @@ package com.talde3.laudiosarean.Jolasak.TestGune4;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +26,12 @@ public class Galderak extends AppCompatActivity {
     private TextView questionTextView;
     private RadioGroup answerRadioGroup;
     private Button submitButton;
-
     private List<Question> questions;
     private int currentQuestionIndex;
-    private GalderaDatuakFragment galderaDatuakFragment;
+    private int unekoPuntuazioa;
+    private long hasierakoDenbora = 30 * 1000; // 30 segundos en milisegundos
+    private TextView txtPuntuazioa;
+    private TextView txtKronometroa;
 
 
     @Override
@@ -36,14 +39,10 @@ public class Galderak extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galderak);
 
-        galderaDatuakFragment = (GalderaDatuakFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
+        txtKronometroa = findViewById(R.id.txtKronometroa);
 
-        if (savedInstanceState == null) {
-            galderaDatuakFragment = new GalderaDatuakFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, new GalderaDatuakFragment())
-                    .commit();
-        }
+        countDownTimer.start();
 
         questionTextView = findViewById(R.id.questionTextView);
         answerRadioGroup = findViewById(R.id.answerRadioGroup);
@@ -58,6 +57,7 @@ public class Galderak extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer();
+                detenerCronometro();
             }
         });
     }
@@ -153,6 +153,7 @@ public class Galderak extends AppCompatActivity {
                 hurrengoGaldera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        reiniciarJokoDatuak();
                         alertDialog.dismiss();
                         currentQuestionIndex++;
                         showQuestion();
@@ -169,5 +170,47 @@ public class Galderak extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.erantzunaAukeratu), Toast.LENGTH_SHORT).show();
         }
     }
+    public int puntazioaKalkulatu(long totalTimeInMillis) {
+        int segundoak = (int) totalTimeInMillis/1000;
+        int puntuazioa;
+        puntuazioa = segundoak*100 ;
+
+        if (puntuazioa < 0) {
+            puntuazioa = 0;
+        }
+
+        return puntuazioa;
+    }
+
+
+    public void detenerCronometro() {
+        // Detener el temporizador
+        countDownTimer.cancel();
+    }
+
+    public void reiniciarJokoDatuak() {
+        countDownTimer.start();
+    }
+
+
+    private CountDownTimer countDownTimer = new CountDownTimer(hasierakoDenbora, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            hasierakoDenbora = millisUntilFinished;
+
+            int segundoak = (int) (millisUntilFinished / 1000) % 60;
+
+            String time = String.format("%02d", segundoak);
+            txtKronometroa.setText(time);
+
+            // Actualizar puntuación según el tiempo restante
+            unekoPuntuazioa = puntazioaKalkulatu(millisUntilFinished);
+            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
+        }
+        @Override
+        public void onFinish() {
+            Toast.makeText(Galderak.this, "¡Tiempo agotado!", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }
