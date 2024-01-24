@@ -22,8 +22,13 @@
         android:theme="@style/Theme.LaudioSarean"
         tools:targetApi="31">
         <activity
+            android:name=".Jolasak.HutsuneakBete.HutsuneakBete"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".Jolasak.Ruleta.Galderak"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Jolasak.Ruleta.Ruleta"
             android:exported="false"

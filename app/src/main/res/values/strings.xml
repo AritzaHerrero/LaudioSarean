@@ -159,4 +159,21 @@
 
     <string name="gunekoErantzunGuztiak">guneko eratzun guztiak egin dituzu</string>
 
+    <!-- Hutsuneak bete -->
+    <string name="erantzuna1">Plaza</string>
+    <string name="erantzuna2">Irudi</string>
+    <string name="erantzuna3">XVI</string>
+    <string name="erantzuna4">Tenplu</string>
+    <string name="erantzuna5">Lamuza</string>
+
+    <string name="bat">1. </string>
+    <string name="bi">2. </string>
+    <string name="hiru">3. </string>
+    <string name="lau">4. </string>
+    <string name="bost">5. </string>
+
+    <string name="testuaHutsunea">Lamuzako San Pedro eliza _____ (1). mendean eraiki zen, baina eliza izan baino lehenago, _____ (2)
+bat zegoen han. Gaur egungo elizaren barruan, _____ (3) politak topatu ditzakegu. San Pedro eliza,
+herriko _____ n (4) kokatuta dago, eta _____ ko (5) jendearentzako toki enblematikoa da.</string>
+
 </resources>
