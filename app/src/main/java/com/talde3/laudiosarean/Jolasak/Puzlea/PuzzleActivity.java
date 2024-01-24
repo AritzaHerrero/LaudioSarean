@@ -332,7 +332,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
-            int puntukant = LoginActivity.db.puntuazioaDao().countPuntuazioa();
+            int puntukant = LoginActivity.db.puntuazioaDao().lastPuntuazioa();
             puntukant ++;
             String puntukantString = String.valueOf(puntukant);
             Puntuazioa puntuazioa = new Puntuazioa();

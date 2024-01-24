@@ -2,6 +2,8 @@ package com.talde3.laudiosarean.Jolasak.Kruzigrama;
 
 import static android.view.View.generateViewId;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -12,6 +14,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +25,14 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.talde3.laudiosarean.Jolasak.JokoDatuakFragment;
+import com.talde3.laudiosarean.LoginActivity;
 import com.talde3.laudiosarean.R;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
 import java.util.HashMap;
 
@@ -35,6 +44,8 @@ public class Kruzigrama extends AppCompatActivity {
     private long hasierakoDenbora = 0L;
     private TextView txtPuntuazioa;
     private Handler koronoHandler = new Handler();
+    private FirebaseAuth mAuth;
+    public static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -279,6 +290,9 @@ public class Kruzigrama extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
+        // Authentification
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         detenerCronometro();
         View view = LayoutInflater.from(Kruzigrama.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
@@ -291,6 +305,21 @@ public class Kruzigrama extends AppCompatActivity {
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
             successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+
+            Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
+
+            int puntukant = LoginActivity.db.puntuazioaDao().lastPuntuazioa();
+            puntukant ++;
+            String puntukantString = String.valueOf(puntukant);
+            Puntuazioa puntuazioa = new Puntuazioa();
+            puntuazioa.setId_puntuazioa(puntukant);
+            puntuazioa.setId_gunea(7);
+            puntuazioa.setId_ikaslea(ikaslea.getId_ikaslea());
+            puntuazioa.setPuntuazioa(Integer.parseInt(puntuaizoText));
+            LoginActivity.db.puntuazioaDao().insert(puntuazioa);
+            Log.i(TAG, String.valueOf(puntuazioa.getPuntuazioa()));
+            firestore.collection("Puntuazioak").document(puntukantString).set(puntuazioa);
+
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
                 successTitle.setText("Hobeezina!!!");

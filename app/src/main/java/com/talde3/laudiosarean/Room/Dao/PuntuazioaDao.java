@@ -22,6 +22,8 @@ public interface PuntuazioaDao {
     void resetPrimaryKeyAutoIncrementValuePuntuazioa();
     @Query("Select count(*) from Puntuazioa")
     int countPuntuazioa();
+    @Query("Select id_puntuazioa from Puntuazioa order by id_puntuazioa desc limit 1")
+    int lastPuntuazioa();
     @Query("Select max(puntuazioa) from Puntuazioa where id_gunea='1'")
     int maxPuntuazioaGune1();
     @Query("Select puntuazioa from Puntuazioa where id_gunea='1' order by puntuazioa desc limit 10")

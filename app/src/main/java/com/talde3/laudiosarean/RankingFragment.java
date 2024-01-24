@@ -122,7 +122,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
             // Agrega el TextView al LinearLayout
             linearLayoutRanking.addView(textView);
         }
-        Toast.makeText(requireContext(), "Elemento seleccionado: " + gunea, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(requireContext(), "Elemento seleccionado: " + gunea, Toast.LENGTH_SHORT).show();
     }
 
     @Override

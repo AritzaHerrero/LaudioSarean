@@ -1,5 +1,7 @@
 package com.talde3.laudiosarean.Jolasak.HutsuneakBete;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -7,14 +9,21 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.talde3.laudiosarean.Jolasak.Kruzigrama.Kruzigrama;
+import com.talde3.laudiosarean.LoginActivity;
 import com.talde3.laudiosarean.R;
+import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
 import org.w3c.dom.Text;
 
@@ -35,8 +44,9 @@ public class HutsuneakBete extends AppCompatActivity {
     private TextView tvErantzuna3;
     private TextView tvErantzuna4;
     private TextView tvErantzuna5;
-
     private Button btnZuzendu;
+    private FirebaseAuth mAuth;
+    public static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +154,9 @@ public class HutsuneakBete extends AppCompatActivity {
     }
 
     private void erakutsiMezua(TextView puntuaizoa) {
+        // Authentification
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         detenerCronometro();
         View view = LayoutInflater.from(HutsuneakBete.this).inflate(R.layout.zorionak_dialog, null);
         Button successDone = view.findViewById(R.id.successDone);
@@ -156,6 +169,21 @@ public class HutsuneakBete extends AppCompatActivity {
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
             successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+
+            Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
+
+            int puntukant = LoginActivity.db.puntuazioaDao().lastPuntuazioa();
+            puntukant ++;
+            String puntukantString = String.valueOf(puntukant);
+            Puntuazioa puntuazioa = new Puntuazioa();
+            puntuazioa.setId_puntuazioa(puntukant);
+            puntuazioa.setId_gunea(5);
+            puntuazioa.setId_ikaslea(ikaslea.getId_ikaslea());
+            puntuazioa.setPuntuazioa(Integer.parseInt(puntuaizoText));
+            LoginActivity.db.puntuazioaDao().insert(puntuazioa);
+            Log.i(TAG, String.valueOf(puntuazioa.getPuntuazioa()));
+            firestore.collection("Puntuazioak").document(puntukantString).set(puntuazioa);
+
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
                 successTitle.setText("Hobeezina!!!");
