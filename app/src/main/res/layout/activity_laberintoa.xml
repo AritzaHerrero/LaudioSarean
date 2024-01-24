@@ -13,7 +13,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayoutKruzigrama"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
@@ -53,8 +53,8 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="375dp"
-        android:layout_height="477dp"
+        android:layout_width="361dp"
+        android:layout_height="424dp"
         android:layout_margin="16dp"
         android:layout_weight="1"
         android:columnCount="25"
@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@id/btnArriba"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/linearLayoutMenua"
         app:layout_constraintVertical_bias="0.772" />
 
     <ImageButton
