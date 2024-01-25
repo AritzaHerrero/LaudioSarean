@@ -28,6 +28,6 @@ public interface PuntuazioaDao {
     int maxPuntuazioaGune1();
     @Query("Select puntuazioa from Puntuazioa where id_gunea='1' order by puntuazioa desc limit 10")
     List<Integer> topGune1();
-    @Query("Select i.izena, max(p.puntuazioa) puntuazioa from Puntuazioa p inner join Ikaslea i on p.id_ikaslea = i.id_ikaslea where id_gunea=:gune group by p.id_ikaslea order by p.puntuazioa desc limit 10")
+    @Query("Select i.izena, max(p.puntuazioa) puntuazioa, abizenak from Puntuazioa p inner join Ikaslea i on p.id_ikaslea = i.id_ikaslea where id_gunea=:gune group by p.id_ikaslea order by p.puntuazioa desc limit 10")
     List<Ranking> topGune(int gune);
 }

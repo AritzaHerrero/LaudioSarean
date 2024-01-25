@@ -17,8 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.talde3.laudiosarean.Room.Entities.ItemSpinner;
 import com.talde3.laudiosarean.Room.Entities.Ranking;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,10 +81,17 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         Spinner spin = view.findViewById(R.id.spin);
 
         // Obtén la lista de cadenas desde tu parámetro
-        List<Integer> guneak = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        List<ItemSpinner> guneak = new ArrayList<>();
+        guneak.add(new ItemSpinner(1, "1. YERMOKO MARIA ANDREAREN SANTUTEGIA"));
+        guneak.add(new ItemSpinner(2, "2. BURDIN HESIA"));
+        guneak.add(new ItemSpinner(3, "3. SANTA AGUEDA ERMITA"));
+        guneak.add(new ItemSpinner(3, "4. KATUXAKO JAUREGIA"));
+        guneak.add(new ItemSpinner(3, "5. LAMUZAKO SAN PEDRO ELIZA"));
+        guneak.add(new ItemSpinner(3, "6. LAMUZAKO JAUREGIA"));
+        guneak.add(new ItemSpinner(3, "7. LEZEAGAKO SORGINA"));
 
         // Crea un ArrayAdapter utilizando la lista de cadenas
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, guneak);
+        ArrayAdapter<ItemSpinner> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, guneak);
 
         // Especifica el diseño para mostrar los elementos en el Spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,9 +105,9 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        Integer gunea = (Integer) parent.getItemAtPosition(pos);
+        ItemSpinner gunea = (ItemSpinner) parent.getItemAtPosition(pos);
 
-        List<Ranking> topi = LoginActivity.db.puntuazioaDao().topGune(gunea);
+        List<Ranking> topi = LoginActivity.db.puntuazioaDao().topGune(gunea.getId());
 
         LinearLayout linearLayoutRanking = requireView().findViewById(R.id.linearLayoutRanking);
         linearLayoutRanking.removeAllViews();
@@ -114,7 +123,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
             );
 
             textView.setTextSize(18);
-            textView.setText((x + 1) + ". " + topi.get(x).getIzena() + ": " + topi.get(x).getPuntuazioa());
+            textView.setText((x + 1) + ". " + topi.get(x).getIzena() + " " + topi.get(x).getAbizenak().split("\\s+")[0].substring(0, 1).toUpperCase() + ". : " + topi.get(x).getPuntuazioa());
 
             layoutParams.setMargins(80, 80, 80, 0); // Aquí estableces los márgenes
             textView.setLayoutParams(layoutParams);
