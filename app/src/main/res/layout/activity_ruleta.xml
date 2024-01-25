@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.talde3.laudiosarean.Jolasak.Ruleta.Ruleta">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Girar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="" />
+
+    <ImageView
+        android:id="@+id/iv_wheel"
+        android:layout_width="400sp"
+        android:layout_height="400sp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ruleta" />
+
+    <ImageView
+        android:id="@+id/ic_pointer"
+        android:layout_width="200sp"
+        android:layout_height="235sp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/arrow_down" />
+</RelativeLayout>

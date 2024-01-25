@@ -16,6 +16,8 @@
     <string name="erLoginLogin">E-posta edo pasahitz okerra</string>
     <string name="ongiEtorri">Ongi etorri</string>
 
+    <string name="ubiError">Baimena ukatua. Aplikazioak ezin izango du kokalekua eskuratu.</string>
+
     <!-- MainActivity.xml -->
     <string name="pasahitzaBegia">Pasahitza erakutsi/ezkutatu</string>
 
@@ -36,6 +38,7 @@
     <string name="erEpostaErregistratuta">E-posta dagoeneko erregistratua dago</string>
     <string name="erInternet">Ez dago Internet konexiorik. Saiatu berriro geroago</string>
     <string name="erEzezaguna">Errore ezezaguna: </string>
+    <string name="kontuaSortu">Zure kontua sortu da</string>
 
     <!-- Informazio Gunea -->
     <string name="jokoaHasi">Jokatzen hasi</string>
@@ -126,9 +129,26 @@
     <string name="definizioa4"> 4. Su handia.</string>
     <string name="definizioa5"> 5. Herri sineskeriaren arabera, deabruarekiko hitzarmen baten ondorioz-edo, indar ezkutuen jabe den pertsona.</string>
     <string name="definizioa6"> 6. Laudioko sorginaren izena.</string>
+    <string name="desfile">DESFILE</string>
+    <string name="sutzar">SUTZAR</string>
+    <string name="mozorro">MOZORRO</string>
+    <string name="otsaila">OTSAILA</string>
+    <string name="sorgin">SORGIN</string>
+    <string name="lezeaga">LEZEAGA</string>
+    <string name="kruzigranaEginEz">"Ez da kruzigrama guztiz amaitu"</string>
+
+    <!-- Sopa letra -->
+    <string name="txtTunnelak">TUNELAK</string>
+    <string name="txtArtilleria">ARTILLERIA</string>
+    <string name="txtAbiazioa">ABIAZIOA</string>
+    <string name="txtTropa">TROPA</string>
+    <string name="txtLubaki">LUBAKI</string>
+    <string name="txtBunkerrak">BUNKERRAK</string>
+    <string name="hitzOkerra">Hitz hori ez da zuzena.</string>
 
     <!-- Galderak -->
     <string name="erantzunaAukeratu">Erantzun bat aukeratu, mesedez</string>
+    <string name="denboraGabe">Denbora agortua!</string>
 
     <!-- erantzun_zuzena_dialog -->
     <string name="hurrengoGaldera">Hurrengo galdera</string>
@@ -136,6 +156,49 @@
     <!-- erantzun_zuzena_dialog -->
     <string name="tituloaOkerra">ERANTZUN OKERRA</string>
     <string name="testuaOkerra">Hurrengoan hobeago egingo duzu</string>
+
+    <!-- Ruleta dialog -->
+    <string name="btnJolastu">Jolastu</string>
+
+    <!-- Galderak (Ruleta) -->
+    <string name="zuzenduBtn">Zuzendu</string>
+    <string name="bukatuBtn">Bukatu</string>
+
+    <string name="galderaZuzena1">1. Galdera: Zuzena</string>
+    <string name="galderaOkerra1">1. Galdera: Okerra</string>
+    <string name="galderaZuzena2">2. Galdera: Zuzena</string>
+    <string name="galderaOkerra2">2. Galdera: Okerra</string>
+
+    <string name="gunekoErantzunGuztiak">guneko eratzun guztiak egin dituzu</string>
+
+    <!-- Hutsuneak bete -->
+    <string name="erantzuna1">Plaza</string>
+    <string name="erantzuna2">Irudi</string>
+    <string name="erantzuna3">XVI</string>
+    <string name="erantzuna4">Tenplu</string>
+    <string name="erantzuna5">Lamuza</string>
+
+    <string name="bat">1. </string>
+    <string name="bi">2. </string>
+    <string name="hiru">3. </string>
+    <string name="lau">4. </string>
+    <string name="bost">5. </string>
+
+    <string name="testuaHutsunea">Lamuzako San Pedro eliza _____ (1). mendean eraiki zen, baina eliza izan baino lehenago, _____ (2)
+    bat zegoen han. Gaur egungo elizaren barruan, _____ (3) politak topatu ditzakegu. San Pedro eliza,
+    herriko _____ n (4) kokatuta dago, eta _____ ko (5) jendearentzako toki enblematikoa da.</string>
+
+    <!-- Anagrama -->
+    <string name="hitzaordenatu">Hitza ordenatu</string>
+    <string name="erroreaAnigrama">Hitz baten bat ez dago ondo.</string>
+
+    <!-- erakutsiMezua-->
+    <string name="zurePuntuazioa">Hau izan da zure puntuazioa</string>
+    <string name="hobezina">Hobezina!!!</string>
+    <string name="osoOndo">Oso ondo!!</string>
+    <string name="ondo">Ondo!</string>
+    <string name="hobetoEgin"> Hurrengoan hobeto egingo duzu!</string>
+
 
 
 </resources>

@@ -1,7 +1,6 @@
 package com.talde3.laudiosarean;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.talde3.laudiosarean.Jolasak.Ruleta.Ruleta;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -146,7 +147,7 @@ public class GuneakFragment extends Fragment {
         ibAzkenEbaluazioa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AzkenEbaluazioaIntent = new Intent(getActivity(), GuneInformazioa.class);
+                Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
                 startActivity(AzkenEbaluazioaIntent);
             }
         });
