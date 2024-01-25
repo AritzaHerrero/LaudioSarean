@@ -64,41 +64,41 @@ public class Kruzigrama extends AppCompatActivity {
 
         HashMap<String, HitzPosizioa> hitzakPosizioaMap = new HashMap<>();
 
-        hitzakPosizioaMap.put("DESFILE", desfile);
-        hitzakPosizioaMap.put("SUTZAR", sutzar);
-        hitzakPosizioaMap.put("MOZORRO", mozorro);
-        hitzakPosizioaMap.put("OTSAILA", otsaila);
-        hitzakPosizioaMap.put("SORGIN", sorgin);
-        hitzakPosizioaMap.put("LEZEAGA", lezeaga);
+        hitzakPosizioaMap.put(getString(R.string.desfile), desfile);
+        hitzakPosizioaMap.put(getString(R.string.sutzar), sutzar);
+        hitzakPosizioaMap.put(getString(R.string.mozorro), mozorro);
+        hitzakPosizioaMap.put(getString(R.string.otsaila), otsaila);
+        hitzakPosizioaMap.put(getString(R.string.sorgin), sorgin);
+        hitzakPosizioaMap.put(getString(R.string.lezeaga), lezeaga);
 
         hitzak = new String[]{"DESFILE", "SUTZAR", "MOZORRO", "OTSAILA", "SORGIN", "LEZEAGA"};
-//        char[][] letters = {
-//                {'X', 'X', 'X', 'X', 'X', '5', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', 'X', 'X', 'X', '4', ' ', ' ', ' ', ' ', ' ', ' ',},
-//                {'X', 'X', 'X', '3', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', '1', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-//                {'2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X',},
-//                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', ' ', '6', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X',},
-//                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-//                {'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-//        };
-
         char[][] letters = {
                 {'X', 'X', 'X', 'X', 'X', '5', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'X', 'X', 'X', '4', 'S', 'U', 'T', 'Z', 'A', 'R',},
-                {'X', 'X', 'X', '3', 'X', 'O', 'X', 'X', 'X', 'X', 'X',},
-                {'X', '1', 'X', 'D', 'X', 'R', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'M', 'X', 'E', 'X', 'G', 'X', 'X', 'X', 'X', 'X',},
-                {'2', 'O', 'T', 'S', 'A', 'I', 'L', 'A', 'X', 'X', 'X',},
-                {'X', 'Z', 'X', 'F', 'X', 'N', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'O', 'X', 'I', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'R', '6', 'L', 'E', 'Z', 'E', 'A', 'G', 'A', 'X',},
-                {'X', 'R', 'X', 'E', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
-                {'X', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', 'X', 'X', 'X', '4', ' ', ' ', ' ', ' ', ' ', ' ',},
+                {'X', 'X', 'X', '3', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+                {'X', '1', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+                {'2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X',},
+                {'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X',},
+                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', ' ', '6', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X',},
+                {'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+                {'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
         };
+
+//        char[][] letters = {
+//                {'X', 'X', 'X', 'X', 'X', '5', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'X', 'X', 'X', '4', 'S', 'U', 'T', 'Z', 'A', 'R',},
+//                {'X', 'X', 'X', '3', 'X', 'O', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', '1', 'X', 'D', 'X', 'R', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'M', 'X', 'E', 'X', 'G', 'X', 'X', 'X', 'X', 'X',},
+//                {'2', 'O', 'T', 'S', 'A', 'I', 'L', 'A', 'X', 'X', 'X',},
+//                {'X', 'Z', 'X', 'F', 'X', 'N', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'O', 'X', 'I', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'R', '6', 'L', 'E', 'Z', 'E', 'A', 'G', 'A', 'X',},
+//                {'X', 'R', 'X', 'E', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//                {'X', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',},
+//        };
 
         GridLayout gridLayout = findViewById(R.id.gridLayoutKruzigrama);
         Button btnKonprobatu = findViewById(R.id.btnKonprobatu);
@@ -283,7 +283,7 @@ public class Kruzigrama extends AppCompatActivity {
                 erakutsiMezua(txtPuntuazioa);
             } else {
                 // El crucigrama no está completado
-                Toast.makeText(Kruzigrama.this, "Ez da kruzigrama osatuta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Kruzigrama.this, getString(R.string.kruzigranaEginEz), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -304,7 +304,7 @@ public class Kruzigrama extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -322,13 +322,13 @@ public class Kruzigrama extends AppCompatActivity {
 
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
-                successTitle.setText("Hobeezina!!!");
+                successTitle.setText(getString(R.string.hobezina));
             } else if (puntuaizoInt>6000) {
-                successTitle.setText("Oso ondo!!");
+                successTitle.setText(getString(R.string.osoOndo));
             } else if (puntuaizoInt>3500) {
-                successTitle.setText("Ondo!");
+                successTitle.setText(getString(R.string.ondo));
             } else {
-                successTitle.setText("Hurrengoan hobeto egingo duzu!");
+                successTitle.setText(getString(R.string.hobetoEgin));
             }
         }
 

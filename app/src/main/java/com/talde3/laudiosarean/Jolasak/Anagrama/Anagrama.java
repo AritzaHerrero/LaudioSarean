@@ -101,7 +101,7 @@ public class Anagrama extends AppCompatActivity {
 
         // Crear EditText para la respuesta del usuario
         EditText editText = new EditText(this);
-        editText.setHint("Ingrese su respuesta");
+        editText.setHint(getString(R.string.hitzaordenatu));
         editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
         InputFilter inputFilter = new InputFilter.AllCaps();
         editText.setFilters(new InputFilter[]{inputFilter});
@@ -154,7 +154,7 @@ public class Anagrama extends AppCompatActivity {
         if (todasCorrectas) {
             erakutsiMezua(txtPuntuazioa);
         } else {
-            Toast.makeText(this, "Al menos una respuesta es incorrecta. Inténtalo de nuevo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.erroreaAnigrama), Toast.LENGTH_SHORT).show();
         }
     }
     private void reiniciarJuego() {
@@ -173,7 +173,6 @@ public class Anagrama extends AppCompatActivity {
             textViews.get(i).setText(palabraMezclada);
         }
     }
-
 
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
@@ -241,7 +240,7 @@ public class Anagrama extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -259,13 +258,13 @@ public class Anagrama extends AppCompatActivity {
 
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
-                successTitle.setText("Hobeezina!!!");
+                successTitle.setText(getString(R.string.hobezina));
             } else if (puntuaizoInt>6000) {
-                successTitle.setText("Oso ondo!!");
+                successTitle.setText(getString(R.string.osoOndo));
             } else if (puntuaizoInt>3500) {
-                successTitle.setText("Ondo!");
+                successTitle.setText(getString(R.string.ondo));
             } else {
-                successTitle.setText("Hurrengoan hobeto egingo duzu!");
+                successTitle.setText(getString(R.string.hobetoEgin));
             }
         }
 

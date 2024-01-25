@@ -105,7 +105,7 @@ public class GalderaDatuakFragment extends Fragment {
 
         @Override
         public void onFinish() {
-            Toast.makeText(getActivity(), "¡Tiempo agotado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.denboraGabe) , Toast.LENGTH_SHORT).show();
         }
     };
 }

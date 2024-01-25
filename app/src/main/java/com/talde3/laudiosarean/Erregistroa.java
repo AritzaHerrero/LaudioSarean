@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Erregistroa extends AppCompatActivity {
@@ -58,10 +59,12 @@ public class Erregistroa extends AppCompatActivity {
         btnErregistratu = findViewById(R.id.btnErregistratu);
 
         ArrayList<String> klaseak = new ArrayList<>();
-        klaseak.add("A");
-        klaseak.add("B");
-        klaseak.add("D");
-        klaseak.add("E");
+
+        String [] hitzak = new String[]{"A", "B", "D", "E"};
+
+        for (String hitza : hitzak) {
+            klaseak.add(hitza);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, klaseak);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -129,7 +132,7 @@ public class Erregistroa extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
-                                Toast.makeText(Erregistroa.this, "Zure kontua sortu da", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Erregistroa.this, getString(R.string.kontuaSortu), Toast.LENGTH_SHORT).show();
 
                                 Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta, kurtsoa);
 

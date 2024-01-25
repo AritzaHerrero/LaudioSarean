@@ -209,7 +209,7 @@ public class Galderak extends AppCompatActivity {
         }
         @Override
         public void onFinish() {
-            Toast.makeText(Galderak.this, "¡Tiempo agotado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Galderak.this, getString(R.string.denboraGabe), Toast.LENGTH_SHORT).show();
         }
     };
 

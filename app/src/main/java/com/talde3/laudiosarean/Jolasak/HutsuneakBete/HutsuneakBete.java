@@ -168,7 +168,7 @@ public class HutsuneakBete extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText("Hau izan da zure puntuazioa " + puntuaizoText + "!!");
+            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -186,13 +186,13 @@ public class HutsuneakBete extends AppCompatActivity {
 
             int puntuaizoInt = Integer.parseInt(puntuaizoText);
             if(puntuaizoInt>8000) {
-                successTitle.setText("Hobeezina!!!");
+                successTitle.setText(getString(R.string.hobezina));
             } else if (puntuaizoInt>6000) {
-                successTitle.setText("Oso ondo!!");
+                successTitle.setText(getString(R.string.osoOndo));
             } else if (puntuaizoInt>3500) {
-                successTitle.setText("Ondo!");
+                successTitle.setText(getString(R.string.ondo));
             } else {
-                successTitle.setText("Hurrengoan hobeto egingo duzu!");
+                successTitle.setText(getString(R.string.hobetoEgin));
             }
         }
 
