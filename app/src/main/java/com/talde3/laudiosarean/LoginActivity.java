@@ -38,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
 import com.talde3.laudiosarean.Room.Entities.Errekor;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
@@ -79,12 +80,31 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if(intent != null) {
+        if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if(bundle != null) {
+            if (bundle != null) {
                 Ikaslea ikaslea = (Ikaslea) bundle.getSerializable("ikaslea");
-                db.ikasleaDao().insert(ikaslea);
-                firestore.collection("Ikasleak").document(ikaslea.getEmail()).set(ikaslea);
+
+                // Ikaslea null den ikusten du
+                IkasleaDao ikasleaDao = db.ikasleaDao();
+                if (ikasleaDao != null) {
+                    // Ikaslea null den ikusten du
+                    if (ikaslea != null) {
+                        try {
+                            // Inserta egiten du Room-en
+                            ikasleaDao.insert(ikaslea);
+
+                            // Firestorera bidaltzen du
+                            firestore.collection("Ikasleak").document(ikaslea.getEmail()).set(ikaslea);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        // Ikaslea null
+                    }
+                } else {
+                    // Ikaslea null
+                }
             }
         }
 
