@@ -146,7 +146,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            layoutParams.setMargins(0, 20, 0, 0);
+            layoutParams.setMargins(0, 10, 0, 10);
 
             // Aplicar los parámetros de diseño al LinearLayout
             itemLayout.setLayoutParams(layoutParams);

@@ -45,6 +45,7 @@ import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     public static Datubase db;
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvErregistratuEmen;
     private ImageButton ibPasahitza;
     private ProgressBar pbKarga;
+    private List<String> lehentasunakInfo;
 
     @SuppressLint("WrongThread")
     @Override
@@ -106,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         pbKarga = findViewById(R.id.pbKarga);
 
         mAuth = FirebaseAuth.getInstance();
-        lehentasunakKargatu();
+        lehentasunakInfo = lehentasunakKargatu();
 
         aktibatuUI();
         btnSaioahasi.setOnClickListener(v -> {
@@ -157,11 +159,12 @@ public class LoginActivity extends AppCompatActivity {
                         cbPasahitzaGorde = findViewById(R.id.cbPasahitzaGorde);
                         if(cbPasahitzaGorde.isChecked()) {
                             lehentasunakGorde();
+                        } else if (!lehentasunakInfo.get(0).equals(eposta) && !lehentasunakInfo.get(1).equals(pasahitza)){
+                            etEposta.setText("");
+                            etPasahitza.setText("");
                         }
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        etEposta.setText("");
-                        etPasahitza.setText("");
                         aktibatuUI();
                         // Toast.makeText(MainActivity.this, getResources().getString(R.string.ongiEtorri), Toast.LENGTH_SHORT).show();
                     } else {
@@ -183,7 +186,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-   private void lehentasunakKargatu() {
+   private List<String> lehentasunakKargatu() {
+        List<String> kredentzialak = new ArrayList<>();
         // kredentzialak.xml kargatzen du (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
 
@@ -194,6 +198,12 @@ public class LoginActivity extends AppCompatActivity {
         // editText-etan ipintzen du kargatutako informazioa
         etEposta.setText(eposta);
         etPasahitza.setText(pasahitza);
+
+       // Informazioa listan gordetzen da
+       kredentzialak.add(eposta);
+       kredentzialak.add(pasahitza);
+
+       return kredentzialak;
    }
 
    private void lehentasunakGorde() {
