@@ -91,7 +91,7 @@ public class Galderak extends AppCompatActivity {
     private void initializeQuestions() {
         // Galdera eta erantzunak
         questions = new ArrayList<>();
-        questions.add(new Question("Ze mendetan eraiki zen?", "XVII", "XV", "XVIV", "XVII"));
+        questions.add(new Question("Ze mendetan eraiki zen?", "XVII", "XV", "XVI", "XVII"));
         questions.add(new Question("Ze materialez eraikita nago?", "Burdinez", "Egurrez", "Harriz", "Harriz"));
         questions.add(new Question("Ze motatako eraikina da?", "Erromanikoa", "Barrokoa", "Grekoa", "Barrokoa"));
 

@@ -199,6 +199,9 @@
     <string name="ondo">Ondo!</string>
     <string name="hobetoEgin"> Hurrengoan hobeto egingo duzu!</string>
 
+    <!-- ruleta -->
+    <string name="btnBiratu">Biratu</string>
+
 
 
 </resources>
