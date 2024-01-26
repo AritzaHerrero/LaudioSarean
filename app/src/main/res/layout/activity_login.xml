@@ -6,20 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+
+    <ImageView
+        android:id="@+id/ivHeaderImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/laudio_udala_logo_zuribeltza"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <EditText
         android:id="@+id/etEposta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/eposta"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.281"
+        app:layout_constraintTop_toBottomOf="@+id/ivHeaderImage"
+        app:layout_constraintVertical_bias="0.25"
         tools:ignore="Autofill,TextContrastCheck" />
 
     <LinearLayout
@@ -39,6 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/key"
             android:hint="@string/pasahitza"
             android:inputType="textPassword"
             android:minHeight="48sp"
@@ -95,16 +111,16 @@
 
     <CheckBox
         android:id="@+id/cbPasahitzaGorde"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="241dp"
+        android:layout_height="48dp"
+        android:enabled="false"
         android:text="@string/pasahitzaGorde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.320"
+        app:layout_constraintHorizontal_bias="0.623"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0"
-        android:enabled="false"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar
         android:id="@+id/pbKarga"
