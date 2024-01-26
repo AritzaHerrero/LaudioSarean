@@ -91,7 +91,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         switchIkasle = view.findViewById(R.id.switchIkasle);
 
         item = new ArrayList<>();
-        item.add(new ItemSpinner(1, "1. YERMOKO MARIA ANDREAREN SANTUTEGIA"));
+        item.add(new ItemSpinner(1, "1. YERMOKO ANDRE MARIAREN SANTUTEGIA"));
         item.add(new ItemSpinner(2, "2. BURDIN HESIA"));
         item.add(new ItemSpinner(3, "3. SANTA AGUEDA ERMITA"));
         item.add(new ItemSpinner(4, "4. KATUXAKO JAUREGIA"));
@@ -142,12 +142,17 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         for (int x = 0; x < topi.size(); x++){
             // Crea un nuevo LinearLayout para contener los TextViews
             LinearLayout itemLayout = new LinearLayout(requireContext());
-            itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-            itemLayout.setOrientation(LinearLayout.HORIZONTAL); // Orientación horizontal para que los TextViews estén uno al lado del otro
+            );
+            layoutParams.setMargins(0, 20, 0, 0);
 
+            // Aplicar los parámetros de diseño al LinearLayout
+            itemLayout.setLayoutParams(layoutParams);
+
+            itemLayout.setOrientation(LinearLayout.HORIZONTAL); // Orientación horizontal para que los TextViews estén uno al lado del otro
+            itemLayout.setPadding(30, 30, 30, 30);
             // Crea un nuevo TextView para el nombre
             TextView nameTextView = new TextView(getActivity());
             LinearLayout.LayoutParams nameLayoutParams = new LinearLayout.LayoutParams(
@@ -156,7 +161,6 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
                     1
             );
             // Establece los márgenes izquierdo y derecho
-            nameLayoutParams.setMargins(20, 0, 20, 0);
             nameTextView.setLayoutParams(nameLayoutParams);
             nameTextView.setTextSize(18);
             nameTextView.setText((x + 1) + ". " + topi.get(x).getIzena() + " " + topi.get(x).getAbizenak().split("\\s+")[0].substring(0, 1).toUpperCase() + ".");
