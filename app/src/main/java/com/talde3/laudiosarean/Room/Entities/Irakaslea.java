@@ -2,7 +2,6 @@ package com.talde3.laudiosarean.Room.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;

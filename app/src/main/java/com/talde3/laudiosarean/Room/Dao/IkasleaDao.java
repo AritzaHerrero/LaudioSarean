@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.ItemSpinner;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface IkasleaDao {
     void delete(Ikaslea ikaslea);
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Ikaslea'")
     void resetPrimaryKeyAutoIncrementValueIkaslea();
+    @Query("Select i.id_ikaslea id, i.izena gunea from Ikaslea i")
+    List<ItemSpinner> getIkasleak();
 }
