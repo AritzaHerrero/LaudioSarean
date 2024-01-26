@@ -20,41 +20,41 @@
 
     <EditText
         android:id="@+id/etEposta"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/edit_text"
         android:drawableStart="@drawable/email"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/eposta"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHeaderImage"
-        app:layout_constraintVertical_bias="0.25"
         tools:ignore="Autofill,TextContrastCheck" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEposta"
-        app:layout_constraintVertical_bias="0.355">
+        app:layout_constraintVertical_bias="0.193">
 
         <EditText
             android:id="@+id/etPasahitza"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:drawablePadding="8dp"
             android:drawableStart="@drawable/key"
+            android:drawablePadding="8dp"
+            android:ems="10"
             android:hint="@string/pasahitza"
             android:inputType="textPassword"
             android:minHeight="48sp"
@@ -62,20 +62,20 @@
 
         <ImageButton
             android:id="@+id/ibPasahitza"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/pasahitzaBegia"
             android:scaleType="centerInside"
             android:src="@drawable/begia_24"
-            tools:ignore="InefficientWeight,SpeakableTextPresentCheck,TouchTargetSizeCheck"
-            android:contentDescription="@string/pasahitzaBegia" />
+            tools:ignore="InefficientWeight,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnSaioahasi"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/saioahasi"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -111,13 +111,13 @@
 
     <CheckBox
         android:id="@+id/cbPasahitzaGorde"
-        android:layout_width="241dp"
-        android:layout_height="48dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/pasahitzaGorde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.623"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0" />

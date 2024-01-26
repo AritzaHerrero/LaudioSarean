@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Laudio Sarean</string>
+    <string name="app_nameLarriz">LAUDIO SAREAN</string>
+
     <!-- MainActivity -->
     <string name="eposta">E-posta</string>
     <string name="pasahitza">Pasahitza</string>
