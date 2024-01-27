@@ -34,6 +34,8 @@ import com.talde3.laudiosarean.Room.Entities.Gunea;
 import java.io.IOException;
 
 public class GuneInformazioa extends Activity {
+    private TextView txtTiempoActual;
+    private TextView txtTiempoTotal;
     private Handler handler = new Handler();
     private Runnable runnable;
     private ImageView imgGunea;
@@ -59,6 +61,9 @@ public class GuneInformazioa extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gune_informazioa);
+
+        txtTiempoActual = findViewById(R.id.txtTiempoActual);
+        txtTiempoTotal = findViewById(R.id.txtTiempoTotal);
 
 
         botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
@@ -198,6 +203,12 @@ public class GuneInformazioa extends Activity {
         // MediaPlayer klasea abiaraziko dugu Audio fitxategia elkartuz
         mediaPlayer = MediaPlayer.create(this, audioResource);
 
+        int tiempoTotal = mediaPlayer.getDuration();
+
+        // Configurar el tiempo total en el TextView
+        String tiempoTotalStr = obtenerFormatoTiempo(tiempoTotal);
+        txtTiempoTotal.setText(tiempoTotalStr);
+
         ImageView imgPrevious = findViewById(R.id.imgPrevious);
         ImageView imgNext = findViewById(R.id.imgNext);
         imgPrevious.setOnClickListener(new View.OnClickListener() {
@@ -251,8 +262,13 @@ public class GuneInformazioa extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    mediaPlayer.seekTo(progress); // Aldatu audioaren posizioa SeekBar-en aurrerapenera
+                    mediaPlayer.seekTo(progress);
                 }
+
+                // Actualizar el tiempo actual en el TextView
+                int tiempoActual = progress;
+                String tiempoActualStr = obtenerFormatoTiempo(tiempoActual);
+                txtTiempoActual.setText(tiempoActualStr);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -363,6 +379,14 @@ public class GuneInformazioa extends Activity {
 
         alertDialog.show();
     }
+
+    private String obtenerFormatoTiempo(int milisegundos) {
+        int segundos = (milisegundos / 1000) % 60;
+        int minutos = (milisegundos / (1000 * 60)) % 60;
+
+        return String.format("%02d:%02d", minutos, segundos);
+    }
+
 
     @Override
     protected void onDestroy() {
