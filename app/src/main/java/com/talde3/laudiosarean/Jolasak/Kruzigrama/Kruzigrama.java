@@ -304,7 +304,7 @@ public class Kruzigrama extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 

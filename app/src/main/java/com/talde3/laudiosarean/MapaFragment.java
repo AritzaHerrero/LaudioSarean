@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.talde3.laudiosarean.Jolasak.Ruleta.Ruleta;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -90,25 +92,25 @@ public class MapaFragment extends Fragment {
         items.add(new OverlayItem("Yermoko Andre Mariaren Santutegia", "",
                 new GeoPoint(43.17177, -2.97165))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Burdin Hesia", "Info, ",
+        items.add(new OverlayItem("Burdin Hesia", "",
                 new GeoPoint(43.1692, -2.9586))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Santa Aguedako ermita", "Info, ",
+        items.add(new OverlayItem("Santa Aguedako ermita", "",
                 new GeoPoint(43.14831, -2.98162))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Katuxako jauregia", "Info, ",
+        items.add(new OverlayItem("Katuxako jauregia", "",
                 new GeoPoint(43.13329, -2.97083))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lamuzako San Pedro eliza", "Info, ",
+        items.add(new OverlayItem("Lamuzako San Pedro eliza", "",
                 new GeoPoint(43.14278, -2.96198))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lamuza jauregia", "Info, ",
+        items.add(new OverlayItem("Lamuza jauregia", "",
                 new GeoPoint(43.14462, -2.96441))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lezeagako sorgina", "Info, ",
+        items.add(new OverlayItem("Lezeagako sorgina", "",
                 new GeoPoint(43.14162,-2.96202))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Trivia", "Info, ",
+        items.add(new OverlayItem("Trivia", "",
                 new GeoPoint(43.14322, -2.96269))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
         ItemizedOverlayWithFocus<OverlayItem> overlay = new ItemizedOverlayWithFocus<>(
@@ -163,8 +165,8 @@ public class MapaFragment extends Fragment {
                             intent.putExtra("aukeratutakoGunea", 7);
                             startActivity(intent);
                         } else if (item.getTitle() == "Trivia") {
-                            intent.putExtra("aukeratutakoGunea", 8);
-                            startActivity(intent);
+                            Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
+                            startActivity(AzkenEbaluazioaIntent);
                         }
                         return false;
                     }

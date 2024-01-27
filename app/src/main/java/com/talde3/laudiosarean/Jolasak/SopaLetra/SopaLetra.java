@@ -206,7 +206,7 @@ public class SopaLetra extends AppCompatActivity {
                                         }
                                     }
                                     if (!idEncontrado) {
-                                        Toast.makeText(getApplicationContext(), "La palabra no está en el array.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.hitzOkerra), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } else {
@@ -255,7 +255,7 @@ public class SopaLetra extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
