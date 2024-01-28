@@ -25,4 +25,8 @@ public class ItemSpinner {
     public void setGunea(String gunea) {
         this.gunea = gunea;
     }
+    @Override
+    public String toString() {
+        return gunea;
+    }
 }

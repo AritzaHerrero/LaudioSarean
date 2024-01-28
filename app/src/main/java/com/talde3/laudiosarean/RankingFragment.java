@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.talde3.laudiosarean.Room.Entities.ItemSpinner;
 import com.talde3.laudiosarean.Room.Entities.Ranking;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
     private Switch switchIkasle;
     private ArrayAdapter<ItemSpinner> adapter;
     private List<ItemSpinner> item;
+    private TextView postop;
     public RankingFragment() {
         // Required empty public constructor
     }
@@ -70,6 +73,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
 
         Spinner spin = view.findViewById(R.id.spin);
         switchIkasle = view.findViewById(R.id.switchIkasle);
+        postop = view.findViewById(R.id.pos);
 
         // Spinner-a defektuz izango duen lista
         item = new ArrayList<>();
@@ -94,6 +98,8 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         ItemSpinner gunea = (ItemSpinner) parent.getItemAtPosition(pos);
+
+        postop.setText("Pos.");
 
         List<Ranking> topi;
 
@@ -133,7 +139,11 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
             // Izenaren eskuin eta ezker marginak
             nameTextView.setLayoutParams(nameLayoutParams);
             nameTextView.setTextSize(18);
-            nameTextView.setText((x + 1) + ". " + topi.get(x).getIzena() + " " + topi.get(x).getAbizenak().split("\\s+")[0].substring(0, 1).toUpperCase() + ".");
+            if(!switchState){
+                nameTextView.setText((x + 1) + ". " + topi.get(x).getIzena() + " " + topi.get(x).getAbizenak().split("\\s+")[0].substring(0, 1).toUpperCase() + ".");
+            }else{
+                nameTextView.setText(topi.get(x).getGunea() + " " + topi.get(x).getIzena() + " " + topi.get(x).getAbizenak().split("\\s+")[0].substring(0, 1).toUpperCase() + ".");
+            }
             nameTextView.setTextAppearance(R.style.GameRankingTextStyle);
 
             // Puntuazioaren textview-a sortu
@@ -154,19 +164,25 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
             itemLayout.addView(nameTextView);
             itemLayout.addView(scoreTextView);
 
-            if(x == 0) {
-                itemLayout.setBackgroundResource(R.drawable.background_top1);
-                nameTextView.setTextSize(30);
-                scoreTextView.setTextSize(30);
-            } else if(x == 1) {
-                itemLayout.setBackgroundResource(R.drawable.background_top2);
-                nameTextView.setTextSize(26);
-                scoreTextView.setTextSize(26);
-            } else if(x == 2) {
-                itemLayout.setBackgroundResource(R.drawable.background_top3);
-                nameTextView.setTextSize(22);
-                scoreTextView.setTextSize(22);
+            if(!switchState){
+                postop.setText("Pos.");
+                if(x == 0) {
+                    itemLayout.setBackgroundResource(R.drawable.background_top1);
+                    nameTextView.setTextSize(30);
+                    scoreTextView.setTextSize(30);
+                } else if(x == 1) {
+                    itemLayout.setBackgroundResource(R.drawable.background_top2);
+                    nameTextView.setTextSize(26);
+                    scoreTextView.setTextSize(26);
+                } else if(x == 2) {
+                    itemLayout.setBackgroundResource(R.drawable.background_top3);
+                    nameTextView.setTextSize(22);
+                    scoreTextView.setTextSize(22);
+                }else{
+                    itemLayout.setBackgroundResource(R.drawable.background_top4_top10);
+                }
             }else{
+                postop.setText("Gunea");
                 itemLayout.setBackgroundResource(R.drawable.background_top4_top10);
             }
 
