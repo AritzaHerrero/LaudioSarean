@@ -40,7 +40,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     public static Datubase db;
-    public static FirebaseFirestore firestore;
+    public FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private EditText etEposta;
     private EditText etPasahitza;

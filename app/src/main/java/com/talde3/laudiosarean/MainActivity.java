@@ -65,14 +65,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean LamuzaSanPedroJauregiaBool = false;
     private boolean LamuzaJauregiaBool = false;
     private boolean LezeagakoSorginaBool = false;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         IrakasleaDao irakasleaDao = LoginActivity.db.irakasleaDao();
         List<Irakaslea> irakasleak = irakasleaDao.getIrakasleak();

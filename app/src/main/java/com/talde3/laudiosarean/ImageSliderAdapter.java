@@ -11,8 +11,8 @@ import androidx.viewpager.widget.PagerAdapter;
 
 public class ImageSliderAdapter extends PagerAdapter {
 
-    private Context context;
-    private int[] images;
+    private final Context context;
+    private final int[] images;
 
     public ImageSliderAdapter(Context context, int[] images) {
         this.context = context;

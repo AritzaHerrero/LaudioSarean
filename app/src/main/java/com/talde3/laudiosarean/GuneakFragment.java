@@ -23,20 +23,6 @@ public class GuneakFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private ImageButton ibSantutegia;
-    private ImageButton ibBurdinHesia;
-    private ImageButton ibErmita;
-    private ImageButton ibKatutxaJauregia;
-    private ImageButton ibEliza;
-    private ImageButton ibLamuzaJauregia;
-    private ImageButton ibLezeagakoSorgina;
-    private ImageButton ibAzkenEbaluazioa;
-
     public GuneakFragment() {
         // Required empty public constructor
     }
@@ -63,8 +49,9 @@ public class GuneakFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -72,84 +59,60 @@ public class GuneakFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guneak, container, false);
 
-        ibSantutegia = view.findViewById(R.id.ibSantutegia);
-        ibBurdinHesia = view.findViewById(R.id.ibBurdinHesia);
-        ibErmita = view.findViewById(R.id.ibErmita);
-        ibKatutxaJauregia = view.findViewById(R.id.ibKatutxaJauregia);
-        ibEliza = view.findViewById(R.id.ibEliza);
-        ibLamuzaJauregia = view.findViewById(R.id.ibLamuzaJauregia);
-        ibLezeagakoSorgina = view.findViewById(R.id.ibLezeagakoSorgina);
-        ibAzkenEbaluazioa = view.findViewById(R.id.ibAzkenEbaluazioa);
+        ImageButton ibSantutegia = view.findViewById(R.id.ibSantutegia);
+        ImageButton ibBurdinHesia = view.findViewById(R.id.ibBurdinHesia);
+        ImageButton ibErmita = view.findViewById(R.id.ibErmita);
+        ImageButton ibKatutxaJauregia = view.findViewById(R.id.ibKatutxaJauregia);
+        ImageButton ibEliza = view.findViewById(R.id.ibEliza);
+        ImageButton ibLamuzaJauregia = view.findViewById(R.id.ibLamuzaJauregia);
+        ImageButton ibLezeagakoSorgina = view.findViewById(R.id.ibLezeagakoSorgina);
+        ImageButton ibAzkenEbaluazioa = view.findViewById(R.id.ibAzkenEbaluazioa);
 
-        ibSantutegia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent YermokoSantutegiaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                YermokoSantutegiaIntent.putExtra("aukeratutakoGunea", 1);
-                startActivity(YermokoSantutegiaIntent);
-            }
+        ibSantutegia.setOnClickListener(v -> {
+            Intent YermokoSantutegiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            YermokoSantutegiaIntent.putExtra("aukeratutakoGunea", 1);
+            startActivity(YermokoSantutegiaIntent);
         });
 
-        ibBurdinHesia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent BurdinHesiaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                BurdinHesiaIntent.putExtra("aukeratutakoGunea", 2);
-                startActivity(BurdinHesiaIntent);
-            }
+        ibBurdinHesia.setOnClickListener(v -> {
+            Intent BurdinHesiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            BurdinHesiaIntent.putExtra("aukeratutakoGunea", 2);
+            startActivity(BurdinHesiaIntent);
         });
 
-        ibErmita.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent SantaAguedakoErmitaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                SantaAguedakoErmitaIntent.putExtra("aukeratutakoGunea", 3);
-                startActivity(SantaAguedakoErmitaIntent);
-            }
+        ibErmita.setOnClickListener(v -> {
+            Intent SantaAguedakoErmitaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            SantaAguedakoErmitaIntent.putExtra("aukeratutakoGunea", 3);
+            startActivity(SantaAguedakoErmitaIntent);
         });
 
-        ibKatutxaJauregia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent KatuxakoJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                KatuxakoJauregiaIntent.putExtra("aukeratutakoGunea", 4);
-                startActivity(KatuxakoJauregiaIntent);
-            }
+        ibKatutxaJauregia.setOnClickListener(v -> {
+            Intent KatuxakoJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            KatuxakoJauregiaIntent.putExtra("aukeratutakoGunea", 4);
+            startActivity(KatuxakoJauregiaIntent);
         });
 
-        ibEliza.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent LamuzakoSanPedroElizaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                LamuzakoSanPedroElizaIntent.putExtra("aukeratutakoGunea", 5);
-                startActivity(LamuzakoSanPedroElizaIntent);
-            }
+        ibEliza.setOnClickListener(v -> {
+            Intent LamuzakoSanPedroElizaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            LamuzakoSanPedroElizaIntent.putExtra("aukeratutakoGunea", 5);
+            startActivity(LamuzakoSanPedroElizaIntent);
         });
 
-        ibLamuzaJauregia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent LamuzaJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                LamuzaJauregiaIntent.putExtra("aukeratutakoGunea", 6);
-                startActivity(LamuzaJauregiaIntent);
-            }
+        ibLamuzaJauregia.setOnClickListener(v -> {
+            Intent LamuzaJauregiaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            LamuzaJauregiaIntent.putExtra("aukeratutakoGunea", 6);
+            startActivity(LamuzaJauregiaIntent);
         });
 
-        ibLezeagakoSorgina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent LezeagakoSorginaIntent = new Intent(getActivity(), GuneInformazioa.class);
-                LezeagakoSorginaIntent.putExtra("aukeratutakoGunea", 7);
-                startActivity(LezeagakoSorginaIntent);
-            }
+        ibLezeagakoSorgina.setOnClickListener(v -> {
+            Intent LezeagakoSorginaIntent = new Intent(getActivity(), GuneInformazioa.class);
+            LezeagakoSorginaIntent.putExtra("aukeratutakoGunea", 7);
+            startActivity(LezeagakoSorginaIntent);
         });
 
-        ibAzkenEbaluazioa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
-                startActivity(AzkenEbaluazioaIntent);
-            }
+        ibAzkenEbaluazioa.setOnClickListener(v -> {
+            Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
+            startActivity(AzkenEbaluazioaIntent);
         });
 
         return view;

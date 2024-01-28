@@ -16,9 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.talde3.laudiosarean.Jolasak.Anagrama.Anagrama;
@@ -32,30 +30,21 @@ import com.talde3.laudiosarean.Jolasak.TestGune4.Galderak;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GuneInformazioa extends Activity {
     private TextView txtTiempoActual;
-    private TextView txtTiempoTotal;
-    private Handler handler = new Handler();
-    private Runnable runnable;
-    private ImageView imgGunea;
+    private final Handler handler = new Handler();
     private ImageButton imgBtnHasi;
     private ImageButton imgBtnGelditu;
-    private ImageButton imgBtnBerrebiarazi;
-    private Button btnPlay;
-    private TextView tituloa;
-    private TextView informazioa;
     private ViewPager viewPager;
     private MediaPlayer mediaPlayer;
     private SeekBar seekBarAudio;
     private boolean isPlaying = false;
-    private int audioarenPosizioa = 0;
-    private int botoia= 0;
     private int audioResource = 0;
-    private Gunea gunea;
 
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "DiscouragedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,26 +52,23 @@ public class GuneInformazioa extends Activity {
         setContentView(R.layout.activity_gune_informazioa);
 
         txtTiempoActual = findViewById(R.id.txtTiempoActual);
-        txtTiempoTotal = findViewById(R.id.txtTiempoTotal);
+        TextView txtTiempoTotal = findViewById(R.id.txtTiempoTotal);
 
 
-        botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
-        imgGunea = findViewById(R.id.imgGunea);
-        btnPlay = findViewById(R.id.btnPlay);
-        tituloa= findViewById(R.id.txtGunea);
-        informazioa= findViewById(R.id.txtHistoriaGunea);
+        int botoia = getIntent().getIntExtra("aukeratutakoGunea", 0);
+        ImageView imgGunea = findViewById(R.id.imgGunea);
+        Button btnPlay = findViewById(R.id.btnPlay);
+        TextView tituloa = findViewById(R.id.txtGunea);
+        TextView informazioa = findViewById(R.id.txtHistoriaGunea);
         viewPager = findViewById(R.id.imageSlider);
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnPlay.setOnClickListener(v -> {
 
-            }
         });
 
         switch (botoia) {
             case 1:
-                gunea = LoginActivity.db.guneaDao().getGuneaById(1);
+                Gunea gunea = LoginActivity.db.guneaDao().getGuneaById(1);
                 audioResource = getResources().getIdentifier(gunea.getAudioa(), "raw", getPackageName());
                 imgGunea.setImageResource(getResources().getIdentifier(gunea.getIrudiak().split(",")[0], "drawable", getPackageName()));
                 tituloa.setText(gunea.getIzena());
@@ -90,12 +76,9 @@ public class GuneInformazioa extends Activity {
                 int[] yermo = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName()),  getResources().getIdentifier(gunea.getIrudiak().split(",")[4], "drawable", getPackageName())};
                 ImageSliderAdapter adapterYermo = new ImageSliderAdapter(this, yermo);
                 viewPager.setAdapter(adapterYermo);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PuzzleActivity puzzleActivity = new PuzzleActivity();
-                        erakutsiMezua(puzzleActivity);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    PuzzleActivity puzzleActivity = new PuzzleActivity();
+                    erakutsiMezua(puzzleActivity);
                 });
                 break;
             case 2:
@@ -107,12 +90,9 @@ public class GuneInformazioa extends Activity {
                 int[] burdinHesia = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[4], "drawable", getPackageName())};
                 ImageSliderAdapter burdinHesiaAdapter = new ImageSliderAdapter(this, burdinHesia);
                 viewPager.setAdapter(burdinHesiaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SopaLetra sopaLetra = new SopaLetra();
-                        erakutsiMezua(sopaLetra);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    SopaLetra sopaLetra = new SopaLetra();
+                    erakutsiMezua(sopaLetra);
                 });
                 break;
             case 3:
@@ -124,12 +104,9 @@ public class GuneInformazioa extends Activity {
                 int[] santaAgueda = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName())};
                 ImageSliderAdapter santaAguedaAdapter = new ImageSliderAdapter(this, santaAgueda);
                 viewPager.setAdapter(santaAguedaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Laberintoa laberintoa = new Laberintoa();
-                        erakutsiMezua(laberintoa);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    Laberintoa laberintoa = new Laberintoa();
+                    erakutsiMezua(laberintoa);
                 });
                 break;
             case 4:
@@ -141,11 +118,9 @@ public class GuneInformazioa extends Activity {
                 int[] katuxakoJaureguia = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[4], "drawable", getPackageName())};
                 ImageSliderAdapter katuxakoJaureguiaAdapter = new ImageSliderAdapter(this, katuxakoJaureguia);
                 viewPager.setAdapter(katuxakoJaureguiaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Galderak galderak = new Galderak();
-                        erakutsiMezua(galderak);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    Galderak galderak = new Galderak();
+                    erakutsiMezua(galderak);
                 });
                 break;
             case 5:
@@ -157,12 +132,9 @@ public class GuneInformazioa extends Activity {
                 int[] lamuzakosanpedroeliza = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[4], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[5], "drawable", getPackageName())};
                 ImageSliderAdapter lamuzakosanpedroelizaAdapter = new ImageSliderAdapter(this, lamuzakosanpedroeliza);
                 viewPager.setAdapter(lamuzakosanpedroelizaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HutsuneakBete galderak = new HutsuneakBete();
-                        erakutsiMezua(galderak);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    HutsuneakBete galderak = new HutsuneakBete();
+                    erakutsiMezua(galderak);
                 });
                 break;
             case 6:
@@ -174,12 +146,9 @@ public class GuneInformazioa extends Activity {
                 int[] lamuzajauregia = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[3], "drawable", getPackageName())};
                 ImageSliderAdapter lamuzajauregiaAdapter = new ImageSliderAdapter(this, lamuzajauregia);
                 viewPager.setAdapter(lamuzajauregiaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Anagrama anagrama = new Anagrama();
-                        erakutsiMezua(anagrama);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    Anagrama anagrama = new Anagrama();
+                    erakutsiMezua(anagrama);
                 });
                 break;
             case 7:
@@ -191,12 +160,9 @@ public class GuneInformazioa extends Activity {
                 int[] lezeagakosorgina = {getResources().getIdentifier(gunea.getIrudiak().split(",")[1], "drawable", getPackageName()), getResources().getIdentifier(gunea.getIrudiak().split(",")[2], "drawable", getPackageName())};
                 ImageSliderAdapter lezeagakosorginaAdapter = new ImageSliderAdapter(this, lezeagakosorgina);
                 viewPager.setAdapter(lezeagakosorginaAdapter);
-                btnPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Kruzigrama kruzigrama = new Kruzigrama();
-                        erakutsiMezua(kruzigrama);
-                    }
+                btnPlay.setOnClickListener(v -> {
+                    Kruzigrama kruzigrama = new Kruzigrama();
+                    erakutsiMezua(kruzigrama);
                 });
                 break;
         }
@@ -211,30 +177,24 @@ public class GuneInformazioa extends Activity {
 
         ImageView imgPrevious = findViewById(R.id.imgPrevious);
         ImageView imgNext = findViewById(R.id.imgNext);
-        imgPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = viewPager.getCurrentItem();
-                if (current > 0) {
-                    viewPager.setCurrentItem(current - 1);
-                }
+        imgPrevious.setOnClickListener(v -> {
+            int current = viewPager.getCurrentItem();
+            if (current > 0) {
+                viewPager.setCurrentItem(current - 1);
             }
         });
-        imgNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = viewPager.getCurrentItem();
-                int total = viewPager.getAdapter().getCount();
-                if (current < total - 1) {
-                    viewPager.setCurrentItem(current + 1);
-                }
+        imgNext.setOnClickListener(v -> {
+            int current = viewPager.getCurrentItem();
+            int total = Objects.requireNonNull(viewPager.getAdapter()).getCount();
+            if (current < total - 1) {
+                viewPager.setCurrentItem(current + 1);
             }
         });
 
         // Interfazearen hiru botoiak lortuko ditugu
         imgBtnHasi = findViewById(R.id.imgBtnHasi);
         imgBtnGelditu = findViewById(R.id.imgBtnGelditu);
-        imgBtnBerrebiarazi = findViewById(R.id.imgBtnBerrebiarazi);
+        ImageButton imgBtnBerrebiarazi = findViewById(R.id.imgBtnBerrebiarazi);
         seekBarAudio= findViewById(R.id.seekBarAudio);
 
         imgBtnHasi.setVisibility(View.VISIBLE);
@@ -246,7 +206,7 @@ public class GuneInformazioa extends Activity {
         seekBarAudio.setMax(mediaPlayer.getDuration());
 
         // Actualizar la posición del SeekBar durante la reproducción del audio
-        runnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 if (mediaPlayer != null) {
@@ -266,8 +226,7 @@ public class GuneInformazioa extends Activity {
                 }
 
                 // Actualizar el tiempo actual en el TextView
-                int tiempoActual = progress;
-                String tiempoActualStr = obtenerFormatoTiempo(tiempoActual);
+                String tiempoActualStr = obtenerFormatoTiempo(progress);
                 txtTiempoActual.setText(tiempoActualStr);
             }
             @Override
@@ -277,30 +236,17 @@ public class GuneInformazioa extends Activity {
         });
 
         // Konfiguratu botoiaren klik erreprodukzioa hasteko edo eteteko
-        imgBtnHasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isPlaying) {
-                    startAudio();
-                }
+        imgBtnHasi.setOnClickListener(v -> {
+            if (!isPlaying) {
+                startAudio();
             }
         });
 
         // Konfiguratu botoiaren klik erreprodukzioa gelditzeko
-        imgBtnGelditu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopAudio();
-            }
-        });
+        imgBtnGelditu.setOnClickListener(v -> stopAudio());
 
         // Konfiguratu botoiaren klik, erreprodukzioa hasieratik berriz hasteko
-        imgBtnBerrebiarazi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restartAudio();
-            }
-        });
+        imgBtnBerrebiarazi.setOnClickListener(v -> restartAudio());
     }
 
     // Audioa erreproduzitzen hasteko edo berriz hasteko metodoa
@@ -322,7 +268,6 @@ public class GuneInformazioa extends Activity {
     // Audio-erreprodukzioa gelditzeko metodoa
     private void stopAudio() {
         if (mediaPlayer.isPlaying()) {
-            audioarenPosizioa = mediaPlayer.getCurrentPosition();
             mediaPlayer.stop();
             isPlaying = false;
             imgBtnHasi.setVisibility(View.VISIBLE);
@@ -345,7 +290,6 @@ public class GuneInformazioa extends Activity {
     }
 
     private void erakutsiMezua(Activity x) {
-        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
         View view = LayoutInflater.from(GuneInformazioa.this).inflate(R.layout.informazioa_dialog, null);
         Button prestBai = view.findViewById(R.id.prestBai);
         Button prestEz = view.findViewById(R.id.prestEz);
@@ -354,23 +298,17 @@ public class GuneInformazioa extends Activity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        prestEz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                Intent intent = new Intent(GuneInformazioa.this, Arauak.class);
-                startActivity(intent);
-            }
+        prestEz.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            Intent intent = new Intent(GuneInformazioa.this, Arauak.class);
+            startActivity(intent);
         });
 
-        prestBai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                Intent intent = new Intent(GuneInformazioa.this, x.getClass());
-                startActivity(intent);
-                finish();
-            }
+        prestBai.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            Intent intent = new Intent(GuneInformazioa.this, x.getClass());
+            startActivity(intent);
+            finish();
         });
 
         if (alertDialog.getWindow() != null) {
@@ -380,6 +318,7 @@ public class GuneInformazioa extends Activity {
         alertDialog.show();
     }
 
+    @SuppressLint("DefaultLocale")
     private String obtenerFormatoTiempo(int milisegundos) {
         int segundos = (milisegundos / 1000) % 60;
         int minutos = (milisegundos / (1000 * 60)) % 60;
