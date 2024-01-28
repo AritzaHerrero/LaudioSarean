@@ -28,11 +28,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
-import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.google.firebase.auth.FirebaseUser;
+import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 
 import org.osmdroid.config.Configuration;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private LocationInfo lamuzaSanPedroJauregia;
     private LocationInfo lamuzaJauregia;
     private LocationInfo lezeagakoSorgina;
-
     private boolean YermoBool = false;
     private boolean BurdinHesiaBool = false;
     private boolean SantaAguedaErmitaBool = false;
@@ -64,17 +65,28 @@ public class MainActivity extends AppCompatActivity {
     private boolean LamuzaSanPedroJauregiaBool = false;
     private boolean LamuzaJauregiaBool = false;
     private boolean LezeagakoSorginaBool = false;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        IkasleaDao ikaselaDao = LoginActivity.db.ikasleaDao();
-        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        IrakasleaDao irakasleaDao = LoginActivity.db.irakasleaDao();
+        List<Irakaslea> irakasleak = irakasleaDao.getIrakasleak();
+        boolean isIrakaslea = false;
 
-        if (ikaslea.getEmail().equals("irakaslea@gmail.com")) {
+        for(int i = 0; i < irakasleak.size(); i++)
+        {
+            assert currentUser != null;
+            if(Objects.requireNonNull(currentUser.getEmail()).equalsIgnoreCase(irakasleak.get(i).getEmail())){
+                isIrakaslea = true;
+            }
+        }
+
+        if (isIrakaslea) {
             erakutsiIrakasleMenua();
         } else {
             erakutsiIkasleMenua();

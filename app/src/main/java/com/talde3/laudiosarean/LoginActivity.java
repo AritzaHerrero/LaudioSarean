@@ -32,6 +32,7 @@ import com.talde3.laudiosarean.Room.Datubase;
 import com.talde3.laudiosarean.Room.Entities.Errekor;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 import com.talde3.laudiosarean.Room.Entities.Puntuazioa;
 
 import java.util.ArrayList;
@@ -239,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
    private void dbKarga(){
         // Room-taula guztiak ezabtzen ditu eta auto incrementak berriz hasieratzen dira
         db.clearAllTables();
+        db.irakasleaDao().resetPrimaryKeyAutoIncrementValueIrakaslea();
         db.ikasleaDao().resetPrimaryKeyAutoIncrementValueIkaslea();
         db.guneaDao().resetPrimaryKeyAutoIncrementValueGunea();
         db.puntuazioaDao().resetPrimaryKeyAutoIncrementValuePuntuazioa();
@@ -310,10 +312,28 @@ public class LoginActivity extends AppCompatActivity {
                             db.errekorDao().insert(document.toObject(Errekor.class));
                             Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+
+                        // Errekorrak kargatu ondoren, Irakasleak kargatzen ditu
+                        loadIrakasleData();
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
+   }
+
+   private void loadIrakasleData(){
+       firestore.collection("Irakasleak")
+               .get()
+               .addOnCompleteListener(task -> {
+                   if (task.isSuccessful()) {
+                       for (QueryDocumentSnapshot document : task.getResult()) {
+                           db.irakasleaDao().insert(document.toObject(Irakaslea.class));
+                           Log.d(TAG, document.getId() + " => " + document.getData());
+                       }
+                   } else {
+                       Log.d(TAG, "Error getting documents: ", task.getException());
+                   }
+               });
    }
 
    private boolean isFirstRun() {

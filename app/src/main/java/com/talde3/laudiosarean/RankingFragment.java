@@ -180,7 +180,7 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         if (switchState) {
             // Switch aktibatuta, ikaleen lista kargatu
             item.clear();
-            item.addAll(LoginActivity.db.ikasleaDao().getIkasleak());
+            item.addAll(LoginActivity.db.ikasleaDao().getIkasleakSpinner());
         } else {
             // Switch desaktibatuta, guneen lista kargatu
             item.clear();

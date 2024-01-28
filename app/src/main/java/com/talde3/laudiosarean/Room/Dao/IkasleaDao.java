@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface IkasleaDao {
     @Query("SELECT * FROM Ikaslea")
-    List<Ikaslea> getAll();
+    List<Ikaslea> getIkasleak();
     @Query("SELECT * FROM Ikaslea WHERE email = :email")
     Ikaslea getIkasleaByEmail(String email);
     @Insert
@@ -26,5 +26,5 @@ public interface IkasleaDao {
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Ikaslea'")
     void resetPrimaryKeyAutoIncrementValueIkaslea();
     @Query("Select i.id_ikaslea id, i.izena gunea from Ikaslea i")
-    List<ItemSpinner> getIkasleak();
+    List<ItemSpinner> getIkasleakSpinner();
 }

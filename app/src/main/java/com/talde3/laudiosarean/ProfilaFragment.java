@@ -18,9 +18,13 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
+import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -40,6 +44,7 @@ public class ProfilaFragment extends Fragment {
     private ImageButton ibEditIzena;
     private EditText etAbizenak;
     private ImageButton ibEditAbizena;
+    public static FirebaseFirestore firestore;
 
     public ProfilaFragment() {
         // Required empty public constructor
@@ -90,16 +95,44 @@ public class ProfilaFragment extends Fragment {
         Button btnEzabatuKontua = view.findViewById(R.id.btnEzabatuKontua);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         // Erabiltzailearen informazioa datu basetik hartzen da
-        IkasleaDao ikaselaDao = LoginActivity.db.ikasleaDao();
-        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+        List<Irakaslea> irakasleak = LoginActivity.db.irakasleaDao().getIrakasleak();
+        boolean isIrakaslea = false;
 
-        etEposta.setText(ikaslea.getEmail());
-        etIzena.setText(ikaslea.getIzena());
-        etAbizenak.setText(ikaslea.getAbizenak());
-        etKurtsoa.setText(ikaslea.getKurtsoa());
+        for (int i = 0; i < irakasleak.size(); i++) {
+            assert currentUser != null;
+            if (Objects.requireNonNull(currentUser.getEmail()).equalsIgnoreCase(irakasleak.get(i).getEmail())) {
+                isIrakaslea = true;
+            }
+        }
 
+        Ikaslea ikaslea;
+        Irakaslea irakaslea;
+        if (isIrakaslea) {
+            ikaslea = null;
+            IrakasleaDao irakasleaDao = LoginActivity.db.irakasleaDao();
+            irakaslea = irakasleaDao.getIrakasleaByEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+
+            etEposta.setText(irakaslea.getEmail());
+            etIzena.setText(irakaslea.getIzena());
+            etAbizenak.setText(irakaslea.getAbizenak());
+            etKurtsoa.setText(irakaslea.getKurtsoa());
+        } else {
+            irakaslea = null;
+            IkasleaDao ikaselaDao = LoginActivity.db.ikasleaDao();
+            ikaslea = ikaselaDao.getIkasleaByEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+
+            etEposta.setText(ikaslea.getEmail());
+            etIzena.setText(ikaslea.getIzena());
+            etAbizenak.setText(ikaslea.getAbizenak());
+            etKurtsoa.setText(ikaslea.getKurtsoa());
+        }
+
+
+        boolean finalIsIrakaslea = isIrakaslea;
+        firestore = FirebaseFirestore.getInstance();
         ibEditIzena.setOnClickListener(view1 -> {
             boolean isEnabled = etIzena.isEnabled();
 
@@ -110,19 +143,44 @@ public class ProfilaFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
                 builder.setMessage(getString(R.string.aldaketakGorde))
                         .setPositiveButton(getString(R.string.bai), (dialog, id) -> {
-                            ikaslea.setIzena(etIzena.getText().toString());
-                            LoginActivity.db.ikasleaDao().update(ikaslea);
-                            etIzena.setText(ikaslea.getIzena());
+                            if(finalIsIrakaslea){
+                                // Room Irakaslea
+                                irakaslea.setIzena(etIzena.getText().toString());
+                                LoginActivity.db.irakasleaDao().update(irakaslea);
+                                etIzena.setText(irakaslea.getIzena());
+
+                                // Firestore Irakaslea
+                                firestore.collection("Irakasleak").document(currentUser.getEmail()).set(irakaslea);
+                            }else{
+                                // Room Ikaslea
+                                ikaslea.setIzena(etIzena.getText().toString());
+                                LoginActivity.db.ikasleaDao().update(ikaslea);
+                                etIzena.setText(ikaslea.getIzena());
+
+                                // Firestore Ikaslea
+                                assert currentUser != null;
+                                firestore.collection("Ikasleak").document(Objects.requireNonNull(currentUser.getEmail())).set(ikaslea);
+                            }
                             etIzena.setEnabled(false);
                             ibEditIzena.setImageResource(R.drawable.edit_pencil_24);
                         })
                         .setNegativeButton(getString(R.string.ez), (dialog, id) -> {
-                            etIzena.setText(ikaslea.getIzena());
+                            if(finalIsIrakaslea){
+                                etIzena.setText(irakaslea.getIzena());
+                            }else{
+                                etIzena.setText(ikaslea.getIzena());
+                            }
                             etIzena.setEnabled(false);
                             dialog.dismiss();
                             ibEditIzena.setImageResource(R.drawable.edit_pencil_24);
                         })
-                        .setOnDismissListener(dialogInterface -> etIzena.setText(ikaslea.getIzena()));
+                        .setOnDismissListener(dialogInterface -> {
+                            if(finalIsIrakaslea) {
+                                etIzena.setText(irakaslea.getIzena());
+                            }else{
+                                etIzena.setText(ikaslea.getIzena());
+                            }
+                        });
                 builder.create().show();
             }
         });
@@ -137,19 +195,41 @@ public class ProfilaFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
                 builder.setMessage(getString(R.string.aldaketakGorde))
                         .setPositiveButton(getString(R.string.bai), (dialog, id) -> {
-                            ikaslea.setAbizenak(etAbizenak.getText().toString());
-                            LoginActivity.db.ikasleaDao().update(ikaslea);
-                            etAbizenak.setText(ikaslea.getAbizenak());
+                            if(finalIsIrakaslea){
+                                // Room Irakaslea
+                                irakaslea.setAbizenak(etAbizenak.getText().toString());
+                                LoginActivity.db.irakasleaDao().update(irakaslea);
+                                etAbizenak.setText(irakaslea.getAbizenak());
+
+                                // Firestore Irakaslea
+                                firestore.collection("Irakasleak").document(Objects.requireNonNull(currentUser.getEmail())).set(irakaslea);
+                            }else{
+                                // Room Ikaslea
+                                ikaslea.setAbizenak(etAbizenak.getText().toString());
+                                LoginActivity.db.ikasleaDao().update(ikaslea);
+                                etAbizenak.setText(ikaslea.getAbizenak());
+
+                                // Firestore Ikaslea
+                                assert currentUser != null;
+                                firestore.collection("Ikasleak").document(Objects.requireNonNull(currentUser.getEmail())).set(ikaslea);
+                            }
                             etAbizenak.setEnabled(false);
                             ibEditAbizena.setImageResource(R.drawable.edit_pencil_24);
                         })
                         .setNegativeButton(getString(R.string.ez), (dialog, id) -> {
-                            etAbizenak.setText(ikaslea.getAbizenak());
+                            if(finalIsIrakaslea){
+                                etAbizenak.setText(irakaslea.getAbizenak());
+                            }else{
+                                etAbizenak.setText(ikaslea.getAbizenak());
+                            }
                             etAbizenak.setEnabled(false);
                             dialog.dismiss();
                             ibEditAbizena.setImageResource(R.drawable.edit_pencil_24);
                         })
-                        .setOnDismissListener(dialogInterface -> etAbizenak.setText(ikaslea.getAbizenak()));
+                        .setOnDismissListener(dialogInterface -> {
+                            assert ikaslea != null;
+                            etAbizenak.setText(ikaslea.getAbizenak());
+                        });
                 builder.create().show();
             }
         });
@@ -171,7 +251,13 @@ public class ProfilaFragment extends Fragment {
                             FirebaseUser erabiltzailea = mAuth.getCurrentUser();
                             if (erabiltzailea != null) {
                                 // Pasahitza eguneratu
-                                LoginActivity.db.ikasleaDao().update(ikaslea);
+                                if(finalIsIrakaslea){
+                                    // Room Irakaslea
+                                    LoginActivity.db.irakasleaDao().update(irakaslea);
+                                }else{
+                                    // Room Ikaslea
+                                    LoginActivity.db.ikasleaDao().update(ikaslea);
+                                }
 
                                 erabiltzailea.updatePassword(newPassword).addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -216,7 +302,13 @@ public class ProfilaFragment extends Fragment {
                         // Kontua ezabatu
                         FirebaseUser erabiltzailea = FirebaseAuth.getInstance().getCurrentUser();
                         if (erabiltzailea != null) {
-                            LoginActivity.db.ikasleaDao().delete(ikaslea);
+                            if(finalIsIrakaslea){
+                                // Room Irakaslea
+                                LoginActivity.db.irakasleaDao().delete(irakaslea);
+                            }else{
+                                // Room Ikaslea
+                                LoginActivity.db.ikasleaDao().delete(ikaslea);
+                            }
                             erabiltzailea.delete().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     // Kontua ondo ezabatu da
@@ -241,7 +333,6 @@ public class ProfilaFragment extends Fragment {
                     });
             builder.create().show();
         });
-
 
 
         return view;
