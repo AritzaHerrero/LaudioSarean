@@ -11,10 +11,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,16 +28,15 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.talde3.laudiosarean.Jolasak.Arauak;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
 import org.osmdroid.config.Configuration;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
-    private IkasleaDao ikaselaDao;
-    private FirebaseAuth mAuth;
     GuneakFragment guneakFragment = new GuneakFragment();
     MapaFragment mapaFragment = new MapaFragment();
     ProfilaFragment profilaFragment = new ProfilaFragment();
@@ -52,17 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1001;
-
-    private LocationInfo carrefourLocation;
-    private LocationInfo eroskiLocation;
-    private LocationInfo plazaLocation;
-    private LocationInfo Yermo;
-    private LocationInfo BurdinHesia;
-    private LocationInfo SantaAguedaErmita;
-    private LocationInfo KatuxakoJauregia;
-    private LocationInfo LamuzaSanPedroJauregia;
-    private LocationInfo LamuzaJauregia;
-    private LocationInfo LezeagakoSorgina;
+    private LocationInfo yermo;
+    private LocationInfo burdinHesia;
+    private LocationInfo santaAguedaErmita;
+    private LocationInfo katuxakoJauregia;
+    private LocationInfo lamuzaSanPedroJauregia;
+    private LocationInfo lamuzaJauregia;
+    private LocationInfo lezeagakoSorgina;
 
     private boolean YermoBool = false;
     private boolean BurdinHesiaBool = false;
@@ -77,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-        ikaselaDao = LoginActivity.db.ikasleaDao();
-        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(mAuth.getCurrentUser().getEmail());
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        IkasleaDao ikaselaDao = LoginActivity.db.ikasleaDao();
+        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
 
         if (ikaslea.getEmail().equals("irakaslea@gmail.com")) {
             erakutsiIrakasleMenua();
@@ -89,26 +82,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int itemId = item.getItemId();
+    private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = item -> {
+        int itemId = item.getItemId();
 
-            if (itemId == GUNEEK_FRAGMENT_ID) {
-                loadFragment(guneakFragment);
-                return true;
-            } else if (itemId == MAPA_FRAGMENT_ID) {
-                loadFragment(mapaFragment);
-                return true;
-            } else if (itemId == PROFILA_FRAGMENT_ID) {
-                loadFragment(profilaFragment);
-                return true;
-            } else if (itemId == ITXI_SAIOA_FRAGMENT_ID) {
-                loadFragment(rankingFragment);
-                return true;
-            }
-            return false;
+        if (itemId == GUNEEK_FRAGMENT_ID) {
+            loadFragment(guneakFragment);
+            return true;
+        } else if (itemId == MAPA_FRAGMENT_ID) {
+            loadFragment(mapaFragment);
+            return true;
+        } else if (itemId == PROFILA_FRAGMENT_ID) {
+            loadFragment(profilaFragment);
+            return true;
+        } else if (itemId == ITXI_SAIOA_FRAGMENT_ID) {
+            loadFragment(rankingFragment);
+            return true;
         }
+        return false;
     };
 
     public void loadFragment(Fragment fragment) {
@@ -126,10 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         LocationCallback locationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
+            public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     updateLocationUI(location);
                 }
@@ -144,80 +131,36 @@ public class MainActivity extends AppCompatActivity {
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
-       /* TextView txtLatitud = findViewById(R.id.textViewLatitud);
-        TextView txtLongitud = findViewById(R.id.textViewLongitud);
-
-        txtLatitud.setText("Latitud: " + latitude);
-        txtLongitud.setText("Longitud: " + longitude);*/
-
-        checkDistance(carrefourLocation, latitude, longitude);
-        checkDistance(eroskiLocation, latitude, longitude);
-        checkDistance(plazaLocation, latitude, longitude);
+        checkDistance(yermo, latitude, longitude);
+        checkDistance(burdinHesia, latitude, longitude);
+        checkDistance(santaAguedaErmita, latitude, longitude);
+        checkDistance(katuxakoJauregia, latitude, longitude);
+        checkDistance(lamuzaSanPedroJauregia, latitude, longitude);
+        checkDistance(lamuzaJauregia, latitude, longitude);
+        checkDistance(lezeagakoSorgina, latitude, longitude);
     }
 
     private void checkDistance(LocationInfo locationInfo, double currentLatitude, double currentLongitude) {
         float distance = calculateDistance(currentLatitude, currentLongitude, locationInfo.getLatitude(), locationInfo.getLongitude());
         if (distance <= locationInfo.getTargetDistance()) {
-         //   Toast.makeText(this, locationInfo.getLocationName(), Toast.LENGTH_SHORT).show();
-
-
             if ("Yermo".equals(locationInfo.getLocationName()) && !YermoBool) {
                 YermoBool = kokalekuaZabaldu(1);
-                /*View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
-                Button prestBai = view.findViewById(R.id.kokalekuaBai);
-                Button prestEz = view.findViewById(R.id.kokalekuaEz);
-
-                Carrefour = true;
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setView(view);
-                final AlertDialog alertDialog = builder.create();
-
-
-                prestEz.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-
-                prestBai.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        Intent YermokoSantutegiaIntent = new Intent(MainActivity.this, GuneInformazioa.class);
-                        YermokoSantutegiaIntent.putExtra("aukeratutakoGunea", 1);
-                        startActivity(YermokoSantutegiaIntent);
-                    }
-                });
-
-                if (alertDialog.getWindow() != null) {
-                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                }
-
-                alertDialog.show();*/
             }
-
             if ("BurdinHesia".equals(locationInfo.getLocationName()) && !BurdinHesiaBool) {
                 BurdinHesiaBool = kokalekuaZabaldu(2);
             }
-
             if ("SantaAguedaErmita".equals(locationInfo.getLocationName()) && !SantaAguedaErmitaBool) {
                 SantaAguedaErmitaBool = kokalekuaZabaldu(3);
             }
-
             if ("KatuxakoJauregia".equals(locationInfo.getLocationName()) && !KatuxakoJauregiaBool) {
                 KatuxakoJauregiaBool = kokalekuaZabaldu(4);
             }
-
             if ("LamuzaSanPedroJauregia".equals(locationInfo.getLocationName()) && !LamuzaSanPedroJauregiaBool) {
                 LamuzaSanPedroJauregiaBool = kokalekuaZabaldu(5);
             }
-
             if ("LamuzaJauregia".equals(locationInfo.getLocationName()) && !LamuzaJauregiaBool) {
                 LamuzaJauregiaBool = kokalekuaZabaldu(6);
             }
-
             if ("LezeagakoSorgina".equals(locationInfo.getLocationName()) && !LezeagakoSorginaBool) {
                 LezeagakoSorginaBool = kokalekuaZabaldu(7);
             }
@@ -225,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private float calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double R = 6371e3; // radio de la Tierra en metros
+        double R = 6371e3; // Lurreko errrakioa m-tan
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);
@@ -246,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates();
             } else {
-                // Manejar el caso en que el usuario deniega los permisos
+                // Erabiltzaileak baimenak ezeztatzen baditu
                 Toast.makeText(this, getResources().getString(R.string.ubiError), Toast.LENGTH_SHORT).show();
             }
         }
@@ -262,21 +205,13 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog alertDialog = builder.create();
 
 
-        prestEz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+        prestEz.setOnClickListener(v -> alertDialog.dismiss());
 
-        prestBai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
-                intent.putExtra("aukeratutakoGunea", aukeratutakoGunea);
-                startActivity(intent);
-            }
+        prestBai.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
+            intent.putExtra("aukeratutakoGunea", aukeratutakoGunea);
+            startActivity(intent);
         });
 
         if (alertDialog.getWindow() != null) {
@@ -324,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         navigationIkasle.setVisibility(View.GONE);
         navigationIrakasle.setVisibility(View.VISIBLE);
         loadFragment(rankingFragment); // Irakaslearen fragmenta kargatzen du
-        navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+        navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // Nabegazio menuari logika gehitzen dio
     }
 
     private void erakutsiIkasleMenua() {
@@ -333,23 +268,19 @@ public class MainActivity extends AppCompatActivity {
         navigationIkasle.setVisibility(View.VISIBLE);
         navigationIrakasle.setVisibility(View.GONE);
         loadFragment(guneakFragment); // Ikaslearen fragmenta kargatzen du
-        navigationIkasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+        navigationIkasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // Nabegazio menuari logika gehitzen dio
 
         // Mapa kargatzeko
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
 
-        // Inicializar ubicaciones
-        carrefourLocation = new LocationInfo("Carrefour", 43.28329, -2.96332, 150);
-        eroskiLocation = new LocationInfo("Eroski", 43.28239, -2.96010, 150);
-        plazaLocation = new LocationInfo("Plaza", 43.28176, -2.96285, 50);
-
-        Yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
-        BurdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
-        SantaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
-        KatuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
-        LamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
-        LamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
-        LezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162,-2.96202, 75);
+        // Ubikazioak hasieratu
+        yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
+        burdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
+        santaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
+        katuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
+        lamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
+        lamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
+        lezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162, -2.96202, 75);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 

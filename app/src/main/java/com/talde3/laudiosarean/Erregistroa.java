@@ -1,6 +1,5 @@
 package com.talde3.laudiosarean;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,21 +12,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Erregistroa extends AppCompatActivity {
-    private IkasleaDao ikaselaDao;
     private FirebaseAuth mAuth;
     private EditText etEposta;
     private EditText etIzena;
@@ -35,7 +28,6 @@ public class Erregistroa extends AppCompatActivity {
     private EditText etPasahitza1;
     private EditText etPasahitza2;
     private Spinner spinnerKlasea;
-    private Button btnErregistratu;
     private String eposta;
     private String izena;
     private String abizenak;
@@ -56,15 +48,13 @@ public class Erregistroa extends AppCompatActivity {
         etPasahitza1 = findViewById(R.id.etPasahitza1);
         etPasahitza2 = findViewById(R.id.etPasahitza2);
         spinnerKlasea = findViewById(R.id.spinnerKlasea);
-        btnErregistratu = findViewById(R.id.btnErregistratu);
+        Button btnErregistratu = findViewById(R.id.btnErregistratu);
 
         ArrayList<String> klaseak = new ArrayList<>();
-
-        String [] hitzak = new String[]{"A", "B", "D", "E"};
-
-        for (String hitza : hitzak) {
-            klaseak.add(hitza);
-        }
+        klaseak.add("A");
+        klaseak.add("B");
+        klaseak.add("D");
+        klaseak.add("E");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, klaseak);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,98 +65,92 @@ public class Erregistroa extends AppCompatActivity {
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  // Aukeratutakoa
              }
-
              @Override
              public void onNothingSelected(AdapterView<?> parentView) {
                  // Aukera gabe
              }
          });
 
-        btnErregistratu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eposta = etEposta.getText().toString();
-                izena = etIzena.getText().toString();
-                abizenak = etAbizena.getText().toString();
-                pasahitza1 = etPasahitza1.getText().toString();
-                pasahitza2 = etPasahitza2.getText().toString();
+        btnErregistratu.setOnClickListener(view -> {
+            eposta = etEposta.getText().toString();
+            izena = etIzena.getText().toString();
+            abizenak = etAbizena.getText().toString();
+            pasahitza1 = etPasahitza1.getText().toString();
+            pasahitza2 = etPasahitza2.getText().toString();
 
-                String trimIzena = izena.trim();
-                //abizeneri trim eta array batean gordetzen da. Lehen abizena lehen arrayean bigarrena bigarrenean.
-                String[] trimAbizenak = abizenak.trim().split("\\s+");
+            String trimIzena = izena.trim();
+            // Abizeneri trim eta array batean gordetzen da. Lehen abizena lehen arrayean bigarrena bigarrenean.
+            String[] trimAbizenak = abizenak.trim().split("\\s+");
 
-                // Emaila konprobatzen du android-en metodoekin.
-                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(eposta).matches()) {
-                    String erEmail = getResources().getString(R.string.erEposta);
-                    etEposta.setError(erEmail);
-                }
-                // izena beteta dagoen ikusten du,
-                else if (trimIzena.isEmpty()) {
-                    String erIzena = getResources().getString(R.string.erIzena);
-                    etIzena.setError(erIzena);
-                }
-                // Zenbat array dauden konprobatzen du abizen kopuruak jakiteko.
-                else if (trimAbizenak.length < 2) {
-                    String erAbizenak = getResources().getString(R.string.erAbizenak);
-                    etAbizena.setError(erAbizenak);
-                }
-                // pasahitzak ez daudela hutsik konprobatzen du.
-                else if (pasahitza1.isEmpty()) {
-                    String erPasahitza1 = getResources().getString(R.string.erPasahitza1);
-                    etPasahitza1.setError(erPasahitza1);
-                }
-                else if (pasahitza2.isEmpty()){
-                    String erPasahitza1 = getResources().getString(R.string.erPasahitza1);
-                    etPasahitza2.setError(erPasahitza1);
-                }
-                // Bi pasahitzak berdinak diren konprobatzen du.
-                else if (!pasahitza1.equals(pasahitza2)) {
-                    Toast.makeText(Erregistroa.this, getResources().getString(R.string.erPasahitza2), Toast.LENGTH_SHORT).show();
-                }
-                // Dena zuzen badago erregistroa egiten da.
-                else {
-                    kurtsoa = spinnerKlasea.getSelectedItem().toString();
+            // Emaila konprobatzen du android-en metodoekin.
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(eposta).matches()) {
+                String erEmail = getResources().getString(R.string.erEposta);
+                etEposta.setError(erEmail);
+            }
+            // Izena beteta dagoen ikusten du,
+            else if (trimIzena.isEmpty()) {
+                String erIzena = getResources().getString(R.string.erIzena);
+                etIzena.setError(erIzena);
+            }
+            // Zenbat array dauden konprobatzen du abizen kopuruak jakiteko.
+            else if (trimAbizenak.length < 2) {
+                String erAbizenak = getResources().getString(R.string.erAbizenak);
+                etAbizena.setError(erAbizenak);
+            }
+            // Pasahitzak ez daudela hutsik konprobatzen du.
+            else if (pasahitza1.isEmpty()) {
+                String erPasahitza1 = getResources().getString(R.string.erPasahitza1);
+                etPasahitza1.setError(erPasahitza1);
+            }
+            else if (pasahitza2.isEmpty()){
+                String erPasahitza1 = getResources().getString(R.string.erPasahitza1);
+                etPasahitza2.setError(erPasahitza1);
+            }
+            // Bi pasahitzak berdinak diren konprobatzen du.
+            else if (!pasahitza1.equals(pasahitza2)) {
+                Toast.makeText(Erregistroa.this, getResources().getString(R.string.erPasahitza2), Toast.LENGTH_SHORT).show();
+            }
+            // Dena zuzen badago erregistroa egiten da.
+            else {
+                kurtsoa = spinnerKlasea.getSelectedItem().toString();
 
-                    mAuth.createUserWithEmailAndPassword(eposta, pasahitza1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
-                                Toast.makeText(Erregistroa.this, getString(R.string.kontuaSortu), Toast.LENGTH_SHORT).show();
+                mAuth.createUserWithEmailAndPassword(eposta, pasahitza1).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Erregistroa ondo badoa erabiltzailearen informazioa datu basean gordeko da
+                        Toast.makeText(Erregistroa.this, getString(R.string.kontuaSortu), Toast.LENGTH_SHORT).show();
 
-                                Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta, kurtsoa);
+                        Ikaslea ikaslea = new Ikaslea(izena, abizenak, eposta, kurtsoa);
 
-                                Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
-                                intent.putExtra("ikaslea", ikaslea);
-                                startActivity(intent);
-                            } else {
-                                // Erregistro okerra. Errore konkretuentzako mezu desberdinekin.
-                                String erroreMezua = getResources().getString(R.string.erOkerra);
+                        Intent intent = new Intent(Erregistroa.this, LoginActivity.class);
+                        intent.putExtra("ikaslea", ikaslea);
+                        startActivity(intent);
+                    } else {
+                        // Erregistro okerra. Errore konkretuentzako mezu desberdinekin.
+                        String erroreMezua = getResources().getString(R.string.erOkerra);
 
-                                // Zein izan den errorea.
-                                Exception exception = task.getException();
-                                if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                    // Pasaitzak ez du formatu ona.
-                                    String erPasahitzFormatua = getResources().getString(R.string.erPasahitzFormatua);
-                                    erroreMezua += erPasahitzFormatua;
-                                } else if (exception instanceof FirebaseAuthUserCollisionException) {
-                                    // E-posta erregistratuta dago
-                                    String erEpostaErregistratuta = getResources().getString(R.string.erEpostaErregistratuta);
-                                    erroreMezua += erEpostaErregistratuta;
-                                } else if (exception instanceof FirebaseNetworkException) {
-                                    // Internet konexio gabe
-                                    String erInternet = getResources().getString(R.string.erInternet);
-                                    erroreMezua += erInternet;
-                                } else {
-                                    // Beste errore batzuk.
-                                    String erEzezaguna = getResources().getString(R.string.erEzezaguna);
-                                    erroreMezua += erEzezaguna + exception.getMessage();
-                                }
-                                Toast.makeText(Erregistroa.this, erroreMezua, Toast.LENGTH_SHORT).show();
-                            }
+                        // Zein izan den errorea.
+                        Exception exception = task.getException();
+                        if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                            // Pasaitzak ez du formatu ona.
+                            String erPasahitzFormatua = getResources().getString(R.string.erPasahitzFormatua);
+                            erroreMezua += erPasahitzFormatua;
+                        } else if (exception instanceof FirebaseAuthUserCollisionException) {
+                            // E-posta erregistratuta dago
+                            String erEpostaErregistratuta = getResources().getString(R.string.erEpostaErregistratuta);
+                            erroreMezua += erEpostaErregistratuta;
+                        } else if (exception instanceof FirebaseNetworkException) {
+                            // Internet konexio gabe
+                            String erInternet = getResources().getString(R.string.erInternet);
+                            erroreMezua += erInternet;
+                        } else {
+                            // Beste errore batzuk.
+                            String erEzezaguna = getResources().getString(R.string.erEzezaguna);
+                            assert exception != null;
+                            erroreMezua += erEzezaguna + exception.getMessage();
                         }
-                    });
-                }
+                        Toast.makeText(Erregistroa.this, erroreMezua, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

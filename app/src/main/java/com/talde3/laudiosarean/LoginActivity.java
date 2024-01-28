@@ -1,43 +1,32 @@
 package com.talde3.laudiosarean;
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
 import com.talde3.laudiosarean.Room.Entities.Errekor;
@@ -99,24 +88,10 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } else {
-                        // Ikaslea null
                     }
-                } else {
-                    // Ikaslea null
                 }
             }
         }
-
-        /*try {
-            File currentDB = getDatabasePath("LaudioDB");
-            File externalStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File backupDB = new File(externalStorageDir, "LaudioDB.db");
-
-            Datubase.exportDatabase(currentDB, backupDB);
-        } catch (IOException e2) {
-            e2.printStackTrace();
-        }*/
 
         etEposta = findViewById(R.id.etEposta);
         etPasahitza = findViewById(R.id.etPasahitza);
@@ -147,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvErregistratuEmen.setOnClickListener(v -> {
-            // Acción a realizar cuando se hace clic en el TextView
+            // Erregistro textView-ean click egitean
             Intent erregistroIntent = new Intent(LoginActivity.this, Erregistroa.class);
             startActivity(erregistroIntent);
         });
@@ -196,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Eposta ez da aurkitu
                             Toast.makeText(LoginActivity.this, getResources().getString(R.string.erEpostaLogin), Toast.LENGTH_SHORT).show();
                         } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                            // Saio-hasierako kredentzial baliogabeak (eposta edp pasahitz baliogabeak)
+                            // Saio-hasierako kredentzial baliogabeak (eposta edo pasahitza baliogabeak)
                             Toast.makeText(LoginActivity.this, getResources().getString(R.string.erPasahitzaLogin), Toast.LENGTH_SHORT).show();
                         } else {
                             // Otro error no manejado específicamente
@@ -208,14 +183,14 @@ public class LoginActivity extends AppCompatActivity {
 
    private List<String> lehentasunakKargatu() {
         List<String> kredentzialak = new ArrayList<>();
-        // kredentzialak.xml kargatzen du (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
+        // Kredentzialak.xml kargatzen du (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
 
         // xml barruan 'user'-ean eta 'pass'-ean gordetako informazioa gordetzen du.
         String eposta = preferences.getString("user", "");
         String pasahitza = preferences.getString("pass", "");
 
-        // editText-etan ipintzen du kargatutako informazioa
+        // EditText-etan ipintzen du kargatutako informazioa
         etEposta.setText(eposta);
         etPasahitza.setText(pasahitza);
 
@@ -227,21 +202,18 @@ public class LoginActivity extends AppCompatActivity {
    }
 
    private void lehentasunakGorde() {
-        // kredentzialak.xml kargatzen da informazioa gordetzeko (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
+        // Kredentzialak.xml kargatzen da informazioa gordetzeko (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
-        // sartutako erabiltzaile eta pasahitzak eskuratzen dira
+        // Sartutako erabiltzaile eta pasahitzak eskuratzen dira
         String eposta = etEposta.getText().toString();
         String pasahitza = etPasahitza.getText().toString();
 
-        // xml-an gordetzeko editorea.
-        // <string name="user">'erabiltzailea'</string>
-        // <string name="pass>'pasahitza'</string>
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user", eposta);
         editor.putString("pass", pasahitza);
 
-        // dena gordeko da xml-an.
-        editor.apply(); // antes -> editor.commit();
+        // Dena gordeko da xml-an.
+        editor.apply();
    }
 
    private void desaktibatuUI() {
@@ -265,32 +237,31 @@ public class LoginActivity extends AppCompatActivity {
    }
 
    private void dbKarga(){
+        // Room-taula guztiak ezabtzen ditu eta auto incrementak berriz hasieratzen dira
         db.clearAllTables();
         db.ikasleaDao().resetPrimaryKeyAutoIncrementValueIkaslea();
         db.guneaDao().resetPrimaryKeyAutoIncrementValueGunea();
         db.puntuazioaDao().resetPrimaryKeyAutoIncrementValuePuntuazioa();
         db.errekorDao().resetPrimaryKeyAutoIncrementValueErrekor();
 
+        // Firestoreko informazioa room-en kargatzen da
         loadIkasleakData();
    }
 
    private void loadIkasleakData() {
         firestore.collection("Ikasleak")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.ikasleaDao().insert(document.toObject(Ikaslea.class));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-
-                            // Después de cargar Ikasleak, carga Guneak
-                            loadGuneakData();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.ikasleaDao().insert(document.toObject(Ikaslea.class));
+                            Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+
+                        // Ikasleak kargatu ondoren, Guneak kargatzen dira
+                        loadGuneakData();
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
    }
@@ -298,40 +269,34 @@ public class LoginActivity extends AppCompatActivity {
    private void loadGuneakData() {
         firestore.collection("Guneak")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.guneaDao().insert(document.toObject(Gunea.class));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-
-                            // Después de cargar Guneak, carga Puntuazioak
-                            loadPuntuazioakData();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.guneaDao().insert(document.toObject(Gunea.class));
+                            Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+
+                        // Guneak kargatu ondoren, Puntuazioak kargatzen ditu
+                        loadPuntuazioakData();
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
    }
    private void loadPuntuazioakData() {
         firestore.collection("Puntuazioak")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.puntuazioaDao().insert(document.toObject(Puntuazioa.class));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-
-                            // Después de cargar Puntuazioak, carga Errekorrak
-                            loadErrekorData();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.puntuazioaDao().insert(document.toObject(Puntuazioa.class));
+                            Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+
+                        // Puntuazioak kargatu ondoren, Errekorrak kargatzen ditu
+                        loadErrekorData();
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
    }
@@ -339,17 +304,14 @@ public class LoginActivity extends AppCompatActivity {
    private void loadErrekorData(){
         firestore.collection("Errekorrak")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.errekorDao().insert(document.toObject(Errekor.class));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.errekorDao().insert(document.toObject(Errekor.class));
+                            Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
    }
