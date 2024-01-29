@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface GuneaDao {
     @Query("SELECT * FROM Gunea")
-    List<Gunea> getAll();
+    List<Gunea> getGuneak();
     @Query("SELECT * FROM Gunea WHERE id_gunea = :id")
     Gunea getGuneaById(int id);
     @Insert

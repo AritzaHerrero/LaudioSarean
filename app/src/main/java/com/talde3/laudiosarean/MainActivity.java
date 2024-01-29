@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 
 import org.osmdroid.config.Configuration;
@@ -284,14 +285,24 @@ public class MainActivity extends AppCompatActivity {
         // Mapa kargatzeko
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
 
+        // Informazioa satu basetik eskuratu
+        List<Gunea> guneak = LoginActivity.db.guneaDao().getGuneak();
+
         // Ubikazioak hasieratu
-        yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
-        burdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
-        santaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
-        katuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
-        lamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
-        lamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
-        lezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162, -2.96202, 75);
+        //yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
+        yermo = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(0).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(0).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(0).getKoordenadak().split(",")[2]));
+        //burdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
+        burdinHesia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(1).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(1).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(1).getKoordenadak().split(",")[2]));
+        //santaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
+        santaAguedaErmita = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(2).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(2).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(2).getKoordenadak().split(",")[2]));
+        //katuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
+        katuxakoJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(3).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(3).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(3).getKoordenadak().split(",")[2]));
+        //lamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
+        lamuzaSanPedroJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(4).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(4).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(4).getKoordenadak().split(",")[2]));
+        //lamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
+        lamuzaJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(5).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(5).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(5).getKoordenadak().split(",")[2]));
+        //lezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162, -2.96202, 75);
+        lezeagakoSorgina = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(6).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(6).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(6).getKoordenadak().split(",")[2]));
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
