@@ -25,7 +25,7 @@ public class Gunea {
     @ColumnInfo(name = "irudiak")
     private String irudiak;
 
-    // Constructor
+    // Constructors
     public Gunea(String izena, String deskribapena, String koordenadak, String audioa, String irudiak) {
         this.izena = izena;
         this.deskribapena = deskribapena;
@@ -33,7 +33,6 @@ public class Gunea {
         this.audioa = audioa;
         this.irudiak = irudiak;
     }
-
     public Gunea(){}
 
     // Getters

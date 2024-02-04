@@ -19,8 +19,10 @@ public interface IrakasleaDao {
     void delete(Irakaslea irakaslea);
     @Update
     void update(Irakaslea irakaslea);
+    // Irakasle baten informazioa berreskuratu bere posta elektronikoz abiatuta
     @Query("SELECT * FROM Irakaslea WHERE email = :email")
     Irakaslea getIrakasleaByEmail(String email);
+    // AutoIncrement balioa 1-etik berriz astea
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Irakaslea'")
     void resetPrimaryKeyAutoIncrementValueIrakaslea();
 }

@@ -23,8 +23,10 @@ public interface IkasleaDao {
     void update(Ikaslea ikaslea);
     @Delete
     void delete(Ikaslea ikaslea);
+    // AutoIncrement balioa 1-etik berriz astea
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Ikaslea'")
     void resetPrimaryKeyAutoIncrementValueIkaslea();
+    // Ikasele taulako ikasle_id eta izen guztiak berreskuratu
     @Query("Select i.id_ikaslea id, i.izena gunea from Ikaslea i")
     List<ItemSpinner> getIkasleakSpinner();
 }

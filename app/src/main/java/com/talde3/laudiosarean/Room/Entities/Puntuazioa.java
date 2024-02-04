@@ -24,13 +24,12 @@ public class Puntuazioa {
     @ColumnInfo(name = "id_gunea")
     private int id_gunea;
 
-    // Constructor
+    // Constructors
     public Puntuazioa(int puntuazioa, int id_ikaslea, int id_gunea) {
         this.puntuazioa = puntuazioa;
         this.id_ikaslea = id_ikaslea;
         this.id_gunea = id_gunea;
     }
-
     public Puntuazioa(){}
 
     // Getters

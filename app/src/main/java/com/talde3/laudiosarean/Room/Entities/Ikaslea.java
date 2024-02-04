@@ -19,13 +19,14 @@ public class Ikaslea implements Serializable {
     private String abizenak;
     private String email;
     private String kurtsoa;
+
+    // COnstructors
     public Ikaslea(String izena, String abizenak, String email, String kurtsoa) {
         this.izena = izena;
         this.abizenak = abizenak;
         this.email = email;
         this.kurtsoa = kurtsoa;
     }
-
     public Ikaslea(){}
 
     // Getters

@@ -6,13 +6,14 @@ public class Ranking {
     private String abizenak;
     private String gunea;
 
-    // Constructor
+    // Constructors
     public Ranking(String gunea, String izena, int puntuazioa, String abizenak) {
         this.gunea = gunea;
         this.izena = izena;
         this.abizenak = abizenak;
         this.puntuazioa = puntuazioa;
     }
+    public Ranking(){}
 
     // Getters
     public String getIzena() {

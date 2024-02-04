@@ -29,7 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
 import com.talde3.laudiosarean.Room.Datubase;
-import com.talde3.laudiosarean.Room.Entities.Errekor;
 import com.talde3.laudiosarean.Room.Entities.Gunea;
 import com.talde3.laudiosarean.Room.Entities.Ikaslea;
 import com.talde3.laudiosarean.Room.Entities.Irakaslea;
@@ -59,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Datu baseko instantziak
         firestore = FirebaseFirestore.getInstance(); // Firestore
-
         db = Datubase.getInstance(getApplicationContext()); // Room
 
         // Datuak kargatu
@@ -244,7 +242,6 @@ public class LoginActivity extends AppCompatActivity {
         db.ikasleaDao().resetPrimaryKeyAutoIncrementValueIkaslea();
         db.guneaDao().resetPrimaryKeyAutoIncrementValueGunea();
         db.puntuazioaDao().resetPrimaryKeyAutoIncrementValuePuntuazioa();
-        db.errekorDao().resetPrimaryKeyAutoIncrementValueErrekor();
 
         // Firestoreko informazioa room-en kargatzen da
         loadIkasleakData();
@@ -295,25 +292,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                         }
 
-                        // Puntuazioak kargatu ondoren, Errekorrak kargatzen ditu
-                        loadErrekorData();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
-                    }
-                });
-   }
-
-   private void loadErrekorData(){
-        firestore.collection("Errekorrak")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            db.errekorDao().insert(document.toObject(Errekor.class));
-                            Log.d(TAG, document.getId() + " => " + document.getData());
-                        }
-
-                        // Errekorrak kargatu ondoren, Irakasleak kargatzen ditu
+                        // Puntuazioak kargatu ondoren, Irakasleak kargatzen ditu
                         loadIrakasleData();
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());

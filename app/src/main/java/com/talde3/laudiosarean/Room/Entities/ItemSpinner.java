@@ -9,6 +9,7 @@ public class ItemSpinner {
         this.id = id;
         this.gunea = gunea;
     }
+    public ItemSpinner(){}
 
     // Getters
     public int getId() {
