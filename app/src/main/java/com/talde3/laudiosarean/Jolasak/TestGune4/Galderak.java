@@ -6,13 +6,16 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.talde3.laudiosarean.ImageSliderAdapter;
 import com.talde3.laudiosarean.Jolasak.GalderaDatuakFragment;
 import com.talde3.laudiosarean.Jolasak.Question;
 import com.talde3.laudiosarean.R;
@@ -28,25 +31,49 @@ public class Galderak extends AppCompatActivity {
     private Button submitButton;
     private List<Question> questions;
     private int currentQuestionIndex;
-    private int unekoPuntuazioa;
-    private long hasierakoDenbora = 30 * 1000; // 30 segundos en milisegundos
-    private TextView txtPuntuazioa;
-    private TextView txtKronometroa;
-
-
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galderak);
 
-        txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
-        txtKronometroa = findViewById(R.id.txtKronometroa);
-
-        countDownTimer.start();
-
         questionTextView = findViewById(R.id.questionTextView);
         answerRadioGroup = findViewById(R.id.answerRadioGroup);
         submitButton = findViewById(R.id.submitButton);
+
+        viewPager = findViewById(R.id.imageSlider);
+        int[] katuxakoJaureguia = {
+                R.drawable.katuxako_jauregia1,
+                R.drawable.katuxako_jauregia2,
+                R.drawable.katuxako_jauregia3,
+                R.drawable.katuxako_jauregia4,
+                R.drawable.katuxako_jauregia
+        };
+
+        ImageSliderAdapter katuxakoJaureguiaAdapter = new ImageSliderAdapter(this, katuxakoJaureguia);
+        viewPager.setAdapter(katuxakoJaureguiaAdapter);
+
+        ImageView imgPrevious = findViewById(R.id.imgPrevious);
+        ImageView imgNext = findViewById(R.id.imgNext);
+        imgPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem();
+                if (current > 0) {
+                    viewPager.setCurrentItem(current - 1);
+                }
+            }
+        });
+        imgNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem();
+                int total = viewPager.getAdapter().getCount();
+                if (current < total - 1) {
+                    viewPager.setCurrentItem(current + 1);
+                }
+            }
+        });
 
         initializeQuestions();
 
@@ -57,7 +84,6 @@ public class Galderak extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer();
-                detenerCronometro();
             }
         });
     }
@@ -65,7 +91,7 @@ public class Galderak extends AppCompatActivity {
     private void initializeQuestions() {
         // Galdera eta erantzunak
         questions = new ArrayList<>();
-        questions.add(new Question("Ze mendetan eraiki zen?", "XVII", "XV", "XVIV", "XVII"));
+        questions.add(new Question("Ze mendetan eraiki zen?", "XVII", "XV", "XVI", "XVII"));
         questions.add(new Question("Ze materialez eraikita nago?", "Burdinez", "Egurrez", "Harriz", "Harriz"));
         questions.add(new Question("Ze motatako eraikina da?", "Erromanikoa", "Barrokoa", "Grekoa", "Barrokoa"));
 
@@ -153,7 +179,6 @@ public class Galderak extends AppCompatActivity {
                 hurrengoGaldera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        reiniciarJokoDatuak();
                         alertDialog.dismiss();
                         currentQuestionIndex++;
                         showQuestion();
@@ -170,47 +195,4 @@ public class Galderak extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.erantzunaAukeratu), Toast.LENGTH_SHORT).show();
         }
     }
-    public int puntazioaKalkulatu(long totalTimeInMillis) {
-        int segundoak = (int) totalTimeInMillis/1000;
-        int puntuazioa;
-        puntuazioa = segundoak*100 ;
-
-        if (puntuazioa < 0) {
-            puntuazioa = 0;
-        }
-
-        return puntuazioa;
-    }
-
-
-    public void detenerCronometro() {
-        // Detener el temporizador
-        countDownTimer.cancel();
-    }
-
-    public void reiniciarJokoDatuak() {
-        countDownTimer.start();
-    }
-
-
-    private CountDownTimer countDownTimer = new CountDownTimer(hasierakoDenbora, 1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            hasierakoDenbora = millisUntilFinished;
-
-            int segundoak = (int) (millisUntilFinished / 1000) % 60;
-
-            String time = String.format("%02d", segundoak);
-            txtKronometroa.setText(time);
-
-            // Actualizar puntuación según el tiempo restante
-            unekoPuntuazioa = puntazioaKalkulatu(millisUntilFinished);
-            txtPuntuazioa.setText(String.valueOf((int) unekoPuntuazioa));
-        }
-        @Override
-        public void onFinish() {
-            Toast.makeText(Galderak.this, getString(R.string.denboraGabe), Toast.LENGTH_SHORT).show();
-        }
-    };
-
 }

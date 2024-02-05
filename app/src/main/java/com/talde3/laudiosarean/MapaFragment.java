@@ -11,7 +11,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.talde3.laudiosarean.Jolasak.Ruleta.Ruleta;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -81,34 +82,38 @@ public class MapaFragment extends Fragment {
         mapa = view.findViewById(R.id.mapaGPS);
         mapa.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         mapa.setMultiTouchControls(true);
+        // Maparen kontrolagailua eskuratu
         mapController = mapa.getController();
+        // Maparen zoom maila ezarri (15.5)
         mapController.setZoom(15.5);
+        // GeoPoint objetua sortu latitudine eta longitudeak erabiliz
         GeoPoint geoPoint = new GeoPoint(43.15130, -2.96970);
+        // Maparen erdialdea ezarri GeoPoint-en arabera
         mapController.setCenter(geoPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
         items.add(new OverlayItem("Yermoko Andre Mariaren Santutegia", "",
                 new GeoPoint(43.17177, -2.97165))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Burdin Hesia", "Info, ",
+        items.add(new OverlayItem("Burdin Hesia", "",
                 new GeoPoint(43.1692, -2.9586))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Santa Aguedako ermita", "Info, ",
+        items.add(new OverlayItem("Santa Aguedako ermita", "",
                 new GeoPoint(43.14831, -2.98162))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Katuxako jauregia", "Info, ",
+        items.add(new OverlayItem("Katuxako jauregia", "",
                 new GeoPoint(43.13329, -2.97083))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lamuzako San Pedro eliza", "Info, ",
+        items.add(new OverlayItem("Lamuzako San Pedro eliza", "",
                 new GeoPoint(43.14278, -2.96198))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lamuza jauregia", "Info, ",
+        items.add(new OverlayItem("Lamuza jauregia", "",
                 new GeoPoint(43.14462, -2.96441))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Lezeagako sorgina", "Info, ",
+        items.add(new OverlayItem("Lezeagako sorgina", "",
                 new GeoPoint(43.14162,-2.96202))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
-        items.add(new OverlayItem("Trivia", "Info, ",
+        items.add(new OverlayItem("Trivia", "",
                 new GeoPoint(43.14322, -2.96269))); // Lat/Lon (OSM-ko Lat/Lon, ez da google mapseko berdina (openstreetmap.org))
 
         ItemizedOverlayWithFocus<OverlayItem> overlay = new ItemizedOverlayWithFocus<>(
@@ -163,12 +168,14 @@ public class MapaFragment extends Fragment {
                             intent.putExtra("aukeratutakoGunea", 7);
                             startActivity(intent);
                         } else if (item.getTitle() == "Trivia") {
-                            intent.putExtra("aukeratutakoGunea", 8);
-                            startActivity(intent);
+                            Intent AzkenEbaluazioaIntent = new Intent(getActivity(), Ruleta.class);
+                            startActivity(AzkenEbaluazioaIntent);
                         }
                         return false;
                     }
                 });
+
+        // Ikono pertsonalizatuak ezarteko karga
         Drawable markerChurch = ContextCompat.getDrawable(requireContext(), R.drawable.church_mapa_24);
         Drawable markerCastle = ContextCompat.getDrawable(requireContext(), R.drawable.castle_mapa_24);
         Drawable markerErmita = ContextCompat.getDrawable(requireContext(), R.drawable.ermita_24);
@@ -187,13 +194,18 @@ public class MapaFragment extends Fragment {
         items.get(7).setMarker(markerTrivia);
 
         overlay.setFocusItemsOnTap(true);
+        // "Marker"-en izenburua eta deskribapena agertzen karratuaren kolorea.
         overlay.setMarkerBackgroundColor(getResources().getColor(R.color.green_light2));
         mapa.getOverlays().add(overlay);
         mapa.setUseDataConnection(true);
 
         return view;
     }
-
+    /**
+     * Metodo honek animazio bidez zooma aplikatzen dio mapari.
+     * @param mapController Maparen kontrolagailua
+     * @param momentukoZooma Uneko zoom-maila
+     */
     private void animateZoom(final IMapController mapController, final double momentukoZooma) {
         final double targetZoom = Math.min(momentukoZooma + 2, 18.0);
 

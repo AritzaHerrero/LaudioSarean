@@ -206,7 +206,7 @@ public class SopaLetra extends AppCompatActivity {
                                         }
                                     }
                                     if (!idEncontrado) {
-                                        Toast.makeText(getApplicationContext(), "La palabra no está en el array.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.hitzOkerra), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } else {
@@ -240,6 +240,11 @@ public class SopaLetra extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -255,7 +260,7 @@ public class SopaLetra extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -312,6 +317,10 @@ public class SopaLetra extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * Letra sopa amaituta dagoen konprobatzen du
+     * @return Amaituta badago 'true'; Ez badago amaituta 'false'.
+     */
     private boolean comprobarSopaAcabada() {
         boolean sopaAcabada = true;
 
@@ -324,6 +333,9 @@ public class SopaLetra extends AppCompatActivity {
         return sopaAcabada;
     }
 
+    /**
+     * Letra sopa berrabiarazten du metodoak.
+     */
     private void reiniciarSopaLetra() {
         // Restablecer colores de fondo de los TextViews en el GridLayout
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
@@ -344,9 +356,16 @@ public class SopaLetra extends AppCompatActivity {
         txtBunkerrak.setBackgroundColor(Color.TRANSPARENT);
     }
 
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -355,6 +374,11 @@ public class SopaLetra extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;

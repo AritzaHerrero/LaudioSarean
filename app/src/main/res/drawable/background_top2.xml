@@ -1,0 +1,9 @@
+<!-- background_top2.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#DFDFDF"
+        android:centerColor="#9C9C9C"
+        android:endColor="#787878"
+        android:angle="0"/>
+    <corners android:radius="12dp"/>   <!-- Radio de los bordes (ajusta según tu preferencia) -->
+</shape>

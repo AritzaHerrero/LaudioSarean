@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation">
+        android:layout_marginBottom="75sp">
 
         <FrameLayout
             android:id="@+id/frame_container"
@@ -50,7 +50,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_navigation_irakasle" />
+        app:menu="@menu/bottom_navigation_irakasle" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 </RelativeLayout>

@@ -1,0 +1,8 @@
+<!-- unselected_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- Color de fondo cuando el botón no está seleccionado -->
+    <solid android:color="@color/green_light" />
+
+    <!-- Bordes redondeados (ajusta según tus preferencias) -->
+    <corners android:radius="8dp" />
+</shape>

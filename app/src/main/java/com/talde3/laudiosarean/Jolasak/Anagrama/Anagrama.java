@@ -70,36 +70,44 @@ public class Anagrama extends AppCompatActivity {
         iniciarJuego();
     }
 
+    /**
+     * Jokoa hasieratzen du
+     */
     private void iniciarJuego() {
         palabrasOriginales = obtenerPalabrasAleatorias();
         textViews = new ArrayList<>();
         editTexts = new ArrayList<>();
 
-        // Crear un LinearLayout vertical para cada palabra
+        // LineatLayout bertikal bat sortzen du hitz bakoitzarentzak
         for (int i = 0; i < palabrasOriginales.size(); i++) {
             LinearLayout linearLayout = new LinearLayout(this);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-            // Palabra
+            // Hitza
             String palabraOriginal = palabrasOriginales.get(i);
             String palabraMezclada = mezclarLetras(palabraOriginal);
             crearTextViewEditText(linearLayout, palabraMezclada);
 
-            // Agregar el LinearLayout al contenedor principal
+            // LinearLayout-a gehitzen du edukiontzi nagusira.
             containerPalabras.addView(linearLayout);
         }
     }
 
+    /**
+     * TextView-a eta EditText-a sortzen ditu hitz bakoitzarentzat.
+     * @param linearLayout Hitza-ren linearLayouta.
+     * @param palabraMezclada Hitza nahastuta
+     */
     private void crearTextViewEditText(LinearLayout linearLayout, String palabraMezclada) {
-        // Crear TextView para la palabra mezclada
+        // TextView-a sortzen du nahastutako hitzarentzat.
         TextView textView = new TextView(this);
         textView.setText(palabraMezclada);
         textView.setTextSize(24);
-        // Ajustar la gravedad para centrar horizontalmente
+        // Horizontalki erdiratzen du.
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
         textViews.add(textView);
 
-        // Crear EditText para la respuesta del usuario
+        // Erantzunarentzat EditTexta sortzen da
         EditText editText = new EditText(this);
         editText.setHint(getString(R.string.hitzaordenatu));
         editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
@@ -107,12 +115,16 @@ public class Anagrama extends AppCompatActivity {
         editText.setFilters(new InputFilter[]{inputFilter});
         editTexts.add(editText);
 
-        // Agregar TextView y EditText al LinearLayout vertical
+        // TextView-a eta EditText-a gehitzen ditu LinearLayout-era.
         linearLayout.addView(textView);
         linearLayout.addView(editText);
     }
 
 
+    /**
+     * Hitzen ordena ausaz desordenatzen ditu.
+     * @return
+     */
     private List<String> obtenerPalabrasAleatorias() {
         String[] palabras = {"ARABA", "MARKESA", "FINKA", "XVIII", "LAMUZA", "BARROKO", "JAUREGIA", "URKIXO"};
         List<String> listaPalabras = new ArrayList<>();
@@ -121,6 +133,11 @@ public class Anagrama extends AppCompatActivity {
         return listaPalabras;
     }
 
+    /**
+     * Hitz bakoitza ausaz desordenatzen du.
+     * @param palabra Hitza ordenatuta
+     * @return Hitza desordenatuta
+     */
     private String mezclarLetras(String palabra) {
         List<Character> letras = new ArrayList<>();
         for (char letra : palabra.toCharArray()) {
@@ -136,6 +153,9 @@ public class Anagrama extends AppCompatActivity {
         return palabraMezclada.toString();
     }
 
+    /**
+     * Erantzunak konprobatzen ditu
+     */
     private void verificarRespuestas() {
         boolean todasCorrectas = true;
 
@@ -157,6 +177,10 @@ public class Anagrama extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.erroreaAnigrama), Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * Jokoa berrabiarazteko metodoa
+     */
     private void reiniciarJuego() {
         // Reiniciar variables y elementos necesarios
         palabrasOriginales = obtenerPalabrasAleatorias();
@@ -174,9 +198,16 @@ public class Anagrama extends AppCompatActivity {
         }
     }
 
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -185,6 +216,11 @@ public class Anagrama extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;
@@ -225,6 +261,11 @@ public class Anagrama extends AppCompatActivity {
             koronoHandler.postDelayed(this, 10);
         }
     };
+
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -240,7 +281,7 @@ public class Anagrama extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 

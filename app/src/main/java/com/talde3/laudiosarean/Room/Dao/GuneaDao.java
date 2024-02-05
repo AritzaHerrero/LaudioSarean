@@ -12,13 +12,15 @@ import java.util.List;
 @Dao
 public interface GuneaDao {
     @Query("SELECT * FROM Gunea")
-    List<Gunea> getAll();
+    List<Gunea> getGuneak();
+    // Guneraen informazioa berreskuratu id-tik abiatuta
     @Query("SELECT * FROM Gunea WHERE id_gunea = :id")
     Gunea getGuneaById(int id);
     @Insert
     void insert(Gunea gunea);
     @Delete
     void delete(Gunea gunea);
+    // AutoIncrement balioa 1-etik berriz astea
     @Query("UPDATE sqlite_sequence SET seq = 1 WHERE name = 'Gunea'")
     void resetPrimaryKeyAutoIncrementValueGunea();
 }

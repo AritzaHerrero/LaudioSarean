@@ -92,7 +92,11 @@ public class PuzzleActivity extends AppCompatActivity {
         });
     }
 
-    // ezarriIrudia fitxategi bateko irudi bat Android aplikazio baten aktiboetan kargatzea da eta emandako ImageView baten tamainara egokitzeko.
+    /**
+     * ezarriIrudia fitxategi bateko irudi bat Android aplikazio baten aktiboetan kargatzea da eta emandako ImageView baten tamainara egokitzeko.
+     * @param assetName Izena
+     * @param imageView Irudia
+     */
     private void ezarriIrudia(String assetName, ImageView imageView) {
         // Lortu Ikuspegiaren neurriak
         int zabalera = imageView.getWidth();
@@ -126,8 +130,12 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
-    // zatituArgazkia()  irudi bat hartzen du, zatitan banatzen du errenkada eta zutabe kopuru jakin batean oinarrituta,
-    // eta puzzle bisual bat aplikatzen dio pieza bakoitzari array batean itzuli aurretik.
+
+    /**
+     * zatituArgazkia()  irudi bat hartzen du, zatitan banatzen du errenkada eta zutabe kopuru jakin batean oinarrituta,
+     * eta puzzle bisual bat aplikatzen dio pieza bakoitzari array batean itzuli aurre
+     * @return Argazkia zatitua bueltatzen du; ArrayList<PuzlearenPizea>
+     */
     private ArrayList<PuzlearenPieza> zatituArgazkia() {
         int errenkadak = 5;
         int zutabeak = 4;
@@ -255,7 +263,15 @@ public class PuzzleActivity extends AppCompatActivity {
         return pieces;
     }
 
-
+    /**
+     * Metodo honek emandako ImageView barruan dagoen irudiaren posizioa, zabalera eta altuera lortzen ditu.
+     * @param imageView ImageView objektua, irudiarekin
+     * @return int[] arraya, non:
+     *         - [0]: Irudiaren ezkerreko posizioa
+     *         - [1]: Irudiaren goiko posizioa
+     *         - [2]: Irudiaren zabalera
+     *         - [3]: Irudiaren altuera
+     */
     private int[] posizioaLortuBitmapImageViewBarruan(ImageView imageView) {
         int[] ret = new int[4];
 
@@ -297,6 +313,9 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Jokoa amaitu den egiaztatzen du
+     */
     public void egiaztatuJokuAmaiera() {
         if (amaitutaDago()==true) {
             TextView txtPuntuazioa = findViewById(R.id.txtPuntuazioa);
@@ -304,6 +323,10 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Jokoa amaituta dagoela ezartzen du
+     * @return Amaituta badago 'true'; Ez badago amaituta 'false'.
+     */
     private boolean amaitutaDago() {
         for (PuzlearenPieza pieza : piezak) {
             if (pieza.mugitu) {
@@ -313,6 +336,10 @@ public class PuzzleActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -328,7 +355,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -387,6 +414,9 @@ public class PuzzleActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * Puzela berrabiarazten du metodoak.
+     */
     private void puzzleBerrezarri() {
         piezak = zatituArgazkia();
         RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
@@ -405,9 +435,16 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -416,6 +453,11 @@ public class PuzzleActivity extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;

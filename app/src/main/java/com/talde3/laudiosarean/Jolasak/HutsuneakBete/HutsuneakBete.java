@@ -88,9 +88,16 @@ public class HutsuneakBete extends AppCompatActivity {
 
     }
 
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -99,6 +106,11 @@ public class HutsuneakBete extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;
@@ -140,6 +152,12 @@ public class HutsuneakBete extends AppCompatActivity {
         }
     };
 
+    /**
+     * Erantzuna zuzena den egiaztatzen du.
+     * @param etErantzuna Erabiltzailearen erantzuna
+     * @param tvErantzuna Erantzun zuzena
+     * @return Zuzena bada 'true'; Okerra bada 'false'.
+     */
     private boolean zuzenduErantzuna(EditText etErantzuna, TextView tvErantzuna) {
         boolean zuzena = false;
         String erantzuna1 = String.valueOf(etErantzuna.getText()).toUpperCase().trim();
@@ -153,6 +171,10 @@ public class HutsuneakBete extends AppCompatActivity {
         return zuzena;
     }
 
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -168,7 +190,7 @@ public class HutsuneakBete extends AppCompatActivity {
 
         if (successDesc != null) {
             String puntuaizoText = puntuaizoa.getText().toString();
-            successDesc.setText(getString(R.string.zurePuntuazioa) + puntuaizoText);
+            successDesc.setText(getString(R.string.zurePuntuazioa) + " " + puntuaizoText);
 
             Ikaslea ikaslea = LoginActivity.db.ikasleaDao().getIkasleaByEmail(currentUser.getEmail());
 
@@ -211,12 +233,12 @@ public class HutsuneakBete extends AppCompatActivity {
             }
         });
 
+        // Jokoa berrabiarazten du.
         berriroJolastu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
                 reiniciarJokoDatuakFragment();
-               // reiniciarKruzigrama();
 
                 etErantzuna1.setText("");
                 etErantzuna2.setText("");

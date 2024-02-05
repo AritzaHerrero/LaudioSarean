@@ -11,10 +11,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,16 +28,18 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.talde3.laudiosarean.Jolasak.Arauak;
-import com.talde3.laudiosarean.Room.Dao.IkasleaDao;
-import com.talde3.laudiosarean.Room.Entities.Ikaslea;
+import com.google.firebase.auth.FirebaseUser;
+import com.talde3.laudiosarean.Room.Dao.IrakasleaDao;
+import com.talde3.laudiosarean.Room.Entities.Gunea;
+import com.talde3.laudiosarean.Room.Entities.Irakaslea;
 
 import org.osmdroid.config.Configuration;
 
+import java.util.List;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
-    private IkasleaDao ikaselaDao;
-    private FirebaseAuth mAuth;
     GuneakFragment guneakFragment = new GuneakFragment();
     MapaFragment mapaFragment = new MapaFragment();
     ProfilaFragment profilaFragment = new ProfilaFragment();
@@ -48,22 +48,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int GUNEEK_FRAGMENT_ID = R.id.guneakFragment;
     private static final int MAPA_FRAGMENT_ID = R.id.mapaFragment;
     private static final int PROFILA_FRAGMENT_ID = R.id.profilaFragment;
-    private static final int ITXI_SAIOA_FRAGMENT_ID = R.id.rankingFragment;
+    private static final int RANKING_FRAGMENT_ID = R.id.rankingFragment;
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1001;
-
-    private LocationInfo carrefourLocation;
-    private LocationInfo eroskiLocation;
-    private LocationInfo plazaLocation;
-    private LocationInfo Yermo;
-    private LocationInfo BurdinHesia;
-    private LocationInfo SantaAguedaErmita;
-    private LocationInfo KatuxakoJauregia;
-    private LocationInfo LamuzaSanPedroJauregia;
-    private LocationInfo LamuzaJauregia;
-    private LocationInfo LezeagakoSorgina;
-
+    private LocationInfo yermo;
+    private LocationInfo burdinHesia;
+    private LocationInfo santaAguedaErmita;
+    private LocationInfo katuxakoJauregia;
+    private LocationInfo lamuzaSanPedroJauregia;
+    private LocationInfo lamuzaJauregia;
+    private LocationInfo lezeagakoSorgina;
     private boolean YermoBool = false;
     private boolean BurdinHesiaBool = false;
     private boolean SantaAguedaErmitaBool = false;
@@ -77,11 +72,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-        ikaselaDao = LoginActivity.db.ikasleaDao();
-        Ikaslea ikaslea = ikaselaDao.getIkasleaByEmail(mAuth.getCurrentUser().getEmail());
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        IrakasleaDao irakasleaDao = LoginActivity.db.irakasleaDao();
 
-        if (ikaslea.getEmail().equals("irakaslea@gmail.com")) {
+        // Datubasean gordetako irakasle guztien lista eskuratzen da.
+        List<Irakaslea> irakasleak = irakasleaDao.getIrakasleak();
+        boolean isIrakaslea = false;
+
+        // Irakasleen listan momentuko e-posta dagoen konprobatzen du.
+        for(int i = 0; i < irakasleak.size(); i++)
+        {
+            assert currentUser != null;
+            if(Objects.requireNonNull(currentUser.getEmail()).equalsIgnoreCase(irakasleak.get(i).getEmail())){
+                isIrakaslea = true;
+            }
+        }
+
+        // Erabiltzailea irakaslea ba, irakaslearen menua erakusten du; Bestela, ikasleen menua erakutsiko da.
+        if (isIrakaslea) {
             erakutsiIrakasleMenua();
         } else {
             erakutsiIkasleMenua();
@@ -89,47 +98,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int itemId = item.getItemId();
 
-            if (itemId == GUNEEK_FRAGMENT_ID) {
-                loadFragment(guneakFragment);
-                return true;
-            } else if (itemId == MAPA_FRAGMENT_ID) {
-                loadFragment(mapaFragment);
-                return true;
-            } else if (itemId == PROFILA_FRAGMENT_ID) {
-                loadFragment(profilaFragment);
-                return true;
-            } else if (itemId == ITXI_SAIOA_FRAGMENT_ID) {
-                loadFragment(rankingFragment);
-                return true;
-            }
-            return false;
+    /**
+     * Nabigazio menuan aukeratzen den botoiaren arabera (Guneak, Mapa, Profila, Ranking) fragment desberdina erakutsiko da.
+     */
+    private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = item -> {
+        int itemId = item.getItemId();
+
+        if (itemId == GUNEEK_FRAGMENT_ID) {
+            loadFragment(guneakFragment);
+            return true;
+        } else if (itemId == MAPA_FRAGMENT_ID) {
+            loadFragment(mapaFragment);
+            return true;
+        } else if (itemId == PROFILA_FRAGMENT_ID) {
+            loadFragment(profilaFragment);
+            return true;
+        } else if (itemId == RANKING_FRAGMENT_ID) {
+            loadFragment(rankingFragment);
+            return true;
         }
+        return false;
     };
 
+    /**
+     * Aukeratutako fragmenta kargatzen da.
+     * @param fragment Aukeratutako fragment-a
+     */
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 
+    /**
+     * Mugikorraren kokalekua eskuratzeko metodoa
+     */
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5000); // Intervalo de actualización en milisegundos
-        locationRequest.setFastestInterval(3000); // Intervalo más rápido de actualización en milisegundos
+        locationRequest.setInterval(5000); // Eguneratze-tartea milisegundotan
+        locationRequest.setFastestInterval(3000); // Eguneratze-tarte azkarrena milisegundotan
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationCallback locationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
+            public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     updateLocationUI(location);
                 }
@@ -139,119 +153,113 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 
+    /**
+     * Mugikorra gune bakoitzera zenbateko distantziara dagoen konprobatzeko
+     * @param location Kokalekua (Location objetua, .getLatitude eta .getLongitude bidez, mapan non dagoen eskuratu ahalko dugu)
+     */
     private void updateLocationUI(Location location) {
         // Actualizar los TextViews con la nueva ubicación
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
-       /* TextView txtLatitud = findViewById(R.id.textViewLatitud);
-        TextView txtLongitud = findViewById(R.id.textViewLongitud);
-
-        txtLatitud.setText("Latitud: " + latitude);
-        txtLongitud.setText("Longitud: " + longitude);*/
-
-        checkDistance(carrefourLocation, latitude, longitude);
-        checkDistance(eroskiLocation, latitude, longitude);
-        checkDistance(plazaLocation, latitude, longitude);
+        checkDistance(yermo, latitude, longitude);
+        checkDistance(burdinHesia, latitude, longitude);
+        checkDistance(santaAguedaErmita, latitude, longitude);
+        checkDistance(katuxakoJauregia, latitude, longitude);
+        checkDistance(lamuzaSanPedroJauregia, latitude, longitude);
+        checkDistance(lamuzaJauregia, latitude, longitude);
+        checkDistance(lezeagakoSorgina, latitude, longitude);
     }
 
+    /**
+     * Mugikorraren kokalekuaren arabera guneren batean gauden detektatzeko. Guneren batean bagaude, gunea automatikoki zabaltzeko aukera emango digu.
+     * @param locationInfo Gunearen kokaleku informazioa (Latitude, Longitude, TargetDistance, LocationName, etab.)
+     * @param currentLatitude Mugikorraren Latitudea
+     * @param currentLongitude Mugikorraren Longitudea
+     */
     private void checkDistance(LocationInfo locationInfo, double currentLatitude, double currentLongitude) {
         float distance = calculateDistance(currentLatitude, currentLongitude, locationInfo.getLatitude(), locationInfo.getLongitude());
         if (distance <= locationInfo.getTargetDistance()) {
-         //   Toast.makeText(this, locationInfo.getLocationName(), Toast.LENGTH_SHORT).show();
-
-
             if ("Yermo".equals(locationInfo.getLocationName()) && !YermoBool) {
                 YermoBool = kokalekuaZabaldu(1);
-                /*View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
-                Button prestBai = view.findViewById(R.id.kokalekuaBai);
-                Button prestEz = view.findViewById(R.id.kokalekuaEz);
-
-                Carrefour = true;
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setView(view);
-                final AlertDialog alertDialog = builder.create();
-
-
-                prestEz.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-
-                prestBai.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        Intent YermokoSantutegiaIntent = new Intent(MainActivity.this, GuneInformazioa.class);
-                        YermokoSantutegiaIntent.putExtra("aukeratutakoGunea", 1);
-                        startActivity(YermokoSantutegiaIntent);
-                    }
-                });
-
-                if (alertDialog.getWindow() != null) {
-                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                }
-
-                alertDialog.show();*/
             }
-
             if ("BurdinHesia".equals(locationInfo.getLocationName()) && !BurdinHesiaBool) {
                 BurdinHesiaBool = kokalekuaZabaldu(2);
             }
-
             if ("SantaAguedaErmita".equals(locationInfo.getLocationName()) && !SantaAguedaErmitaBool) {
                 SantaAguedaErmitaBool = kokalekuaZabaldu(3);
             }
-
             if ("KatuxakoJauregia".equals(locationInfo.getLocationName()) && !KatuxakoJauregiaBool) {
                 KatuxakoJauregiaBool = kokalekuaZabaldu(4);
             }
-
             if ("LamuzaSanPedroJauregia".equals(locationInfo.getLocationName()) && !LamuzaSanPedroJauregiaBool) {
                 LamuzaSanPedroJauregiaBool = kokalekuaZabaldu(5);
             }
-
             if ("LamuzaJauregia".equals(locationInfo.getLocationName()) && !LamuzaJauregiaBool) {
                 LamuzaJauregiaBool = kokalekuaZabaldu(6);
             }
-
             if ("LezeagakoSorgina".equals(locationInfo.getLocationName()) && !LezeagakoSorginaBool) {
                 LezeagakoSorginaBool = kokalekuaZabaldu(7);
             }
         }
     }
 
+    /**
+     * Metodo honek bi puntuen arteko distantzia kalkulatzen du.
+     * @param lat1 Latitudea lehenengo puntuan (Mugikorraren Latitudea)
+     * @param lon1 Longitudea lehenengo puntuan (Mugikorraren Longitudea)
+     * @param lat2 Latitudea bigarren puntuan (Gunearen Latitudea)
+     * @param lon2 Longitudea bigarren puntuan (Gunearen Latitudea)
+     * @return Bi puntuen arteko distantzia emaitza (metrotan)
+     */
     private float calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double R = 6371e3; // radio de la Tierra en metros
+        // Lurreko eradioa metroetan
+        double R = 6371e3;
+
+        // Latitudeak eta longitudeak radianetan
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);
         double deltaLambda = Math.toRadians(lon2 - lon1);
 
+        // Haversine formula erabiliz distantzia kalkulatu
         double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
                 Math.cos(phi1) * Math.cos(phi2) *
                         Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
+        // Distantzia metrotan kalkulatu eta emaitza itzuli
         return (float) (R * c);
     }
 
+    /**
+     * Metodo honek baimenak eskaketaren erantzuna jasotzen du.
+     * @param requestCode Baimen eskatzeko galdera zenbakia, aplikazioak eskatu duen kodea
+     * @param permissions Eskatutako baimenak, array moduan
+     * @param grantResults Baimenak emateko erantzunak, array moduan
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Eskatu den baimena PERMISSION_REQUEST_CODE-ekin bat dator
         if (requestCode == PERMISSION_REQUEST_CODE) {
+            // Baimenak emateko erantzun kopurua 0 baino handiagoa bada eta lehenengo erantzuna "PERMISSION_GRANTED" bada
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Baimenak emandakoan kokaleku eguneratzea hasi
                 startLocationUpdates();
             } else {
-                // Manejar el caso en que el usuario deniega los permisos
+                // Erabiltzaileak baimenak ezeztatzen baditu
                 Toast.makeText(this, getResources().getString(R.string.ubiError), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    /**
+     * Kokalekua zabaltzeko galdera. (kokalekura iristen zarenean agertuko den AlertDialog-a)
+     * @param aukeratutakoGunea Kokalekuko gunearen ID-a
+     * @return True, erabiltzaileak "Bai" botoia sakatu duenean; False, erabiltzaileak "Ez" botoia sakatu duenean edo dialogoa itxi duenean
+     */
     public boolean kokalekuaZabaldu(int aukeratutakoGunea) {
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
         Button prestBai = view.findViewById(R.id.kokalekuaBai);
@@ -262,21 +270,13 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog alertDialog = builder.create();
 
 
-        prestEz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+        prestEz.setOnClickListener(v -> alertDialog.dismiss());
 
-        prestBai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
-                intent.putExtra("aukeratutakoGunea", aukeratutakoGunea);
-                startActivity(intent);
-            }
+        prestBai.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            Intent intent = new Intent(MainActivity.this, GuneInformazioa.class);
+            intent.putExtra("aukeratutakoGunea", aukeratutakoGunea);
+            startActivity(intent);
         });
 
         if (alertDialog.getWindow() != null) {
@@ -318,38 +318,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Irakaslearen menua erakusten da eta logika konfiguratzen du
+     */
     private void erakutsiIrakasleMenua() {
         BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
         BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);
         navigationIkasle.setVisibility(View.GONE);
         navigationIrakasle.setVisibility(View.VISIBLE);
         loadFragment(rankingFragment); // Irakaslearen fragmenta kargatzen du
-        navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+        navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // Nabegazio menuari logika gehitzen dio
     }
 
+    /**
+     * Ikaslearen menua erakusten da eta logika konfiguratzen du
+     */
     private void erakutsiIkasleMenua() {
         BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
         BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);
         navigationIkasle.setVisibility(View.VISIBLE);
         navigationIrakasle.setVisibility(View.GONE);
         loadFragment(guneakFragment); // Ikaslearen fragmenta kargatzen du
-        navigationIkasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // nabegazio menuari logika gehitzen dio
+        navigationIkasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // Nabegazio menuari logika gehitzen dio
 
         // Mapa kargatzeko
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
 
-        // Inicializar ubicaciones
-        carrefourLocation = new LocationInfo("Carrefour", 43.28329, -2.96332, 150);
-        eroskiLocation = new LocationInfo("Eroski", 43.28239, -2.96010, 150);
-        plazaLocation = new LocationInfo("Plaza", 43.28176, -2.96285, 50);
+        // Informazioa satu basetik eskuratu
+        List<Gunea> guneak = LoginActivity.db.guneaDao().getGuneak();
 
-        Yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
-        BurdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
-        SantaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
-        KatuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
-        LamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
-        LamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
-        LezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162,-2.96202, 75);
+        // Ubikazioak hasieratu
+        //yermo = new LocationInfo("Yermo", 43.17177, -2.97165, 75);
+        yermo = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(0).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(0).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(0).getKoordenadak().split(",")[2]));
+        //burdinHesia = new LocationInfo("BurdinHesia", 43.1692, -2.9586, 150);
+        burdinHesia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(1).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(1).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(1).getKoordenadak().split(",")[2]));
+        //santaAguedaErmita = new LocationInfo("SantaAguedaErmita", 43.14831, -2.98162, 125);
+        santaAguedaErmita = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(2).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(2).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(2).getKoordenadak().split(",")[2]));
+        //katuxakoJauregia = new LocationInfo("KatuxakoJauregia", 43.13329, -2.97083, 100);
+        katuxakoJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(3).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(3).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(3).getKoordenadak().split(",")[2]));
+        //lamuzaSanPedroJauregia = new LocationInfo("LamuzaSanPedroJauregia", 43.14278, -2.96198, 100);
+        lamuzaSanPedroJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(4).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(4).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(4).getKoordenadak().split(",")[2]));
+        //lamuzaJauregia = new LocationInfo("LamuzaJauregia", 43.14462, -2.96441, 100);
+        lamuzaJauregia = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(5).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(5).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(5).getKoordenadak().split(",")[2]));
+        //lezeagakoSorgina = new LocationInfo("LezeagakoSorgina", 43.14162, -2.96202, 75);
+        lezeagakoSorgina = new LocationInfo(guneak.get(0).getIzena(), Double.parseDouble(guneak.get(6).getKoordenadak().split(",")[0]), Double.parseDouble(guneak.get(6).getKoordenadak().split(",")[1]), Float.parseFloat(guneak.get(6).getKoordenadak().split(",")[2]));
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 

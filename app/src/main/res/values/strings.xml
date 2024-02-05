@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Laudio Sarean</string>
+    <string name="app_nameLarriz">LAUDIO SAREAN</string>
+
     <!-- MainActivity -->
     <string name="eposta">E-posta</string>
     <string name="pasahitza">Pasahitza</string>
@@ -198,6 +200,9 @@
     <string name="osoOndo">Oso ondo!!</string>
     <string name="ondo">Ondo!</string>
     <string name="hobetoEgin"> Hurrengoan hobeto egingo duzu!</string>
+
+    <!-- ruleta -->
+    <string name="btnBiratu">Biratu</string>
 
 
 

@@ -50,7 +50,7 @@ public class Galderak extends AppCompatActivity {
 
     private List<Question> momentukoGunea;
     private int guneaZbk;
-
+    private ImageView imgGunea;
     private boolean erantzuna1;
     private boolean erantzuna2;
 
@@ -71,6 +71,7 @@ public class Galderak extends AppCompatActivity {
         rbErantzuna3 = findViewById(R.id.rbErantzuna3);
         rbErantzuna4 = findViewById(R.id.rbErantzuna4);
         btnErantzun = findViewById(R.id.btnErantzun);
+        imgGunea= findViewById(R.id.imgGunea);
 
         tvGunea.setText(testua);
         String gunea = (String) tvGunea.getText();
@@ -108,36 +109,43 @@ public class Galderak extends AppCompatActivity {
             momentukoGunea = yermoAndreMari;
             guneaZbk = yermoZbk;
             setGalderak(testua, yermoZbk, yermoAndreMari);
+            imgGunea.setImageResource(R.drawable.yermoko_andre_mariaren_santutegia);
         }
         if (gunea.equals("Burdin Hesia")) {
             momentukoGunea = burdinHesia;
             guneaZbk = burdinZbk;
             setGalderak(testua, burdinZbk, burdinHesia);
+            imgGunea.setImageResource(R.drawable.burdin_hesia);
         }
         if (gunea.equals("Santa Aguedako ermita")) {
             momentukoGunea = santaAguedaErmita;
             guneaZbk = santaZbk;
             setGalderak(testua, santaZbk, santaAguedaErmita);
+            imgGunea.setImageResource(R.drawable.santa_aguedako_ermita);
         }
         if (gunea.equals("Katuxako jauregia")) {
             momentukoGunea = katuxakoJauregia;
             guneaZbk = katuxaZbk;
             setGalderak(testua, katuxaZbk, katuxakoJauregia);
+            imgGunea.setImageResource(R.drawable.katuxako_jauregia);
         }
         if (gunea.equals("Lamuzako San Pedro eliza")) {
             guneaZbk = lamuzaSanPedroZbk;
             momentukoGunea = lamuzaSanPedroEliza;
             setGalderak(testua, lamuzaSanPedroZbk, lamuzaSanPedroEliza);
+            imgGunea.setImageResource(R.drawable.lamuzako_san_pedro_eliza);
         }
         if (gunea.equals("Lamuza jauregia")) {
             momentukoGunea = lamuzaJauregia;
             guneaZbk = lamuzaJauregiaZbk;
             setGalderak(testua, lamuzaJauregiaZbk, lamuzaJauregia);
+            imgGunea.setImageResource(R.drawable.lamuza_jauregia);
         }
         if (gunea.equals("Lezeagako sorgina")) {
             momentukoGunea = lezeagakaoSorgina;
             guneaZbk = lezeagaZbk;
             setGalderak(testua, lezeagaZbk, lezeagakaoSorgina);
+            imgGunea.setImageResource(R.drawable.lezeagako_sorgina);
         }
 
         btnErantzun.setOnClickListener(new View.OnClickListener() {

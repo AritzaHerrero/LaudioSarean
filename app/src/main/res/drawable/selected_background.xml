@@ -1,0 +1,8 @@
+<!-- selected_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- Color de fondo cuando el botón está seleccionado -->
+    <solid android:color="@color/green" />
+
+    <!-- Bordes redondeados (ajusta según tus preferencias) -->
+    <corners android:radius="8dp" />
+</shape>

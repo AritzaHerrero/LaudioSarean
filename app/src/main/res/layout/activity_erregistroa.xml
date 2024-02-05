@@ -6,123 +6,181 @@
     android:layout_height="match_parent"
     tools:context=".Erregistroa">
 
+
+    <LinearLayout
+        android:id="@+id/llTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/etEposta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.266">
+
+        <ImageView
+            android:id="@+id/ivHeaderImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/laudio_udala_logo_zuribeltza"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/app_nameLarriz"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivHeaderImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/etEposta"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/eposta"
         android:inputType="textEmailAddress"
         android:minHeight="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
-        tools:ignore="Autofill,TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/etIzena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/izena"
-        android:inputType="textPersonName"
-        android:minHeight="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEposta"
-        app:layout_constraintVertical_bias="0.1"
         tools:ignore="Autofill,TextContrastCheck" />
 
     <EditText
         android:id="@+id/etAbizena"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/personxml"
+        android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/abizenak"
         android:inputType="textPersonName"
         android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etIzena"
-        app:layout_constraintVertical_bias="0.1"
-        tools:ignore="Autofill,TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/etPasahitza1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/pasahitza1"
-        android:inputType="textPassword"
-        android:minHeight="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAbizena"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.079"
         tools:ignore="Autofill,TextContrastCheck" />
 
     <EditText
         android:id="@+id/etPasahitza2"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/key"
+        android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/pasahitza2"
         android:inputType="textPassword"
         android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasahitza1"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.106"
         tools:ignore="Autofill,TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llIkasgela"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Ikasgela:"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnErregistratu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasahitza2"
-        app:layout_constraintVertical_bias="0.176" />
+        app:layout_constraintVertical_bias="0.4">
 
-    <Spinner
-        android:id="@+id/spinnerKlasea"
-        android:layout_width="132sp"
-        android:layout_height="49sp"
-        android:backgroundTint="@color/black"
+        <ImageView
+            android:id="@+id/imageIkasgela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:contentDescription="Ikasgela Image"
+            android:src="@drawable/ikasgela" />
+
+        <Spinner
+            android:id="@+id/spinnerKlasea"
+            android:layout_width="226dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:minHeight="48sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etIzena"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/personxml"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/izena"
+        android:inputType="textPersonName"
         android:minHeight="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.752" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEposta"
+        app:layout_constraintVertical_bias="0.069"
+        tools:ignore="Autofill,TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/etPasahitza1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/key"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/pasahitza1"
+        android:inputType="textPassword"
+        android:minHeight="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAbizena"
+        app:layout_constraintVertical_bias="0.092"
+        tools:ignore="Autofill,TextContrastCheck" />
 
     <Button
         android:id="@+id/btnErregistratu"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:text="@string/erregistratu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerKlasea"
-        app:layout_constraintVertical_bias="0.884" />
-
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
