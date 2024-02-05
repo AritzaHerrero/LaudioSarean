@@ -48,3 +48,8 @@ Aritza Herrero Niño, Unax Zulaika Fuente, Aingeru Siranaula Santos
 <br></br>
 - Irakasle email: irakaslea@gmail.com
 - Ikaslea pasahitza: 12345678
+
+## Prezentazio bideoa
+Bideo bat prestatu dugu aplikazioaren funtzionalitatea ikusi ahal izateko. [Click eginez deskargatu](Laudio%20Sarean%20Bideoa.mp4?raw=true)
+
+https://github.com/AritzaHerrero/LaudioSarean/assets/115776659/36c6261a-762e-4f9d-8003-ccb782da8da4
