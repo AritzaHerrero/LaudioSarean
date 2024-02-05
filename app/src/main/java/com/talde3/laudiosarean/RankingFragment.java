@@ -191,7 +191,10 @@ public class RankingFragment extends Fragment implements AdapterView.OnItemSelec
         }
     }
 
-    // Spinner-en datuak eguneratu switch-aren arabera
+    /**
+     * Spinner-en datuak eguneratu switch-aren arabera
+     * @param switchState Switchean aukeratutakoa
+     */
     private void updateSpinnerData(boolean switchState) {
         if (switchState) {
             // Switch aktibatuta, ikaleen lista kargatu

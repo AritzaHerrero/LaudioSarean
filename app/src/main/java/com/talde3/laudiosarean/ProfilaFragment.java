@@ -133,6 +133,8 @@ public class ProfilaFragment extends Fragment {
 
         boolean finalIsIrakaslea = isIrakaslea;
         firestore = FirebaseFirestore.getInstance();
+
+        // Izena editatzeko aukera. Izena aldatzen denean Room eta Firestoren eguneratzen da.
         ibEditIzena.setOnClickListener(view1 -> {
             boolean isEnabled = etIzena.isEnabled();
 
@@ -185,6 +187,7 @@ public class ProfilaFragment extends Fragment {
             }
         });
 
+        // Abizena editatzeko aukera. Abizena aldatzen denean Room eta Firestoren eguneratzen da.
         ibEditAbizena.setOnClickListener(view2 -> {
             boolean isEnabled = etAbizenak.isEnabled();
 
@@ -234,6 +237,7 @@ public class ProfilaFragment extends Fragment {
             }
         });
 
+        // Pasahitza aldatzeko aukera. Pasahitza aldatzen denean Room-en eta Authenticator-en eguneratzen da.
         btnAldatuPasahitza.setOnClickListener(view3 -> {
             // Edit text pasahitz berria sartzeko
             final EditText etPasahitzBerriaInput = new EditText(getActivity());
@@ -290,11 +294,13 @@ public class ProfilaFragment extends Fragment {
             builder.create().show();
         });
 
+        // Saioa ixten du
         btnItxiSaioa.setOnClickListener(view4 -> {
             mAuth.signOut();
             requireActivity().finish();
         });
 
+        // Kontua ezabatzeko aukera. Kontua Room-en eta Authenticator-en ezabatzen da.
         btnEzabatuKontua.setOnClickListener(view5 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
             builder.setMessage(getString(R.string.kontuaEzabatuGaldera))
@@ -333,7 +339,6 @@ public class ProfilaFragment extends Fragment {
                     });
             builder.create().show();
         });
-
 
         return view;
     }

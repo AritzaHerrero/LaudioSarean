@@ -88,10 +88,9 @@ public class Laberintoa extends AppCompatActivity {
         buttonAbajo = findViewById(R.id.btnAbajo);
 
         laberintoaSortu();
-        //  imprimirLaberinto();
 
 
-        //Ajustar tamaño de botones segun resolucion de pantalla
+        // Botoien tamaina egokitzen du pantailaren-ebazpenaren arabera
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
@@ -159,6 +158,9 @@ public class Laberintoa extends AppCompatActivity {
         });
     }
 
+    /**
+     * Labertintoa sortzen du
+     */
     private void laberintoaSortu() {
         for (int i = 0; i < anchoLaberinto; i++) {
             for (int j = 0; j < alturaLaberinto; j++) {
@@ -169,6 +171,12 @@ public class Laberintoa extends AppCompatActivity {
         recursiveBacktracking(1, 1);
     }
 
+    /**
+     * Metodo honek laberintoa sortzeko recursive backtracking algoritmoa aplikatzen du.
+     *
+     * @param fila Hasierako posizioko errenkada
+     * @param columna Hasierako posizioko zutabea
+     */
     private void recursiveBacktracking(int fila, int columna) {
         ArrayList<Direccion> vecinos = getVecinos(fila, columna);
         Collections.shuffle(vecinos, random);
@@ -200,6 +208,12 @@ public class Laberintoa extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo honek emandako posizioko laberintoaren tetrazioaren inguruko posizioak itzultzen ditu.
+     * @param fila Posizioaren errenkada
+     * @param columna Posizioaren zutabea
+     * @return Direccion objektuen ArrayList, norabideetako posizioak gordetzen dituena
+     */
     private ArrayList<Direccion> getVecinos(int fila, int columna) {
         ArrayList<Direccion> vecinos = new ArrayList<>();
 
@@ -226,6 +240,15 @@ public class Laberintoa extends AppCompatActivity {
         DERECHA
     }
 
+    /**
+     * Metodo honek jokalariaren mugimendua kudeatzen du.
+     * @param deltaY Y ardatzaren aldaketa
+     * @param deltaX X ardatzaren aldaketa
+     * @param buttonDerecha Botoia "Eskuina"
+     * @param buttonIzquierda Botoia "Eskerra"
+     * @param buttonArriba Botoia "Gora"
+     * @param buttonAbajo Botoia "Behera"
+     */
     private void mover(int deltaY, int deltaX, ImageButton buttonDerecha, ImageButton buttonIzquierda, ImageButton buttonArriba, ImageButton buttonAbajo) {
         jugadorXAnterior = jugadorX;
         jugadorYAnterior = jugadorY;
@@ -263,6 +286,9 @@ public class Laberintoa extends AppCompatActivity {
         }
     }
 
+    /**
+     * Interfazea eguneratzen du jokalariaren posizio berria ikusteko.
+     */
     private void interfazeaEguneratu() {
         // Garbitu jokalariaren aurreko posizioa
         botones[jugadorXAnterior][jugadorYAnterior].setImageResource(0);
@@ -277,6 +303,9 @@ public class Laberintoa extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Laberintoa berrabiarazten du.
+     */
     private void reiniciarLaberinto() {
         //Denbora eta puntuazioa berrezarri
         // Jokalariaren irudia kendu
@@ -304,6 +333,9 @@ public class Laberintoa extends AppCompatActivity {
     }
 
 
+    /**
+     * 'Botoien' (Hasiera puntua, Helmuga, Bideak eta Hormak) koloreak eguneratzen ditu.
+     */
     private void botoienKoloreakEguneratu() {
         for (int i = 0; i < laberinto.length; i++) {
             for (int j = 0; j < laberinto[i].length; j++) {
@@ -326,6 +358,10 @@ public class Laberintoa extends AppCompatActivity {
         }
     }
 
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -396,9 +432,16 @@ public class Laberintoa extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -407,6 +450,11 @@ public class Laberintoa extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;

@@ -82,9 +82,13 @@ public class MapaFragment extends Fragment {
         mapa = view.findViewById(R.id.mapaGPS);
         mapa.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         mapa.setMultiTouchControls(true);
+        // Maparen kontrolagailua eskuratu
         mapController = mapa.getController();
+        // Maparen zoom maila ezarri (15.5)
         mapController.setZoom(15.5);
+        // GeoPoint objetua sortu latitudine eta longitudeak erabiliz
         GeoPoint geoPoint = new GeoPoint(43.15130, -2.96970);
+        // Maparen erdialdea ezarri GeoPoint-en arabera
         mapController.setCenter(geoPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
@@ -170,6 +174,8 @@ public class MapaFragment extends Fragment {
                         return false;
                     }
                 });
+
+        // Ikono pertsonalizatuak ezarteko karga
         Drawable markerChurch = ContextCompat.getDrawable(requireContext(), R.drawable.church_mapa_24);
         Drawable markerCastle = ContextCompat.getDrawable(requireContext(), R.drawable.castle_mapa_24);
         Drawable markerErmita = ContextCompat.getDrawable(requireContext(), R.drawable.ermita_24);
@@ -188,13 +194,18 @@ public class MapaFragment extends Fragment {
         items.get(7).setMarker(markerTrivia);
 
         overlay.setFocusItemsOnTap(true);
+        // "Marker"-en izenburua eta deskribapena agertzen karratuaren kolorea.
         overlay.setMarkerBackgroundColor(getResources().getColor(R.color.green_light2));
         mapa.getOverlays().add(overlay);
         mapa.setUseDataConnection(true);
 
         return view;
     }
-
+    /**
+     * Metodo honek animazio bidez zooma aplikatzen dio mapari.
+     * @param mapController Maparen kontrolagailua
+     * @param momentukoZooma Uneko zoom-maila
+     */
     private void animateZoom(final IMapController mapController, final double momentukoZooma) {
         final double targetZoom = Math.min(momentukoZooma + 2, 18.0);
 

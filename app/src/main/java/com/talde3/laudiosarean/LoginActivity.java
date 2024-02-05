@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             String posta = etEposta.getText().toString().trim();
             String pasahitza = etPasahitza.getText().toString().trim();
 
+            // posta edo pasahitzaren EditText-a ez badago errore mezua. Bestela Saioa hasten saiatuko da.
             if (TextUtils.isEmpty(posta)) {
                 String sartuEposta = getResources().getString(R.string.sartuEposta);
                 etEposta.setError(sartuEposta);
@@ -120,30 +121,41 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Erregistroa activity-ra ereamango digu.
         tvErregistratuEmen.setOnClickListener(v -> {
             // Erregistro textView-ean click egitean
             Intent erregistroIntent = new Intent(LoginActivity.this, Erregistroa.class);
             startActivity(erregistroIntent);
         });
 
+        // ImageButton-ari click egitean pasahitza erakutsiko da, berriro egiten badugu click pasahitza eskutatuko da.
         ibPasahitza.setOnClickListener(v -> {
             int currentInputType = etPasahitza.getInputType();
 
+            // Pasahitza ez badago ikusgarri
             if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
                 etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 etPasahitza.setTypeface(Typeface.DEFAULT);
                 ibPasahitza.setImageResource(R.drawable.begia_off_24);
-            } else {
+            }
+            // Pasahitza ikusgarri badago
+            else {
                 etPasahitza.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 etPasahitza.setTypeface(Typeface.DEFAULT);
                 ibPasahitza.setImageResource(R.drawable.begia_24);
             }
 
-            // Mover el cursor al final del texto para mantener la visibilidad
+            // Kurtsorea testuaren amaieran mugitzen da.
             etPasahitza.setSelection(etPasahitza.getText().length());
         });
     }
 
+    /**
+     * Saioa hasten sailatzen da. Saioa ondo hasten bada, lehentasunakGorde behar diren edo ez konprobatzen du. Azkenik MainActivity-ra eramaten dio erabiltzaileari.
+     * Ezin izan bada saioa hasi errore mezu pertsonalizatua bat ageriko da.
+     * @param eposta Erabiltzailearen eposta
+     * @param pasahitza Erabiltzailearen pasahitza
+     */
    private void saioaHasi(String eposta, String pasahitza) {
         desaktibatuUI();
         mAuth.signInWithEmailAndPassword(eposta, pasahitza)
@@ -180,6 +192,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Lehentasunak kargatzeko metodoa. Kasu onetan, erabiltzailearen e-posta eta pasahitza kargatzeko.
+     * @return Gordetako kredentzialak bueltatuko ditu.
+     */
    private List<String> lehentasunakKargatu() {
         List<String> kredentzialak = new ArrayList<>();
         // Kredentzialak.xml kargatzen du (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
@@ -200,6 +216,10 @@ public class LoginActivity extends AppCompatActivity {
        return kredentzialak;
    }
 
+
+    /**
+     * Lehentasunak gordetzeko metodoa. Kasu onetan, erabiltzailearen e-posta eta pasahitza gordetzeko.
+     */
    private void lehentasunakGorde() {
         // Kredentzialak.xml kargatzen da informazioa gordetzeko (lehenengo aldia bada 'kredentzialak.xml' sortzen du)
         SharedPreferences preferences = getSharedPreferences("kredentzialak", Context.MODE_PRIVATE);
@@ -215,6 +235,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
    }
 
+
+    /**
+     * Erabiltzailearen interfazea desaktibatuko du eta Karga (ProgressBar) erakutsiko du.
+     */
    private void desaktibatuUI() {
         etEposta.setEnabled(false);
         etPasahitza.setEnabled(false);
@@ -225,6 +249,9 @@ public class LoginActivity extends AppCompatActivity {
         pbKarga.setVisibility(View.VISIBLE);
    }
 
+    /**
+     * Erabiltzailearen interfazea aktibatuko du eta Karga (ProgressBar) ezkutatu du.
+     */
    private void aktibatuUI() {
         etEposta.setEnabled(true);
         etPasahitza.setEnabled(true);
@@ -235,6 +262,9 @@ public class LoginActivity extends AppCompatActivity {
         pbKarga.setVisibility(View.INVISIBLE);
    }
 
+    /**
+     * Room-taula guztiak ezabtzen ditu eta auto incrementak berriz hasieratzen dira eta Firestoreko informazioa room-en kargatzen da.
+     */
    private void dbKarga(){
         // Room-taula guztiak ezabtzen ditu eta auto incrementak berriz hasieratzen dira
         db.clearAllTables();
@@ -247,6 +277,9 @@ public class LoginActivity extends AppCompatActivity {
         loadIkasleakData();
    }
 
+    /**
+     * Ikasleen informaszioa kargatzen du eta behin bukatu ondoren Guneak kargatzen dira.
+     */
    private void loadIkasleakData() {
         firestore.collection("Ikasleak")
                 .get()
@@ -265,6 +298,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
    }
 
+    /**
+     * Guneen informazioa kargatzen du eta behin bukatu ondoren Puntuazioak kargatzen dira.
+     */
    private void loadGuneakData() {
         firestore.collection("Guneak")
                 .get()
@@ -282,6 +318,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
    }
+
+    /**
+     * Puntuazioen informazioa kargatzen du eta behin bukatu ondoren Irakasleak kargatzen dira.
+     */
    private void loadPuntuazioakData() {
         firestore.collection("Puntuazioak")
                 .get()
@@ -300,6 +340,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
    }
 
+    /**
+     * Irakasleen informazioa kargatzen du.
+     */
    private void loadIrakasleData(){
        firestore.collection("Irakasleak")
                .get()
@@ -315,11 +358,19 @@ public class LoginActivity extends AppCompatActivity {
                });
    }
 
+    /**
+     * Aplikazioa lehen aldiz kargatzen den konprobatzen du. "KEY_FIRST_RUN"-en balioa true bada, aplikazioaren lehen exekuzioa dela esan nahi du.
+     * @return True, lehen aldiz exekutatzen bada; False, beste batzuetan exekutatzen bada.
+     */
    private boolean isFirstRun() {
         SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
         return preferences.getBoolean("KEY_FIRST_RUN", true);
    }
 
+    /**
+     * Aplikazioa lehenago ere exekutatu dela adierazteko erabiltzen da.
+     * Lehenago exekutatu bada, "KEY_FIRST_RUN"-en balioa false bezala ezartzen da.
+     */
     private void markFirstRun() {
         SharedPreferences preferences = getSharedPreferences("Datuak_kargatu", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

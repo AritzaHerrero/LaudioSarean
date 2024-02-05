@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int GUNEEK_FRAGMENT_ID = R.id.guneakFragment;
     private static final int MAPA_FRAGMENT_ID = R.id.mapaFragment;
     private static final int PROFILA_FRAGMENT_ID = R.id.profilaFragment;
-    private static final int ITXI_SAIOA_FRAGMENT_ID = R.id.rankingFragment;
+    private static final int RANKING_FRAGMENT_ID = R.id.rankingFragment;
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1001;
@@ -75,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         IrakasleaDao irakasleaDao = LoginActivity.db.irakasleaDao();
+
+        // Datubasean gordetako irakasle guztien lista eskuratzen da.
         List<Irakaslea> irakasleak = irakasleaDao.getIrakasleak();
         boolean isIrakaslea = false;
 
+        // Irakasleen listan momentuko e-posta dagoen konprobatzen du.
         for(int i = 0; i < irakasleak.size(); i++)
         {
             assert currentUser != null;
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // Erabiltzailea irakaslea ba, irakaslearen menua erakusten du; Bestela, ikasleen menua erakutsiko da.
         if (isIrakaslea) {
             erakutsiIrakasleMenua();
         } else {
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Nabigazio menuan aukeratzen den botoiaren arabera (Guneak, Mapa, Profila, Ranking) fragment desberdina erakutsiko da.
+     */
     private final BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = item -> {
         int itemId = item.getItemId();
 
@@ -106,24 +114,31 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemId == PROFILA_FRAGMENT_ID) {
             loadFragment(profilaFragment);
             return true;
-        } else if (itemId == ITXI_SAIOA_FRAGMENT_ID) {
+        } else if (itemId == RANKING_FRAGMENT_ID) {
             loadFragment(rankingFragment);
             return true;
         }
         return false;
     };
 
+    /**
+     * Aukeratutako fragmenta kargatzen da.
+     * @param fragment Aukeratutako fragment-a
+     */
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 
+    /**
+     * Mugikorraren kokalekua eskuratzeko metodoa
+     */
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5000); // Intervalo de actualización en milisegundos
-        locationRequest.setFastestInterval(3000); // Intervalo más rápido de actualización en milisegundos
+        locationRequest.setInterval(5000); // Eguneratze-tartea milisegundotan
+        locationRequest.setFastestInterval(3000); // Eguneratze-tarte azkarrena milisegundotan
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationCallback locationCallback = new LocationCallback() {
@@ -138,6 +153,10 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 
+    /**
+     * Mugikorra gune bakoitzera zenbateko distantziara dagoen konprobatzeko
+     * @param location Kokalekua (Location objetua, .getLatitude eta .getLongitude bidez, mapan non dagoen eskuratu ahalko dugu)
+     */
     private void updateLocationUI(Location location) {
         // Actualizar los TextViews con la nueva ubicación
         double latitude = location.getLatitude();
@@ -152,6 +171,12 @@ public class MainActivity extends AppCompatActivity {
         checkDistance(lezeagakoSorgina, latitude, longitude);
     }
 
+    /**
+     * Mugikorraren kokalekuaren arabera guneren batean gauden detektatzeko. Guneren batean bagaude, gunea automatikoki zabaltzeko aukera emango digu.
+     * @param locationInfo Gunearen kokaleku informazioa (Latitude, Longitude, TargetDistance, LocationName, etab.)
+     * @param currentLatitude Mugikorraren Latitudea
+     * @param currentLongitude Mugikorraren Longitudea
+     */
     private void checkDistance(LocationInfo locationInfo, double currentLatitude, double currentLongitude) {
         float distance = calculateDistance(currentLatitude, currentLongitude, locationInfo.getLatitude(), locationInfo.getLongitude());
         if (distance <= locationInfo.getTargetDistance()) {
@@ -179,26 +204,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo honek bi puntuen arteko distantzia kalkulatzen du.
+     * @param lat1 Latitudea lehenengo puntuan (Mugikorraren Latitudea)
+     * @param lon1 Longitudea lehenengo puntuan (Mugikorraren Longitudea)
+     * @param lat2 Latitudea bigarren puntuan (Gunearen Latitudea)
+     * @param lon2 Longitudea bigarren puntuan (Gunearen Latitudea)
+     * @return Bi puntuen arteko distantzia emaitza (metrotan)
+     */
     private float calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double R = 6371e3; // Lurreko errrakioa m-tan
+        // Lurreko eradioa metroetan
+        double R = 6371e3;
+
+        // Latitudeak eta longitudeak radianetan
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);
         double deltaLambda = Math.toRadians(lon2 - lon1);
 
+        // Haversine formula erabiliz distantzia kalkulatu
         double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
                 Math.cos(phi1) * Math.cos(phi2) *
                         Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
+        // Distantzia metrotan kalkulatu eta emaitza itzuli
         return (float) (R * c);
     }
 
+    /**
+     * Metodo honek baimenak eskaketaren erantzuna jasotzen du.
+     * @param requestCode Baimen eskatzeko galdera zenbakia, aplikazioak eskatu duen kodea
+     * @param permissions Eskatutako baimenak, array moduan
+     * @param grantResults Baimenak emateko erantzunak, array moduan
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Eskatu den baimena PERMISSION_REQUEST_CODE-ekin bat dator
         if (requestCode == PERMISSION_REQUEST_CODE) {
+            // Baimenak emateko erantzun kopurua 0 baino handiagoa bada eta lehenengo erantzuna "PERMISSION_GRANTED" bada
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Baimenak emandakoan kokaleku eguneratzea hasi
                 startLocationUpdates();
             } else {
                 // Erabiltzaileak baimenak ezeztatzen baditu
@@ -207,6 +255,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Kokalekua zabaltzeko galdera. (kokalekura iristen zarenean agertuko den AlertDialog-a)
+     * @param aukeratutakoGunea Kokalekuko gunearen ID-a
+     * @return True, erabiltzaileak "Bai" botoia sakatu duenean; False, erabiltzaileak "Ez" botoia sakatu duenean edo dialogoa itxi duenean
+     */
     public boolean kokalekuaZabaldu(int aukeratutakoGunea) {
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.kokalekua_dialog, null);
         Button prestBai = view.findViewById(R.id.kokalekuaBai);
@@ -265,6 +318,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Irakaslearen menua erakusten da eta logika konfiguratzen du
+     */
     private void erakutsiIrakasleMenua() {
         BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
         BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);
@@ -274,6 +330,9 @@ public class MainActivity extends AppCompatActivity {
         navigationIrakasle.setOnItemSelectedListener(mOnNavigationItemSelectedListener); // Nabegazio menuari logika gehitzen dio
     }
 
+    /**
+     * Ikaslearen menua erakusten da eta logika konfiguratzen du
+     */
     private void erakutsiIkasleMenua() {
         BottomNavigationView navigationIkasle = findViewById(R.id.bottom_navigation);
         BottomNavigationView navigationIrakasle = findViewById(R.id.bottom_navigation_irakasle);

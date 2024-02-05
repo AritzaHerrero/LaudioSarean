@@ -289,6 +289,10 @@ public class Kruzigrama extends AppCompatActivity {
 
     }
 
+    /**
+     * Jokoa bukatzean erakuzten den mezua. Jokalariaren emaitza erakusten da.
+     * @param puntuaizoa Azken puntuazioa
+     */
     private void erakutsiMezua(TextView puntuaizoa) {
         // Authentification
         mAuth = FirebaseAuth.getInstance();
@@ -361,6 +365,11 @@ public class Kruzigrama extends AppCompatActivity {
 
         alertDialog.show();
     }
+
+    /**
+     * Kruzigrama amaituta dagoen egiaztatzen du.
+     * @return Amaituta badago 'true' bueltatzen du; Ez badago amaituta 'false' bueltatzen du.
+     */
     private boolean isKruzigramaCompletado() {
         boolean amaituta = false;
         if(aciertos == hitzak.length){
@@ -368,6 +377,10 @@ public class Kruzigrama extends AppCompatActivity {
         }
         return amaituta;
     }
+
+    /**
+     * Kruzigrama berrabiarazten du.
+     */
     private void reiniciarKruzigrama() {
         GridLayout gridLayout = findViewById(R.id.gridLayoutKruzigrama);
 
@@ -386,9 +399,17 @@ public class Kruzigrama extends AppCompatActivity {
         }
         aciertos = 0;
     }
+
+    /**
+     * Kronometroa gelditzen du
+     */
     public void detenerCronometro() {
         koronoHandler.removeCallbacks(kronoRunnable);
     }
+
+    /**
+     * Fragmenta berrabiarazten du
+     */
     public void reiniciarJokoDatuakFragment() {
         // Reiniciar variables
         hasierakoDenbora = System.currentTimeMillis();
@@ -397,6 +418,11 @@ public class Kruzigrama extends AppCompatActivity {
         koronoHandler.postDelayed(kronoRunnable, 0);
     }
 
+    /**
+     * Puntuazioa kalkulatzeko metodoa
+     * @param totalTimeInMillis Momentuan zenbat denbora doan jokalaria.
+     * @return Jokalariaren puntuazioa
+     */
     public static int puntazioaKalkulatu(long totalTimeInMillis) {
         int maxPuntuazioa = 10000;
         int milisegundoak = (int) totalTimeInMillis;

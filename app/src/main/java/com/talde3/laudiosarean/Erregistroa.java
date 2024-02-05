@@ -71,6 +71,7 @@ public class Erregistroa extends AppCompatActivity {
              }
          });
 
+        // Erregistratzeko botoia erabiltzean, eremu guztiak zuzenak direla egiaztatzen du eta ondroen erabiltzailea sortzen du Room eta Firestore Database-n.
         btnErregistratu.setOnClickListener(view -> {
             eposta = etEposta.getText().toString();
             izena = etIzena.getText().toString();

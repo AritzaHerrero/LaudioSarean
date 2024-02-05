@@ -66,6 +66,7 @@ public class GuneInformazioa extends Activity {
 
         });
 
+        // Zein gune aukeratu den konprobatzen du eta gunearen arabera informazio, argazki... desberdinak erakusten ditu.
         switch (botoia) {
             case 1:
                 Gunea gunea = LoginActivity.db.guneaDao().getGuneaById(1);
@@ -205,7 +206,7 @@ public class GuneInformazioa extends Activity {
         //seekBar max jarri
         seekBarAudio.setMax(mediaPlayer.getDuration());
 
-        // Actualizar la posición del SeekBar durante la reproducción del audio
+        // SeekBar-aren posizioa eguneratzen du audioa erreproduzitzen den bitartean
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -225,7 +226,7 @@ public class GuneInformazioa extends Activity {
                     mediaPlayer.seekTo(progress);
                 }
 
-                // Actualizar el tiempo actual en el TextView
+                // Momentuko denbora eguneratzen du
                 String tiempoActualStr = obtenerFormatoTiempo(progress);
                 txtTiempoActual.setText(tiempoActualStr);
             }
